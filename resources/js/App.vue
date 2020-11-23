@@ -1,8 +1,20 @@
 <template>
   <div>
-    <h3>Vue Router 入門</h3>
-    <router-link to="/page1">ページ１へ</router-link>
-    <router-link to="/page2">ページ２へ</router-link>
-    <RouterView />
+    <Header />
+    <router-view />
+    <Footer />
   </div>
 </template>
+
+<script>
+  import Header from './components/Header';
+  import Footer from './components/Footer';
+
+  export default {
+    name: 'App',
+    components: {
+      Header,
+      Footer,
+    }
+  };
+</script>
