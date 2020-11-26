@@ -1,0 +1,47 @@
+<template>
+  <form>
+    <v-text-field
+      v-model="name"
+      :error-messages="nameErrors"
+      :counter="10"
+      label="Name"
+      required
+      @input="$v.name.$touch()"
+      @blur="$v.name.$touch()"
+    />
+    <v-text-field
+      v-model="email"
+      :error-messages="emailErrors"
+      label="E-mail"
+      required
+      @input="$v.email.$touch()"
+      @blur="$v.email.$touch()"
+    />
+    <v-text-field
+      v-model="password"
+      :error-messages="passwordErrors"
+      label="Password"
+      required
+      @input="$v.password.$touch()"
+      @blur="$v.password.$touch()"
+    />
+    <v-checkbox
+      v-model="checkbox"
+      :error-messages="checkboxErrors"
+      label="Do you agree?"
+      required
+      @change="$v.checkbox.$touch()"
+      @blur="$v.checkbox.$touch()"
+    />
+
+    <v-btn
+      class="mr-4"
+      @click="submit"
+    >
+      Login
+    </v-btn>
+    <v-btn @click="clear">
+      clear
+    </v-btn>
+  </form>
+</template>

@@ -6,6 +6,8 @@ import BulltenBorad from './pages/BulletenBoard.vue';
 import List from './pages/List.vue';
 import MyPage from './pages/MyPage.vue';
 import Support from './pages/Support.vue';
+import Register from './pages/Register.vue';
+import Login from './pages/Login.vue';
 
 //ページコンポーネントのインポート
 
@@ -37,6 +39,17 @@ export default new Router ({
             path: '/support',
             name: 'support',
             component: Support,
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Register,
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login,
         }
+
     ]
 });

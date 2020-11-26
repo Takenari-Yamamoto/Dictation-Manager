@@ -9,6 +9,7 @@ import Vuetify from 'vuetify';
 
 Vue.config.productionTip = false;
 Vue.use(vuetify);
+Vue.component('spinner', require('vue-simple-spinner'));
 
 new Vue ({
   router,

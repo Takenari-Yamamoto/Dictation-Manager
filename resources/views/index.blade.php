@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name') }}</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Dictation Manager</title>
 
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}" defer></script>
@@ -16,15 +17,16 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="https://hypertext-candy.s3-ap-northeast-1.amazonaws.com/posts/vue-laravel-tutorial/app.css">
+  <link rel="stylesheet" href="{{ URL::to('/') }}">
   
-  <style>
-    ＃footer {
-      margin-top: auto;
-    }
-  </style>
 </head>
 <body>
   <div id="app">
   </div>
+    <script>
+      var BASE_URL = '{{ URL::to('/') }}';
+    </script>
+
+  <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
