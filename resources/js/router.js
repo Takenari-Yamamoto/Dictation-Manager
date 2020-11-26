@@ -9,12 +9,19 @@ import Support from './pages/Support.vue';
 import Register from './pages/Register.vue';
 import Login from './pages/Login.vue';
 
+import Board from './pages/Board.vue';
+
 //ページコンポーネントのインポート
 
 Vue.use(Router);
 
 export default new Router ({
     routes: [
+        {
+            path: '/',
+            naem: 'board',
+            component: Board
+        },
         {
             path: '/',
             name: 'home',
