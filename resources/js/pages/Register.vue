@@ -43,9 +43,10 @@
                 placeholder="Password Again..."
               >
             </div>
-            <button class="btn btn-sucess">Register</button>
+            <button class="btn btn-sucess">
+              Register
+            </button>
           </form>
-          
         </div>
       </div>
     </div>
