@@ -7,6 +7,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import '@mdi/font/css/materialdesignicons.css';
 import Vuetify from 'vuetify';
 import store from './store';
+import './bootstrap';
 
 Vue.config.productionTip = false;
 Vue.use(vuetify);
