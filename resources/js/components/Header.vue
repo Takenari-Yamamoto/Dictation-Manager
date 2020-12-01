@@ -6,7 +6,7 @@
   >
     <v-toolbar-title>Dictation Manager</v-toolbar-title>
     <v-spacer />
-    <v-toolbar-items>
+    <v-toolbar-items v-if='isLogin'>
       <v-btn text>
         <router-link
           to="/HomePage"
@@ -77,6 +77,14 @@
            this.app.user = null;
            this.$router.push("/login");
          });
+       }
+     },
+     computed: {
+       isLogin () {
+         return this.$store.getters['auth/check']
+       },
+       username() {
+         return this.$store.getters['auth/username']
        }
      }
    };
