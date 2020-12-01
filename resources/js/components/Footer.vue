@@ -1,19 +1,17 @@
 <template>
-  <v-app>
-    <v-footer
-      color="primary"
-      dark
-      app
+  <v-footer
+    color="primary"
+    dark
+    app
+  >
+    Dictation Manager
+    <button
+      class="button button--link"
+      @click="logout"
     >
-      Dictation Manager
-      <button
-        class="button button--link"
-        @click="logout"
-      >
-        Logout
-      </button>
-    </v-footer>
-  </v-app>
+      Logout
+    </button>
+  </v-footer>
 </template>
 
 <script>
