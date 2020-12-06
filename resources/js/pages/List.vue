@@ -1,5 +1,5 @@
 <template>
-  <v-simple-table>
+  <v-simple-table class="list">
     <template #default>
       <thead>
         <tr>
@@ -74,3 +74,9 @@
     },
   };
 </script>
+
+<style>
+.list {
+  padding-top: 100px
+}
+</style>

@@ -8,6 +8,9 @@ import MyPage from './pages/MyPage.vue';
 import Support from './pages/Support.vue';
 import Login from './pages/Login.vue';
 
+import store from './store';
+import SystemError from './pages/errors/System.vue';
+
 //ページコンポーネントのインポート
 
 Vue.use(Router);
@@ -44,7 +47,21 @@ export default new Router ({
             path: '/login',
             name: 'login',
             component: Login,
+            beforeEnter (to, from, next) {
+            // 定義されたルートにアクセスされてページコンポーネントが切り替わる直前に呼び出される関数
+            // 第一引数 to はアクセスされようとしているルートのルートオブジェクト
+            // 第二引数 from はアクセス元のルート
+            // 第三引数 next はページの移動先（切り替わり先）を決めるための関数
+                if (store.getters['auth/check']) {
+                    next('/login');
+                } else {
+                    next();
+                }
+            }
+        },
+        {
+            path: '/500',
+            component: SystemError
         }
-
     ]
 });

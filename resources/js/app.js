@@ -16,9 +16,15 @@ Vue.use(VueResource);
 Vue.config.productionTip = false;
 Vue.use(vuetify);
 
-new Vue ({
-  router,
-  store,
-  vuetify: new Vuetify(),
-  render: h => h(App)
-}).$mount("#app");
+const createApp = async () => {
+  await store.dispatch('auth/currentUser');
+
+  new Vue ({
+    router,
+    store,
+    vuetify: new Vuetify(),
+    render: h => h(App)
+  }).$mount("#app");
+};
+
+createApp();
