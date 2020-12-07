@@ -8,8 +8,6 @@ const state = {
 };
   
 const getters = {
-  // state を加工した値を出力する
-  // 必ず引数にstateを持つ
   check: state => !! state.user,
   username: state => state.user ? state.user.name : ''
 };
@@ -68,8 +66,6 @@ const actions = {
   }
 };
 
-console.log(actions);
-
   export default {
     namespaced: true,
     state,
@@ -77,4 +73,3 @@ console.log(actions);
     mutations,
     actions
   };
-  

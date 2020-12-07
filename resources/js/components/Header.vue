@@ -78,6 +78,9 @@
           Login / Register
         </RouterLink>
       </div>
+      <span v-if="isLogin" class="navbar__item">
+        {{ username }}
+      </span>
     </div>
   </v-app-bar>
 </template>
@@ -94,9 +97,3 @@ export default {
   }
 };
 </script>
-
-<style>
-  .navbar__menu {
-    color: white
-  }
-</style>

@@ -8,7 +8,6 @@ import '@mdi/font/css/materialdesignicons.css';
 import Vuetify from 'vuetify';
 import store from './store';
 import './bootstrap';
-import axios from 'axios';
 import VueResource from 'vue-resource';
 
 Vue.use(VueResource);
