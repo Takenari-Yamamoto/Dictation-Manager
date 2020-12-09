@@ -1,5 +1,8 @@
 <template>
-  <v-simple-table class="list">
+  <v-simple-table
+    v-if="isLogin"
+    class="list"
+  >
     <template #default>
       <thead>
         <tr>
@@ -22,6 +25,12 @@
       </tbody>
     </template>
   </v-simple-table>
+
+  <div
+    v-else
+  >
+    ログインしてね
+  </div>
 </template>
 
 <script>
@@ -71,6 +80,14 @@
           },
         ],
       };
+    },
+    computed: {
+      isLogin () {
+        return this.$store.getters['auth/check'];
+      },
+      username () {
+        return this.$store.getters['auth/username'];
+      }
     },
   };
 </script>

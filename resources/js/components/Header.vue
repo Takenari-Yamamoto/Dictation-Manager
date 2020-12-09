@@ -1,8 +1,7 @@
-<template>
+<template class="header">
   <v-app-bar
-    color="primary"
     app
-    dark
+    color="primary"
   >
     <RouterLink
       class="navbar__brand"
@@ -17,7 +16,6 @@
       >
         <router-link
           to="/HomePage"
-          class="white"
         >
           Home
         </router-link>
@@ -28,7 +26,6 @@
       >
         <router-link
           to="/mypage"
-          class="white"
         >
           My Page
         </router-link>
@@ -39,7 +36,6 @@
       >
         <router-link
           to="/bulleten_board"
-          class="white"
         >
           Bulletin Borad
         </router-link>
@@ -50,7 +46,6 @@
       >
         <router-link
           to="/list"
-          class="white"
         >
           List
         </router-link>
@@ -61,7 +56,6 @@
       >
         <router-link
           to="/support"
-          class="white"
         >
           Support
         </router-link>
@@ -78,7 +72,10 @@
           Login / Register
         </RouterLink>
       </div>
-      <span v-if="isLogin" class="navbar__item">
+      <span
+        v-if="isLogin"
+        class="navbar__item"
+      >
         {{ username }}
       </span>
     </div>
@@ -97,3 +94,9 @@ export default {
   }
 };
 </script>
+
+<style>
+  .header {
+    color: white;
+  }
+</style>

@@ -48,12 +48,8 @@ export default new Router ({
             name: 'login',
             component: Login,
             beforeEnter (to, from, next) {
-            // 定義されたルートにアクセスされてページコンポーネントが切り替わる直前に呼び出される関数
-            // 第一引数 to はアクセスされようとしているルートのルートオブジェクト
-            // 第二引数 from はアクセス元のルート
-            // 第三引数 next はページの移動先（切り替わり先）を決めるための関数
                 if (store.getters['auth/check']) {
-                    next('/login');
+                    next('/');
                 } else {
                     next();
                 }
