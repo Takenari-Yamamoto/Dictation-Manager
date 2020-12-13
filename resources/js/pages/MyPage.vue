@@ -17,8 +17,11 @@
   </v-main>
 </template>
 
+
 <script>
+
   export default {
+    
     computed: {
       isLogin () {
         return this.$store.getters['auth/check'];

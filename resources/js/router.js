@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from "vue-router";
 
-import Homepage from './pages/Homepage.vue';
+import HomePage from './pages/HomePage.vue';
 import BulltenBorad from './pages/BulletenBoard.vue';
 import List from './pages/List.vue';
 import MyPage from './pages/MyPage.vue';
@@ -19,9 +19,9 @@ export default new Router ({
     mode: 'history',
     routes: [
         {
-            path: '/',
+            path: '/HomePage',
             name: 'home',
-            component: Homepage,
+            component: HomePage,
         },
         {
             path: '/list',

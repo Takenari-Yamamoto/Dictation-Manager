@@ -2,6 +2,7 @@
   <v-app-bar
     app
     color="primary"
+    class="white--text"
   >
     <RouterLink
       class="navbar__brand"
@@ -10,56 +11,41 @@
       Dictation Manager
     </RouterLink>
     <div class="navbar__menu">
-      <div
+      <router-link
         v-if="isLogin"
-        class="navbar__item"
+        to="/HomePage"
+        class="navbar__item white--text text-decoration-none"
       >
-        <router-link
-          to="/HomePage"
-        >
-          Home
-        </router-link>
-      </div>
-      <div
+        Home
+      </router-link>
+      <router-link
         v-if="isLogin"
-        class="navbar__item"
+        to="/mypage"
+        class="navbar__item white--text text-decoration-none"
       >
-        <router-link
-          to="/mypage"
-        >
-          My Page
-        </router-link>
-      </div>
-      <div
+        My Page
+      </router-link>
+      <router-link
         v-if="isLogin"
-        class="navbar__item"
+        to="/bulleten_board"
+        class="navbar__item white--text text-decoration-none"
       >
-        <router-link
-          to="/bulleten_board"
-        >
-          Bulletin Borad
-        </router-link>
-      </div>
-      <div
+        Bulletin Borad
+      </router-link>
+      <router-link
         v-if="isLogin"
-        class="navbar__item"
+        to="/list"
+        class="navbar__item white--text text-decoration-none"
       >
-        <router-link
-          to="/list"
-        >
-          List
-        </router-link>
-      </div>
-      <div
+        List
+      </router-link>
+      <router-link
         v-if="isLogin"
-        class="navbar__item"
+        class="navbar__item white--text text-decoration-none"
+        to="/support"
       >
-        <router-link
-          to="/support"
-        >
-          Support
-        </router-link>
-      </div>
+        Support
+      </router-link>
       <!-- ログインしていないときの表示↓ -->
       <div
         v-else
@@ -74,9 +60,10 @@
       </div>
       <span
         v-if="isLogin"
-        class="navbar__item"
+        id="name"
+        class="navbar__item text-right"
       >
-        {{ username }}
+        {{ username }} 
       </span>
     </div>
   </v-app-bar>
@@ -94,9 +81,3 @@ export default {
   }
 };
 </script>
-
-<style>
-  .header {
-    color: white;
-  }
-</style>
