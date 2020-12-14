@@ -1,26 +1,24 @@
 <template>
   <v-container>
-    <div class="work">
+    <div
+      class="work"
+    >
       <v-row>
         <v-col cols="7">
-          <v-textarea
-            outlined
-            class="textarea"
-            name="input-7-4"
-            rows="20"
-            label="Outlined textarea"
-            value="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus "
-          />
-        </v-col>
-        <v-col cols="2">
-          <div id="App">
-            <p>選択中の文字:<span>{{ selectedText }}</span></p>
-            <textarea 
-              @select="selected"
-              @blur="selected"
-              @keyup="selected"
-              @click="selected"
+          <div>
+            <v-textarea
+              outlined
+              name="input-7-4"
+              rows="20"
+              label="Outlined textarea"
+              value="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus "
+              @click.selected.prevent="selected"
             />
+          </div>
+        </v-col>
+        <v-col cols="1">
+          <div>
+            <pre id="selected">選択中の文字 : {{ selectedText }}</pre>
           </div>
         </v-col>
       </v-row>
@@ -40,7 +38,7 @@ export default {
   },
   methods: {
     selected: function() {
-      this.selectedText = window,getSelection().toString();
+      this.selectedText = window.getSelection().toString();
     }
   }
 };
@@ -52,5 +50,10 @@ export default {
 }
 .v-textarea textarea {
   line-height: 70px !important;
+}
+
+#selected {
+  font-size: 25px;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 </style>
