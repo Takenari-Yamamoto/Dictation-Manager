@@ -12,46 +12,45 @@
             value="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus "
           />
         </v-col>
+        <v-col cols="2">
+          <div id="App">
+            <p>選択中の文字:<span>{{ selectedText }}</span></p>
+            <textarea 
+              @select="selected"
+              @blur="selected"
+              @keyup="selected"
+              @click="selected"
+            />
+          </div>
+        </v-col>
       </v-row>
     </div>
     <!-- <List /> -->
   </v-container>
 </template>
 
-<script>
-import List from '../pages/List.vue';
+<script type="text/javascript">
 
 export default {
-  components: {
-    List
+  name: 'App',
+  data() {
+    return {
+      selectedText:""
+    };
+  },
+  methods: {
+    selected: function() {
+      this.selectedText = window,getSelection().toString();
+    }
   }
-//   created: {
-//     vm = this
-//     document.onselectionchange = function() {
-//       var value = getSelection() ;
-//       console.log( value ) ;
-//       document.getElementById( "result" ).textContent = value ;
-//     }
-//   },
-//   data: function() {
-//     return {
-//       selectedText: ""
-//     };
-//   },
-//   methods: {
-//     selected: function() {
-//       this.selectedText = window.getSelection().toString();
-//     }
-//   }
-// }
 };
 </script>
 
 <style>
-  .work {
-    padding-top: 100px;
-  }
-  ::deep/ .v-textarea textarea {
-line-height: 40px;
+.work {
+  padding-top: 100px;
+}
+.v-textarea textarea {
+  line-height: 70px !important;
 }
 </style>
