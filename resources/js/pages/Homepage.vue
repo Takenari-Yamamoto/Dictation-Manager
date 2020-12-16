@@ -1,39 +1,28 @@
 <template>
   <v-container>
     <div
-      class="work"
+      id="app"
+      class="editor"
     >
-      <v-row>
-        <v-col cols="7">
-          <div>
-            <v-textarea
-              outlined
-              name="input-7-4"
-              rows="20"
-              label="Outlined textarea"
-              value="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus "
-              @click.selected.prevent="selected"
-            />
-          </div>
-        </v-col>
-        <v-col cols="1">
-          <div>
-            <pre id="selected">選択中の文字 : {{ selectedText }}</pre>
-          </div>
-        </v-col>
-      </v-row>
+      <quill-editor
+        ref="quillEditor"
+        v-model="content"
+        options="editorOption"
+      />
     </div>
-    <!-- <List /> -->
   </v-container>
 </template>
 
 <script type="text/javascript">
 
 export default {
-  name: 'App',
+  el:'#app',
   data() {
     return {
-      selectedText:""
+      content: 'Hello contents',
+      editorOption: {
+        theme: 'snow'
+      }
     };
   },
   methods: {
@@ -45,15 +34,26 @@ export default {
 </script>
 
 <style>
-.work {
+
+.editor {
   padding-top: 100px;
 }
 .v-textarea textarea {
-  line-height: 70px !important;
+  font-size: 20px;
+  line-height: 60px !important;
 }
 
 #selected {
   font-size: 25px;
   font-family: 'Roboto Condensed', sans-serif;
+}
+.red {
+  color:yellow;
+}
+button{
+  display: block;
+  width: 200px;
+  height: 30px;
+  margin-top: 10px;
 }
 </style>

@@ -9,7 +9,12 @@ import Vuetify from 'vuetify';
 import store from './store';
 import './bootstrap';
 import VueResource from 'vue-resource';
+import VueQuillEditor from 'vue-quill-editor';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 
+Vue.use(VueQuillEditor);
 Vue.use(VueResource);
 
 Vue.config.productionTip = false;

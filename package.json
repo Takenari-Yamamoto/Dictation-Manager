@@ -38,6 +38,7 @@
         "material-design-icons-iconfont": "^6.1.0",
         "object-path": "^0.11.5",
         "vue-axios": "^3.2.0",
+        "vue-quill-editor": "^3.0.6",
         "vue-resource": "^1.5.1",
         "vue-router": "^3.4.9",
         "vue-simple-spinner": "^1.2.10",
