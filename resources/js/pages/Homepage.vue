@@ -1,14 +1,25 @@
 <template>
   <v-container>
-    <div
-      id="app"
-      class="editor"
-    >
-      <quill-editor
-        ref="quillEditor"
-        v-model="content"
-        options="editorOption"
-      />
+    <div id="app">
+      <v-row>
+        <v-col cols="7">
+          <div
+            class="editor"
+            @click.selected.prevent="selected"
+          >
+            <quill-editor
+              ref="quillEditor"
+              v-model="content"
+              options="editorOption"
+            />
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <div id="selectedWord">
+            Word You Select : {{ selectedText }}
+          </div>
+        </v-col>
+      </v-row>
     </div>
   </v-container>
 </template>
@@ -19,10 +30,11 @@ export default {
   el:'#app',
   data() {
     return {
-      content: 'Hello contents',
+      content: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus ',
       editorOption: {
         theme: 'snow'
-      }
+      },
+      selectedText: ""
     };
   },
   methods: {
@@ -35,25 +47,16 @@ export default {
 
 <style>
 
-.editor {
+.editor  {
   padding-top: 100px;
 }
-.v-textarea textarea {
+#selectedWord {
+  padding-top: 150px;
   font-size: 20px;
-  line-height: 60px !important;
 }
 
-#selected {
-  font-size: 25px;
-  font-family: 'Roboto Condensed', sans-serif;
-}
-.red {
-  color:yellow;
-}
-button{
-  display: block;
-  width: 200px;
-  height: 30px;
-  margin-top: 10px;
+.ql-editor {
+  line-height: 300% !important;
+  font-size: 20px !important;
 }
 </style>
