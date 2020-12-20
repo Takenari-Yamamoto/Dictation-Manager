@@ -18,6 +18,10 @@
           <div id="selectedWord">
             Word You Select : {{ selectedText }}
           </div>
+          <v-select
+            :items="items"
+            label="Upload File You Dictate"
+          />
         </v-col>
       </v-row>
     </div>
@@ -25,7 +29,6 @@
 </template>
 
 <script type="text/javascript">
-
 export default {
   el:'#app',
   data() {
@@ -34,13 +37,13 @@ export default {
       editorOption: {
         theme: 'snow'
       },
-      selectedText: ""
+      selectedText: "",
     };
   },
   methods: {
     selected: function() {
       this.selectedText = window.getSelection().toString();
-    }
+    },
   }
 };
 </script>
