@@ -15,3 +15,5 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/user', function () {
     return Auth::user();
 })->name('user');
+
+Route::post('/HomePage', 'DictationController@create')->name('dictation.create');
