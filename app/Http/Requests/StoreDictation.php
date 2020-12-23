@@ -24,7 +24,7 @@ class StoreDictation extends FormRequest
     public function rules()
     {
         return [
-            //
+            ''
         ];
     }
 }
