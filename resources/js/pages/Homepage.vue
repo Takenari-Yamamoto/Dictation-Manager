@@ -27,22 +27,27 @@
           <div id="selectedWord">
             Word You Select : {{ selectedText }}
           </div>
-          <div class="dectation_post">
+          <div class="upload_dectation">
             <p>Upload File You Wanna Dictate</p>
-            <form
-              action="/upload"
-              method="get"
-              enctype="multipart/form-data"
+            <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
             >
               <!-- {{ csrf_field() }} -->
-              <input
-                type="file"
-                name="file"
+              <v-file-input
+                accept="movie/*"
+                label="File input"
+              />
+              
+              <v-btn
+                color="success"
+                class="mr-4"
+                @submit.prevent="upload"
               >
-              <button type="submit">
-                保存
-              </button>
-            </form>
+                submit
+              </v-btn>
+            </v-form>
           </div>
         </v-col>
       </v-row>
@@ -65,32 +70,6 @@ export default {
   methods: {
     selected: function() {
       this.selectedText = window.getSelection().toString();
-    },
-    onFileChange (event) {
-      this.dictation = event.target.files[0];
-    },
-    reset () {
-      this.dictation = null;
-      this.$el.querySelector('input[type="file"]').value = null;
-    },
-    async submit () {
-      const formData = new FormData();
-      formData.append('dictation', this.dictation);
-      const response = await axios.post('/api/dictations', formData);
-
-      this.reset();
-      this.$submit('input', false);
-
-      if (response.status !== CREATED) {
-        this.$store.commit('error/setCode', response.status);
-        return false;
-      }
-
-      this.$store.commit('message/setContent', {
-        content: 'ファイルが投稿されました',
-        timeout: 6000
-      });
-
     }
   }
 };
