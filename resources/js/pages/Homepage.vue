@@ -10,7 +10,6 @@
             <quill-editor
               ref="quillEditor"
               v-model="content"
-              options="editorOption"
             />
           </div>
           <v-btn
@@ -31,19 +30,18 @@
             <p>Upload File You Wanna Dictate</p>
             <v-form
               ref="form"
-              v-model="valid"
               lazy-validation
             >
               <!-- {{ csrf_field() }} -->
               <v-file-input
+                id="upload-file"
                 accept="movie/*"
                 label="File input"
               />
-              
               <v-btn
                 color="success"
                 class="mr-4"
-                @submit.prevent="upload"
+                @click="upload"
               >
                 submit
               </v-btn>
@@ -57,6 +55,7 @@
 
 <script type="text/javascript">
 export default {
+  name: 'AwsS3Upload',
   data() {
     return {
       content: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus ',
@@ -70,7 +69,56 @@ export default {
   methods: {
     selected: function() {
       this.selectedText = window.getSelection().toString();
-    }
+    },
+    async upload() { 
+      const upload_files = document.getElementById('upload-file');
+      const upload_file = upload_files.files[0];
+      // 署名付きPOSTのAPI叩く
+      let preSignedUrl = await this.getPresignedUrl();
+      // S3へアップロード
+      let uploadS3Path = await this.uploadS3(preSignedUrl, upload_file);
+      console.log(upload_file);
+    },
+    async getPresignedUrl() {
+      let filename = 'fuga';
+      let filetype = 'image/jpeg';
+      let fileext = 'jpg';
+
+      try {
+          const url = '/api/get-presigned-url?filename=' +  filename + '&filetype=' + filetype + '&fileext=' + fileext;
+          let response = await axios.get(url);
+          console.log('S3署名付きURL取得 成功');
+          return response;
+      } catch (error) {
+          console.log('S3 署名付きURL取得 失敗');
+      }
+    },
+    async uploadS3(presignedUrl, up_file) {
+      let data = presignedUrl.data;
+      try {
+          var formdata = new FormData();
+          for (let key in data.fields) {
+              formdata.append(key, data.fields[key]);
+          }
+          formdata.append("file", up_file);
+          const headers = {
+              "content-type": "multipart/form-data",
+          };
+          console.log('S3 アップロード 開始');
+          let response = await axios.post(
+              data.url,
+              formdata,
+              {
+                  headers: headers,
+              }
+          );
+          console.log('S3 アップロード 成功');
+          return data.url + '/' + data.fields.key;
+      } catch (error) {
+          console.log('S3 アップロード エラー');
+      }
+  },
+        
   }
 };
 </script>
