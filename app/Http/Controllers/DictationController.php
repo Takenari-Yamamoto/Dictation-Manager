@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-require 'vendor/autoload.php';
 
 use Illuminate\Http\Request;
 use Aws\S3\S3Client;  
@@ -13,14 +12,14 @@ class DictationController extends Controller
     {
         $s3Client = new \Aws\S3\S3Client([
             'credentials' => [
-                'key' => env('AKIA4ZW3CFNNSPHMEOQK'),
-                'secret' => env('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'),
+                'key' => 'AKIA4ZW3CFNNSPHMEOQK',
+                'secret' => '1aa{77JnoROH8#^',
             ],
-            'region' => env('ap-northeast-1'),
+            'region' => 'ap-northeast-1',
             'version' => 'latest'
         ]);
 
-        $bucket = env('dictationmanager');
+        $bucket = 'dictationmanager';
         $requestData = $request->all();
         $formInputs = [
             //acl とはアクセスコントロールリスト
@@ -30,7 +29,7 @@ class DictationController extends Controller
         $options = [
             ['acl' => 'public-read'],
             ['bucket' => $bucket],
-            ['starts-with', '$key', 'hoge/'],
+            ['starts-with', 'key', 'hoge/'],
         ];
         $expires = '+20 minutes';
         $postObject = new \Aws\S3\PostObjectV4(
@@ -49,5 +48,5 @@ class DictationController extends Controller
                 'url' => $formAttributes['action'],
                 'fields' => $formInputs
             ]);
-    };
+    }
 }

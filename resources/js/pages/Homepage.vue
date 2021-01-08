@@ -77,7 +77,6 @@ export default {
       let preSignedUrl = await this.getPresignedUrl();
       // S3へアップロード
       let uploadS3Path = await this.uploadS3(preSignedUrl, upload_file);
-      console.log(upload_file);
     },
     async getPresignedUrl() {
       let filename = 'fuga';
@@ -96,26 +95,28 @@ export default {
     async uploadS3(presignedUrl, up_file) {
       let data = presignedUrl.data;
       try {
-          var formdata = new FormData();
-          for (let key in data.fields) {
-              formdata.append(key, data.fields[key]);
+        var formdata = new FormData();
+        for (let key in data.fields) {
+            formdata.append(key, data.fields[key]);
+        }
+        formdata.append("file", up_file);
+        const headers = {
+            "content-type": "multipart/form-data",
+        };
+        console.log('S3 アップロード 開始');
+        let response = await axios.post(
+          data.url,
+          formdata,
+          {
+            headers: headers,
           }
-          formdata.append("file", up_file);
-          const headers = {
-              "content-type": "multipart/form-data",
-          };
-          console.log('S3 アップロード 開始');
-          let response = await axios.post(
-              data.url,
-              formdata,
-              {
-                  headers: headers,
-              }
-          );
-          console.log('S3 アップロード 成功');
-          return data.url + '/' + data.fields.key;
+        );
+        console.log('S3 アップロード 成功');
+        
+        return data.url + '/' + data.fields.key;
       } catch (error) {
           console.log('S3 アップロード エラー');
+          console.log(error);
       }
   },
         

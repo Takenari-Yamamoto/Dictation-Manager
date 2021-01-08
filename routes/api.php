@@ -17,3 +17,5 @@ Route::get('/user', function () {
 })->name('user');
 
 Route::post('/HomePage', 'DictationController@create')->name('dictation.create');
+
+Route::get('get-presigned-url', 'DictationController@getPresignedUrl');
