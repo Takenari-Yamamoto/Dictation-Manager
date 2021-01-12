@@ -15,7 +15,9 @@
           <v-btn
             class="ma-2"
             color="success"
+            @click="saveDictation"
           >
+            >
             Save
             <template #loader>
               <span>Loading...</span>
@@ -26,16 +28,28 @@
           <div id="selectedWord">
             Word You Select : {{ selectedText }}
           </div>
-          <div class="upload_dectation">
-            <p>Upload File You Wanna Dictate</p>
+
+          <div
+            class="updated_dictation"
+          >
+            <audio
+              controls
+              src="https://dictationmanager.s3-ap-northeast-1.amazonaws.com/hoge/dictation.mp3"
+              class="pt-4"
+            />
+          </div>
+
+          <div
+            class="upload_dictation"
+          >
             <v-form
               ref="form"
               lazy-validation
+              method="post"
             >
               <!-- {{ csrf_field() }} -->
               <v-file-input
                 id="upload-file"
-                accept="movie/*"
                 label="File input"
               />
               <v-btn
@@ -58,7 +72,7 @@ export default {
   name: 'AwsS3Upload',
   data() {
     return {
-      content: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus ',
+      content: '',
       editorOption: {
         theme: 'snow'
       },
@@ -67,6 +81,15 @@ export default {
     };
   },
   methods: {
+    saveDictation: function() {
+      const dictation = {
+        'content': this.content
+      };
+      axios.post('/api/dictation').then(res => {
+        // テストのため返り値をコンソールに表示
+        console.log(res.data.content);
+      });
+    },
     selected: function() {
       this.selectedText = window.getSelection().toString();
     },
@@ -79,14 +102,15 @@ export default {
       let uploadS3Path = await this.uploadS3(preSignedUrl, upload_file);
     },
     async getPresignedUrl() {
-      let filename = 'fuga';
-      let filetype = 'image/jpeg';
-      let fileext = 'jpg';
+      let filename = 'dictation';
+      let filetype = 'audio/*';
+      let fileext = 'mp3';
 
       try {
           const url = '/api/get-presigned-url?filename=' +  filename + '&filetype=' + filetype + '&fileext=' + fileext;
           let response = await axios.get(url);
           console.log('S3署名付きURL取得 成功');
+          console.log(response);
           return response;
       } catch (error) {
           console.log('S3 署名付きURL取得 失敗');
@@ -112,7 +136,6 @@ export default {
           }
         );
         console.log('S3 アップロード 成功');
-        
         return data.url + '/' + data.fields.key;
       } catch (error) {
           console.log('S3 アップロード エラー');

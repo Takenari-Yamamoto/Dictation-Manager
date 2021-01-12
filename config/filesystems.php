@@ -57,11 +57,11 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => 'AKIA4ZW3CFNNSPHMEOQK',
-            'secret' => '1aa{77JnoROH8#^',
+            'key' => 'AKIA4ZW3CFNN252QQAZH',
+            'secret' => '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',
             'region' => 'ap-northeast-1',
             'bucket' => 'dictationmanager',
-            'url' => 'https://dictationmanager.s3.ap-northeast-1.amazonaws.com/',
+            'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 

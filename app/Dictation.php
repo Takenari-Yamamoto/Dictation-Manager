@@ -9,8 +9,8 @@ class Dictation extends Model
     protected $table = 'dictations';
 
     protected $fillable =
-    [
-        'type',
+    [   
+        'title',
         'content'
     ];
 

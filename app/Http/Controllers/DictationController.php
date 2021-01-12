@@ -8,12 +8,43 @@ use Aws\Exception\AwsException;
 
 class DictationController extends Controller
 {
+
+    public function index() {
+        
+        $dictations = Dictation::all();
+
+    return $dictations;
+    }
+
+    public function store(Request $request)
+    {
+      $dictation = new Dictation;
+      
+      $dictation->content = $request->content;
+      $dictation->save();
+      return redirect('api/dictations');
+      
+    }
+
+    public function show($id)
+    {
+        $dictation = Dictation::find($id);
+        return $dictation;
+    }
+
+    public function destroy($id)
+    {
+        $dictation = Dictation::find($id);
+        $dictation->delete();
+        return redirect('api/dictations');
+    }
+
     public function getPresignedUrl(Request $request)
     {
         $s3Client = new \Aws\S3\S3Client([
             'credentials' => [
-                'key' => 'AKIA4ZW3CFNNSPHMEOQK',
-                'secret' => '1aa{77JnoROH8#^',
+                'key' => 'AKIA4ZW3CFNN252QQAZH',
+                'secret' => '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',
             ],
             'region' => 'ap-northeast-1',
             'version' => 'latest'
@@ -29,7 +60,7 @@ class DictationController extends Controller
         $options = [
             ['acl' => 'public-read'],
             ['bucket' => $bucket],
-            ['starts-with', 'key', 'hoge/'],
+            ['starts-with', '$key', 'hoge/'],
         ];
         $expires = '+20 minutes';
         $postObject = new \Aws\S3\PostObjectV4(
