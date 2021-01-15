@@ -11,14 +11,24 @@
               ref="quillEditor"
               v-model="content"
             />
+            <p>{{ content }}</p>
           </div>
           <v-btn
             class="ma-2"
-            color="success"
-            @click="saveDictation"
+            color="info"
+            @click="updateDictation"
           >
-            >
-            Save
+            UPDATE
+            <template #loader>
+              <span>Loading...</span>
+            </template>
+          </v-btn>
+          <v-btn
+            class="ma-2"
+            color="error"
+            @click="deleteDictation"
+          >
+            Delete
             <template #loader>
               <span>Loading...</span>
             </template>
@@ -70,6 +80,13 @@
 <script type="text/javascript">
 export default {
   name: 'AwsS3Upload',
+  props: {
+    // dictationId: String
+    dictationId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       content: '',
@@ -81,18 +98,29 @@ export default {
     };
   },
   methods: {
-    saveDictation: function() {
+    //選択した文字列を取得
+    selected: function() {
+      this.selectedText = window.getSelection().toString();
+    },
+    //Dictationの更新
+    updateDictation: function() {
       const dictation = {
         'content': this.content
       };
-      axios.post('/api/dictation').then(res => {
+      axios.post('/api/dictation', dictation).then(res => {
         // テストのため返り値をコンソールに表示
         console.log(res.data.content);
       });
     },
-    selected: function() {
-      this.selectedText = window.getSelection().toString();
+    //Dictationの削除
+     deleteDictation(index, id) {
+      axios.delete('api/dictation/' + id).then(response => {
+        this.dictatins.slice(id, 1);
+      })
+      .catch(error =>
+      console.log(error));
     },
+    //音声のアップロード
     async upload() { 
       const upload_files = document.getElementById('upload-file');
       const upload_file = upload_files.files[0];

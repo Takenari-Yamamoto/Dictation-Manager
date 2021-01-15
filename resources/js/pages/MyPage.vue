@@ -1,9 +1,13 @@
 <template>
   <v-main>
+    <h2 class="ml-10">
+      {{ username }} さんのディクテーション一覧
+    </h2>
+    
     <v-container v-if="isLogin">
       <v-row>
         <v-col
-          v-for="n in 24"
+          v-for="n in 3"
           :key="n"
           cols="4"
         >

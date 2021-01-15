@@ -13,38 +13,38 @@
     <div class="navbar__menu">
       <router-link
         v-if="isLogin"
-        to="/HomePage"
-        class="navbar__item white--text text-decoration-none"
-      >
-        Home
-      </router-link>
-      <router-link
-        v-if="isLogin"
         to="/mypage"
         class="navbar__item white--text text-decoration-none"
       >
-        My Page
-      </router-link>
-      <router-link
-        v-if="isLogin"
-        to="/bulleten_board"
-        class="navbar__item white--text text-decoration-none"
-      >
-        Bulletin Borad
+        My PAGE
       </router-link>
       <router-link
         v-if="isLogin"
         to="/list"
         class="navbar__item white--text text-decoration-none"
       >
-        List
+        WORD LIST
       </router-link>
       <router-link
         v-if="isLogin"
         class="navbar__item white--text text-decoration-none"
         to="/support"
       >
-        Support
+        SUPPORT
+      </router-link>
+      <router-link
+        v-if="isLogin"
+        id="create_button"
+        class="text-decoration-none ml-10"
+        to="/Dictation"
+      >
+        <v-btn
+          color="warning"
+          dark
+          @click="createDictation"
+        >
+          CREATE NEW DICTATION!!
+        </v-btn>
       </router-link>
       <!-- ログインしていないときの表示↓ -->
       <div
@@ -58,13 +58,6 @@
           Login / Register
         </RouterLink>
       </div>
-      <span
-        v-if="isLogin"
-        id="name"
-        class="navbar__item text-right"
-      >
-        {{ username }} 
-      </span>
     </div>
   </v-app-bar>
 </template>
@@ -78,6 +71,17 @@ export default {
     username () {
       return this.$store.getters['auth/username'];
     }
+  },
+  methods: {
+    createDictation: function() {
+      const dictation = {
+        'content': ''
+      };
+      axios.post('/api/dictation', dictation).then(res => {
+        // テストのため返り値をコンソールに表示
+        console.log(res.data.content);
+      });
+    },
   }
 };
 </script>

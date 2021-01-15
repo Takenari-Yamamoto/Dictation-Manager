@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Aws\S3\S3Client;  
 use Aws\Exception\AwsException;
+use App\Dictation;
 
 class DictationController extends Controller
 {
@@ -19,8 +20,8 @@ class DictationController extends Controller
     public function store(Request $request)
     {
       $dictation = new Dictation;
-      
       $dictation->content = $request->content;
+      $dictation->user_id = $request->user()->id;
       $dictation->save();
       return redirect('api/dictations');
       
