@@ -34,5 +34,10 @@
         return this.$store.getters['auth/username'];
       }
     },
+    created() {
+      axios.get('/api/dictation',{
+        id: 2
+      });
+    }
   };
 </script>

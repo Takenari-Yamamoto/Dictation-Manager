@@ -11,7 +11,7 @@
               ref="quillEditor"
               v-model="content"
             />
-            <p>{{ content }}</p>
+            <p v-for="(dictation, index) in dictations" :key='index'>{{ dictation.id }} : {{ dictation.content }}</p>
           </div>
           <v-btn
             class="ma-2"
@@ -89,6 +89,7 @@ export default {
   },
   data() {
     return {
+      dictations: [],
       content: '',
       editorOption: {
         theme: 'snow'
@@ -97,12 +98,22 @@ export default {
       dictation: null
     };
   },
+  created() {
+    this.request();
+  },
   methods: {
     //選択した文字列を取得
     selected: function() {
       this.selectedText = window.getSelection().toString();
     },
-    //Dictationの更新
+    request: function() {
+      axios.get('/api/Dictation/:dictationId').then((res)=>{
+        console.log(res.data);
+        this.dictations = res.data;
+      })
+        .catch(error => console.log(error));
+    },
+    //Dictationの更新（仮）
     updateDictation: function() {
       const dictation = {
         'content': this.content
@@ -112,7 +123,7 @@ export default {
         console.log(res.data.content);
       });
     },
-    //Dictationの削除
+    //Dictationの削除（仮）
      deleteDictation(index, id) {
       axios.delete('api/dictation/' + id).then(response => {
         this.dictatins.slice(id, 1);
@@ -171,7 +182,7 @@ export default {
       }
   },
         
-  }
+  },
 };
 </script>
 

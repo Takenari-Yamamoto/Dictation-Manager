@@ -29,8 +29,10 @@ class DictationController extends Controller
 
     public function show($id)
     {
-        $dictation = Dictation::find($id);
-        return $dictation;
+        $res = Dictation::query()
+            ->select('id','content')
+            ->get();
+        return $res;
     }
 
     public function destroy($id)

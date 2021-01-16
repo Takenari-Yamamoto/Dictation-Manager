@@ -20,7 +20,7 @@ export default new Router ({
     routes: [
         {
             path: '/Dictation/:dictationId',
-            name: 'dictation',
+            name: 'dictation.show',
             component: Dictation,
             props: true
         },
