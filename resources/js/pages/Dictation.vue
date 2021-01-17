@@ -10,10 +10,7 @@
             <quill-editor
               ref="quillEditor"
               v-model="dictations.content"
-              method="POST"
-              value="PUT"
             />
-            <p>{{ dictations.content }}</p>
           </div>
           <v-btn
             class="ma-2"
@@ -83,7 +80,6 @@ export default {
   data() {
     return {
       dictations: [],
-      content: '',
       editorOption: {
         theme: 'snow'
       },
@@ -109,8 +105,9 @@ export default {
     },
     //Dictationの更新（仮）
     updateDictation: function() {
-      axios.put('/api/Dictation/'+ this.$route.params['dictationId'], {
-        content: this.dictations.content
+      axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
+        data: this.dictations.content,
+        _method: 'put'
       })
       .then((res) => {
         console.log(res);
