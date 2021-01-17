@@ -15,7 +15,7 @@
             class="mx-auto"
             max-width="344"
             outlined
-          >
+          > 
             <v-list-item three-line>
               <v-list-item-content>
                 {{ dictation.id }} : {{ dictation.content }}

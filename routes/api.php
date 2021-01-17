@@ -22,4 +22,5 @@ Route::get('get-presigned-url', 'DictationController@getPresignedUrl');
 Route::group(['middleware' => ['api']],function(){
     Route::resource('dictation', 'DictationController');
     Route::post('del',  'DictationController@destroy');
+    
 });

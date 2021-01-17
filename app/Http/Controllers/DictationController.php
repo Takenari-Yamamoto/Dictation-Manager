@@ -24,7 +24,15 @@ class DictationController extends Controller
       $dictation->user_id = $request->user()->id;
       $dictation->save();
       return redirect('api/dictations');
-      
+    }
+
+    public function update(Request $request)
+    {
+        $dictation = new Dictation;
+        $dictation->content = $request->content;
+        $dictation->user_id = $request->user()->id;
+        $dictation->save();
+        return redirect('/');
     }
 
     public function show($id)

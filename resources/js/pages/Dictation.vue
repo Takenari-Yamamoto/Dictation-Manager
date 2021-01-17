@@ -9,13 +9,16 @@
           >
             <quill-editor
               ref="quillEditor"
-              v-model="content"
+              v-model="dictations.content"
+              method="POST"
+              value="PUT"
             />
             <p>{{ dictations.content }}</p>
           </div>
           <v-btn
             class="ma-2"
             color="info"
+            
             @click="updateDictation"
           >
             UPDATE
@@ -96,6 +99,7 @@ export default {
     selected: function() {
       this.selectedText = window.getSelection().toString();
     },
+    //id毎に内容を取得
     request: function() {
       axios.get('/api/dictation/'+ this.$route.params['dictationId']).then((res)=>{
         console.log(res.data);
@@ -105,12 +109,11 @@ export default {
     },
     //Dictationの更新（仮）
     updateDictation: function() {
-      const dictation = {
-        'content': this.content
-      };
-      axios.put('/api/dictation', dictation).then(res => {
-        // テストのため返り値をコンソールに表示
-        console.log(res.data.content);
+      axios.put('/api/Dictation/'+ this.$route.params['dictationId'], {
+        content: this.dictations.content
+      })
+      .then((res) => {
+        console.log(res);
       });
     },
     
