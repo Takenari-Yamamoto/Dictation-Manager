@@ -29,17 +29,15 @@ class DictationController extends Controller
 
     public function show($id)
     {
-        $res = Dictation::query()
-            ->select('id','content')
-            ->get();
-        return $res;
+        $dictation = Dictation::find($id);
+        return $dictation;
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $dictation = Dictation::find($id);
-        $dictation->delete();
-        return redirect('api/dictations');
+        $dictation = Dictation::where('id', $request->id)->delete();
+        $dictations = Dictation::all();
+        return $dictations;
     }
 
     public function getPresignedUrl(Request $request)

@@ -11,7 +11,7 @@
               ref="quillEditor"
               v-model="content"
             />
-            <p v-for="(dictation, index) in dictations" :key='index'>{{ dictation.id }} : {{ dictation.content }}</p>
+            <p>{{ dictations.content }}</p>
           </div>
           <v-btn
             class="ma-2"
@@ -19,16 +19,6 @@
             @click="updateDictation"
           >
             UPDATE
-            <template #loader>
-              <span>Loading...</span>
-            </template>
-          </v-btn>
-          <v-btn
-            class="ma-2"
-            color="error"
-            @click="deleteDictation"
-          >
-            Delete
             <template #loader>
               <span>Loading...</span>
             </template>
@@ -107,7 +97,7 @@ export default {
       this.selectedText = window.getSelection().toString();
     },
     request: function() {
-      axios.get('/api/Dictation/:dictationId').then((res)=>{
+      axios.get('/api/dictation/'+ this.$route.params['dictationId']).then((res)=>{
         console.log(res.data);
         this.dictations = res.data;
       })
@@ -118,19 +108,12 @@ export default {
       const dictation = {
         'content': this.content
       };
-      axios.post('/api/dictation', dictation).then(res => {
+      axios.put('/api/dictation', dictation).then(res => {
         // テストのため返り値をコンソールに表示
         console.log(res.data.content);
       });
     },
-    //Dictationの削除（仮）
-     deleteDictation(index, id) {
-      axios.delete('api/dictation/' + id).then(response => {
-        this.dictatins.slice(id, 1);
-      })
-      .catch(error =>
-      console.log(error));
-    },
+    
     //音声のアップロード
     async upload() { 
       const upload_files = document.getElementById('upload-file');
