@@ -6,15 +6,16 @@ use Illuminate\Http\Request;
 use Aws\S3\S3Client;  
 use Aws\Exception\AwsException;
 use App\Dictation;
+use Illuminate\Support\Facades\Auth;
 
 class DictationController extends Controller
 {
 
     public function index() {
         
-        $dictations = Dictation::all();
-
-    return $dictations;
+        $user_id = Auth::id();
+        $dictations = Dictation::all()->where('user_id', $user_id);
+        return $dictations;
     }
 
     public function store(Request $request)
@@ -36,7 +37,8 @@ class DictationController extends Controller
 
     public function show($id)
     {
-        $dictation = Dictation::find($id);
+        $dictation = Dictation::findOrFail($id);
+        $this->authorize('view', $dictation);
         return $dictation;
     }
 

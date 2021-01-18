@@ -127,7 +127,6 @@ export default {
       let filename = 'dictation';
       let filetype = 'audio/*';
       let fileext = 'mp3';
-
       try {
           const url = '/api/get-presigned-url?filename=' +  filename + '&filetype=' + filetype + '&fileext=' + fileext;
           let response = await axios.get(url);
@@ -170,7 +169,6 @@ export default {
 </script>
 
 <style>
-
 .editor  {
   padding-top: 100px;
 }
@@ -178,7 +176,6 @@ export default {
   padding-top: 150px;
   font-size: 20px;
 }
-
 .ql-editor {
   line-height: 300% !important;
   font-size: 20px !important;
