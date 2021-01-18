@@ -26,13 +26,12 @@ class DictationController extends Controller
       return redirect('api/dictations');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $dictation = new Dictation;
-        $dictation->content = $request->content;
-        $dictation->user_id = $request->user()->id;
-        $dictation->save();
-        return redirect('/');
+        $update = [
+            'content' => $request->content,
+        ];
+        Dictation::where('id', $id)->update($update);
     }
 
     public function show($id)

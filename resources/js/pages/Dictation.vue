@@ -15,8 +15,7 @@
           <v-btn
             class="ma-2"
             color="info"
-            
-            @click="updateDictation"
+            @click="updateDictation()"
           >
             UPDATE
             <template #loader>
@@ -80,6 +79,7 @@ export default {
   data() {
     return {
       dictations: [],
+      dictationsContent:"",
       editorOption: {
         theme: 'snow'
       },
@@ -106,7 +106,7 @@ export default {
     //Dictationの更新（仮）
     updateDictation: function() {
       axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
-        data: this.dictations.content,
+        content: this.dictations.content,
         _method: 'put'
       })
       .then((res) => {
