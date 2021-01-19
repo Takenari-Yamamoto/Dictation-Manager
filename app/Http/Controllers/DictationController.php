@@ -90,4 +90,12 @@ class DictationController extends Controller
                 'fields' => $formInputs
             ]);
     }
+
+    public function checkExist(Request $request) 
+    {
+        $theDictation = Dictation::where('id', $request->dictation_id)
+            ->get()
+            ->sortByDesc('created_at');
+        return $theDictation;
+    }
 }

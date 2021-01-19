@@ -69,6 +69,31 @@
 <script type="text/javascript">
 export default {
   name: 'AwsS3Upload',
+  beforeRouteEnter: (to, from, next) => {
+    axios.post("/api/checkDictationExist", {
+      dictation_id: to.params['dictationId']
+    }).then((response) => {
+      if (response.data.length === 0) {
+        next({path: '/Error'});
+        console.log(response.data.length);
+      } else {
+        next();
+      }
+    });
+  },
+  beforeRouteUpdate: (to, from, next) => {
+
+    axios.post("/api/checkDictationExist", {
+        dictation_id: to.params['dictationId'],
+      }).then((response) => {
+        if (response.data.length === 0) {
+          next({path: '/Error'});
+          console.log(response.data.length);
+        } else {
+          next();
+        }
+      });
+  },
   props: {
     // dictationId: String
     dictationId: {
