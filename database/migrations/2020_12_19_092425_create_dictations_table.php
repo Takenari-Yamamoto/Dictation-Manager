@@ -14,7 +14,7 @@ class CreateDictationsTable extends Migration
     public function up()
     {
         Schema::create('dictations', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->primary();
             $table->bigInteger('user_id')->unsigned();
             $table->string('content')->nullable()->change();
             $table->timestamps();

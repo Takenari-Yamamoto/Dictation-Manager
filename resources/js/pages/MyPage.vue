@@ -35,6 +35,7 @@
                 right
                 color="blue-grey"
                 rounded
+                @click="editDictation(dictation.id)"
               >
                 EDIT
               </v-btn>
@@ -91,6 +92,10 @@
           this.todos = res.data;
           this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
+      },
+      //editで詳細ページへ
+      editDictation: function() {
+        this.$router.push({ path: '/Dictation/{{:dictationid}}' });
       }
     },
   };

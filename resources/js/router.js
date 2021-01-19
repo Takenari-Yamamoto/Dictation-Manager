@@ -7,6 +7,7 @@ import List from './pages/List.vue';
 import MyPage from './pages/MyPage.vue';
 import Support from './pages/Support.vue';
 import Login from './pages/Login.vue';
+import Error from './pages/errors/Error.vue';
 
 import store from './store';
 import SystemError from './pages/errors/System.vue';
@@ -59,6 +60,11 @@ export default new Router ({
         {
             path: '/500',
             component: SystemError
+        },
+        {
+            path: '*',
+            name: 'Error',
+            component: Error
         }
     ]
 });
