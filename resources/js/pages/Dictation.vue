@@ -128,14 +128,7 @@ export default {
           this.dictations = res.data;
           const responseCode = res.status;
           if (responseCode === 403){
-            this.$router.push();
-          }
-        })
-        .catch((res)=>{
-          const responseCode = res.status;
-          if (responseCode === 403){
-            console.log('アクセスできないです');
-             this.$router.push('/403');
+            this.$router.push('/403');
           }
         });
     },

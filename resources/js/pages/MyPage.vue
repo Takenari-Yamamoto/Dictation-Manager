@@ -95,7 +95,7 @@
       },
       //editで詳細ページへ（仮）
       editDictation: function() {
-        this.router.push('/api/dictation/'+ this.$route.params['dictationId']);;
+        this.$router.push('/api/dictation/'+ this.$route.params['dictationId']);
       }
     },
   };
