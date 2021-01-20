@@ -93,9 +93,9 @@
           this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
       },
-      //editで詳細ページへ
+      //editで詳細ページへ（仮）
       editDictation: function() {
-        this.$router.push({ path: '/Dictation/{{:dictationid}}' });
+        this.router.push('/api/dictation/'+ this.$route.params['dictationId']);;
       }
     },
   };

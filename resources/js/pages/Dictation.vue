@@ -122,11 +122,22 @@ export default {
     },
     //id毎に内容を取得
     request: function() {
-      axios.get('/api/dictation/'+ this.$route.params['dictationId']).then((res)=>{
-        console.log(res.data);
-        this.dictations = res.data;
-      })
-        .catch(error => console.log(error));
+      axios.get('/api/dictation/'+ this.$route.params['dictationId'])
+        .then((res)=>{
+          console.log(res.data);
+          this.dictations = res.data;
+          const responseCode = res.status;
+          if (responseCode === 403){
+            this.$router.push();
+          }
+        })
+        .catch((res)=>{
+          const responseCode = res.status;
+          if (responseCode === 403){
+            console.log('アクセスできないです');
+             this.$router.push('/403');
+          }
+        });
     },
     //Dictationの更新（仮）
     updateDictation: function() {

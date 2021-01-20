@@ -81,6 +81,7 @@ export default {
         // テストのため返り値をコンソールに表示
         console.log(res.data.content);
       });
+      this.router.push('/api/dictation', dictation);
     },
   }
 };
