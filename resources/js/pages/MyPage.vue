@@ -94,8 +94,12 @@
         });
       },
       //editで詳細ページへ（仮）
-      editDictation: function() {
-        this.$router.push('/api/dictation/'+ this.$route.params['dictationId']);
+      editDictation: function(dictationId) {
+        axios.get('/Dictation/+ dictationId',{
+          id: dictationId
+        }).then(()=>{
+          this.$router.push('/Dictation/'+ dictationId);    
+        });
       }
     },
   };
