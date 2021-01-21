@@ -41,7 +41,7 @@
         <v-btn
           color="warning"
           dark
-          @click="createDictation"
+          @click="createDictation()"
         >
           CREATE NEW DICTATION!!
         </v-btn>
@@ -81,13 +81,7 @@ export default {
         // テストのため返り値をコンソールに表示
         console.log(res.data.content);
       });
-      this.router.push('/api/dictation', dictation);
     },
   }
 };
 </script>
-
-<style>
-@media screen and (max-width: 700px) {
-}
-</style>

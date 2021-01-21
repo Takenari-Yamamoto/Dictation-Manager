@@ -20,11 +20,12 @@ class DictationController extends Controller
 
     public function store(Request $request)
     {
-      $dictation = new Dictation;
-      $dictation->content = $request->content;
-      $dictation->user_id = $request->user()->id;
-      $dictation->save();
-      return redirect('api/dictations');
+    //   $dictation = Dictation::create($request->all());
+      return response()->json([
+        //   'id' => $request->dictation->id,
+          'content' => $request->content,
+          'user_id' => auth()->id()
+      ], 201, [], JSON_UNESCAPED_UNICODE);
     }
 
     public function update(Request $request, $id)

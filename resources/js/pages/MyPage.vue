@@ -45,11 +45,6 @@
       </v-row>
     </v-container>
     
-    <!-- <v-container v-if="isLogin">
-      <li v-for="dictation in dictations">
-        {{ dictation.content }}
-      </li>
-    </v-container> -->
     <v-container v-else>
       <div>ログインしてね</div>
     </v-container>
@@ -81,8 +76,7 @@
         axios.get('/api/dictation').then((res)=>{
           console.log(res.data);
           this.dictations = res.data;
-        })
-          .catch(error => console.log(error));
+        });
       },
       //Dictationの削除（仮）
       deleteDictation: function(dictationId) {
@@ -93,7 +87,7 @@
           this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
       },
-      //editで詳細ページへ（仮）
+      //editで詳細ページへ
       editDictation: function(dictationId) {
         axios.get('/Dictation/+ dictationId',{
           id: dictationId
