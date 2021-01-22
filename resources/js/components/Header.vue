@@ -64,6 +64,11 @@
 
 <script>
 export default {
+  data: function() {
+      return {
+        dictations: [],
+      };
+    },
   computed: {
     isLogin () {
       return this.$store.getters['auth/check'];
@@ -75,13 +80,14 @@ export default {
   methods: {
     createDictation: function() {
       const dictation = {
-        'content': ''
+        content: '',
+        title: 'no title',
       };
       axios.post('/api/dictation', dictation).then(res => {
-        // テストのため返り値をコンソールに表示
-        console.log(res.data.content);
+        this.$router.push('/Dictation/'+ res.data.id);
       });
     },
+    
   }
 };
 </script>

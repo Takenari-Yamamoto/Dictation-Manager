@@ -18,7 +18,7 @@
           > 
             <v-list-item three-line>
               <v-list-item-content>
-                {{ dictation.id }} : {{ dictation.content }}
+                {{ dictation.id }} : {{ dictation.title }}
               </v-list-item-content>
             </v-list-item>
 
@@ -56,7 +56,7 @@
   export default {
     data: function() {
       return {
-        dictations: []
+        dictations: [],
       };
     },
     computed: {
@@ -78,7 +78,7 @@
           this.dictations = res.data;
         });
       },
-      //Dictationの削除（仮）
+      //Dictationの削除（後で修正する）
       deleteDictation: function(dictationId) {
         axios.post('/api/del',{
           id: dictationId

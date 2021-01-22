@@ -7,6 +7,10 @@
             class="editor"
             @click.selected.prevent="selected"
           >
+            <v-text-field
+              v-model="dictations.title"
+              label="Title"
+            />
             <quill-editor
               ref="quillEditor"
               v-model="dictations.content"
@@ -136,6 +140,7 @@ export default {
     updateDictation: function() {
       axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
         content: this.dictations.content,
+        title: this.dictations.title,
         _method: 'put'
       })
       .then((res) => {

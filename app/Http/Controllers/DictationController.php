@@ -18,20 +18,24 @@ class DictationController extends Controller
         return $dictations;
     }
 
+    // 後で修正する
     public function store(Request $request)
     {
-    //   $dictation = Dictation::create($request->all());
-      return response()->json([
-        //   'id' => $request->dictation->id,
-          'content' => $request->content,
-          'user_id' => auth()->id()
-      ], 201, [], JSON_UNESCAPED_UNICODE);
+      $dictation = new Dictation;
+      $dictation->id = $request->id;
+      $dictation->content = $request->content;
+      $dictation->title = $request->title;
+      $dictation->user_id = $request->user()->id;
+      $dictation->save();
+
+      return response()->json($dictation);
     }
 
     public function update(Request $request, $id)
     {
         $update = [
             'content' => $request->content,
+            'title' => $request->title
         ];
         Dictation::where('id', $id)->update($update);
     }
