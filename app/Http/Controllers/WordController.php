@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Aws\S3\S3Client;  
+use Aws\Exception\AwsException;
+use App\Word;
+use Illuminate\Support\Facades\Auth;
 
 class WordController extends Controller
 {

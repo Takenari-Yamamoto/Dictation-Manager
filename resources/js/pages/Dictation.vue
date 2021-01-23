@@ -28,23 +28,23 @@
           </v-btn>
         </v-col>
         <v-col cols="3">
-          <div id="selectedWord">
-            Word You Select : {{ selectedText }}
-          </div>
+          <input 
+            v-model="selectedText"
+            class="pt-10"
+          >
           <v-btn
             color="success"
             @click="addToList()"
           >
-            submit
+            Add to List
           </v-btn>
           <div
             class="updated_dictation"
           >
             <audio
               controls
-              v-bind:src="url"
-            >
-            </audio>
+              :src="url"
+            />
 
             <div
               class="upload_dictation"
@@ -162,7 +162,10 @@ export default {
     },
     // 単語帳に追加
     addToList: function() {
-      axios.post('/api/word',this.selectedText).then(res => {
+      const word = {
+        word: this.selectedText
+      };
+      axios.post('/api/word',word).then(res => {
         console.log(res.data);
       });
     },
