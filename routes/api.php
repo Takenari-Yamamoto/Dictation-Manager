@@ -23,5 +23,10 @@ Route::group(['middleware' => ['api']],function(){
     Route::resource('dictation', 'DictationController');
     Route::post('del',  'DictationController@destroy');
 });
-
+//確認
 Route::post('/checkDictationExist', 'DictationController@checkExist');
+
+//単語追加
+Route::group(['middleware' => ['api']],function(){
+    Route::resource('word', 'WordController');
+});

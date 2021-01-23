@@ -31,38 +31,43 @@
           <div id="selectedWord">
             Word You Select : {{ selectedText }}
           </div>
-
+          <v-btn
+            color="success"
+            @click="addToList()"
+          >
+            submit
+          </v-btn>
           <div
             class="updated_dictation"
           >
             <audio
               controls
-              src="https://dictationmanager.s3-ap-northeast-1.amazonaws.com/hoge/dictation.mp3"
-              class="pt-4"
-            />
-          </div>
-
-          <div
-            class="upload_dictation"
-          >
-            <v-form
-              ref="form"
-              lazy-validation
-              method="post"
+              v-bind:src="url"
             >
-              <!-- {{ csrf_field() }} -->
-              <v-file-input
-                id="upload-file"
-                label="File input"
-              />
-              <v-btn
-                color="success"
-                class="mr-4"
-                @click="upload"
+            </audio>
+
+            <div
+              class="upload_dictation"
+            >
+              <v-form
+                ref="form"
+                lazy-validation
+                method="post"
               >
-                submit
-              </v-btn>
-            </v-form>
+                <!-- {{ csrf_field() }} -->
+                <v-file-input
+                  id="upload-file"
+                  label="File input"
+                />
+                <v-btn
+                  color="success"
+                  class="mr-4"
+                  @click="upload"
+                >
+                  submit
+                </v-btn>
+              </v-form>
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -86,7 +91,6 @@ export default {
     });
   },
   beforeRouteUpdate: (to, from, next) => {
-
     axios.post("/api/checkDictationExist", {
         dictation_id: to.params['dictationId'],
       }).then((response) => {
@@ -113,9 +117,18 @@ export default {
         theme: 'snow'
       },
       selectedText: "",
-      dictation: null
+      dictation: null,
+      username: this.$store.getters['auth/username']
     };
   },
+  computed: {
+      isLogin () {
+        return this.$store.getters['auth/check'];
+      },
+      url() {
+        return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
+      }
+    },
   created() {
     this.request();
   },
@@ -136,7 +149,7 @@ export default {
           }
         });
     },
-    //Dictationの更新（仮）
+    //Dictationの更新
     updateDictation: function() {
       axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
         content: this.dictations.content,
@@ -147,7 +160,12 @@ export default {
         console.log(res);
       });
     },
-    
+    // 単語帳に追加
+    addToList: function() {
+      axios.post('/api/word',this.selectedText).then(res => {
+        console.log(res.data);
+      });
+    },
     //音声のアップロード
     async upload() { 
       const upload_files = document.getElementById('upload-file');
@@ -158,7 +176,7 @@ export default {
       let uploadS3Path = await this.uploadS3(preSignedUrl, upload_file);
     },
     async getPresignedUrl() {
-      let filename = 'dictation';
+      let filename = this.username + '/' + this.$route.params['dictationId'];
       let filetype = 'audio/*';
       let fileext = 'mp3';
       try {

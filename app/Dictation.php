@@ -22,6 +22,6 @@ class Dictation extends Model
 
     public function words()
     {
-        return $this->hasMany(\App\Word::class);
+        return $this->hasMany(Word::class);
     }
 }
