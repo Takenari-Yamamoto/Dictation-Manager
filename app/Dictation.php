@@ -19,4 +19,9 @@ class Dictation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function words()
+    {
+        return $this->hasMany(\App\Word::class);
+    }
 }
