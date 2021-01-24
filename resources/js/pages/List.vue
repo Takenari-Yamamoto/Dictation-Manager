@@ -26,9 +26,33 @@
           :key="word.word"
         >
           <td>{{ word.word }}</td>
-          <td>{{ word.classification }}</td>
-          <td>{{ word.meaning }}</td>
-          <td>{{ word.pronounciation }}</td>
+          <td>
+            <select v-model="word.classification">
+              <option
+                disabled
+                value=""
+              >
+                Please select one
+              </option>
+              <option>Noun</option>
+              <option>Verb</option>
+              <option>Adjective</option>
+              <option>Adverb</option>
+              <option>Idiom</option>
+            </select>
+          </td>
+          <td>
+            <input
+              v-model="word.meaning"
+              type="text"
+            >
+          </td>
+          <td>
+            <input
+              v-model="word.pronounciation"
+              type="text"
+            >
+          </td>
         </tr>
       </tbody>
     </template>
@@ -45,7 +69,7 @@
   export default {
     data () {
       return {
-        words:[]
+        words:[],
       };
     },
     computed: {
