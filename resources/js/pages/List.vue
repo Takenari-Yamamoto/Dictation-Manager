@@ -7,20 +7,28 @@
       <thead>
         <tr>
           <th class="text-left">
-            Name
+            Word
           </th>
           <th class="text-left">
-            Calories
+            Classification
+          </th>
+          <th class="text-left">
+            Meaning
+          </th>
+          <th class="text-left">
+            Pronounciation
           </th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="item in desserts"
-          :key="item.name"
+          v-for="word in words"
+          :key="word.word"
         >
-          <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
+          <td>{{ word.word }}</td>
+          <td>{{ word.classification }}</td>
+          <td>{{ word.meaning }}</td>
+          <td>{{ word.pronounciation }}</td>
         </tr>
       </tbody>
     </template>
@@ -37,48 +45,7 @@
   export default {
     data () {
       return {
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-          },
-        ],
+        words:[]
       };
     },
     computed: {
@@ -87,6 +54,18 @@
       },
       username () {
         return this.$store.getters['auth/username'];
+      }
+    },
+    created () {
+      this.requestMyWord();
+    },
+    methods: {
+      // 自分の単語リストを取得
+      requestMyWord: function() {
+        axios.get('/api/word').then((res)=>{
+          this.words = res.data;
+          console.log(res.data);
+        });
       }
     },
   };

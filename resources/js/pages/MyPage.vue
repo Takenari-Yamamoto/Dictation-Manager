@@ -74,7 +74,6 @@
       //自分の投稿一覧取得
       requestAll: function(){
         axios.get('/api/dictation').then((res)=>{
-          console.log(res.data);
           this.dictations = res.data;
         });
       },
