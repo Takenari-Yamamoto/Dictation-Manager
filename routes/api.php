@@ -30,4 +30,5 @@ Route::post('/checkDictationExist', 'DictationController@checkExist');
 Route::group(['middleware' => ['api']],function(){
     Route::resource('word', 'WordController');
     Route::post('deleteWord',  'WordController@destroy');
+    Route::put('word',  'WordController@update');
 });

@@ -39,7 +39,7 @@ class WordController extends Controller
             'meaning' => $request->meaning,
             'pronunciation' => $request->pronunciation
         ];
-        Word::where('id', $id)->update($update);
+        Word::all()->update($update);
     }
 
     public function destroy(Request $request)
