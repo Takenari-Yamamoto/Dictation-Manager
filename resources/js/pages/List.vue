@@ -16,7 +16,7 @@
             Meaning
           </th>
           <th class="text-left">
-            Pronounciation
+            pronunciation
           </th>
         </tr>
       </thead>
@@ -48,7 +48,7 @@
           </td>
           <td>
             <input
-              v-model="word.pronounciation"
+              v-model="words.pronunciation"
               type="text"
             >
           </td>
@@ -103,7 +103,7 @@
           word: this.words.word,
           classification: this.words.classification,
           meaning: this.words.meaning,
-          pronounciation: this.words.pronounciation,
+          pronunciation: this.words.pronunciation,
           _method: 'put'
         })
         .then(res => {
