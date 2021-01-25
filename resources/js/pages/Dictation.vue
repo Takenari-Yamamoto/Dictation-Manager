@@ -163,7 +163,7 @@ export default {
     // 単語帳に追加
     addToList: function() {
       const word = {
-        word: this.selectedText
+        word: this.selectedText,
       };
       axios.post('/api/word',word).then(res => {
         console.log(res.data);

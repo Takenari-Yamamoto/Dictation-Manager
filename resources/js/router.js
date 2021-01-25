@@ -36,7 +36,7 @@ export default new Router ({
             component: BulltenBorad,
         },
         {
-            path: '/mypage',
+            path: '',
             name: 'mypage',
             component: MyPage,
         },

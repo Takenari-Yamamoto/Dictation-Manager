@@ -1,123 +1,195 @@
 <template>
-  <v-simple-table
-    v-if="isLogin"
-    class="list"
-  >
-    <template #default>
-      <thead>
-        <tr>
-          <th class="text-left">
-            Word
-          </th>
-          <th class="text-left">
-            Classification
-          </th>
-          <th class="text-left">
-            Meaning
-          </th>
-          <th class="text-left">
-            pronunciation
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(word, key) in words"
-          :key="key"
+  <div class="list">
+    <v-data-table
+      :headers="headers"
+      :items="words"
+    >
+      <!-- 単語 -->
+      <template #item.word="props">
+        <v-edit-dialog
+          :return-value.sync="props.item.word"
+          @save="save"
+          @cancel="cancel"
+          @open="open"
+          @close="close"
         >
-          <td>{{ word.word }}</td>
-          <td>
-            <select v-model="word.classification">
-              <option
-                disabled
-              >
-                Please select one
-              </option>
-              <option>Noun</option>
-              <option>Verb</option>
-              <option>Adjective</option>
-              <option>Adverb</option>
-              <option>Idiom</option>
-            </select>
-          </td>
-          <td>
-            <input
-              v-model="word.meaning"
-              type="text"
-            >
-          </td>
-          <td>
-            <input
-              v-model="words.pronunciation"
-              type="text"
-            >
-          </td>
-        </tr>
-        <v-btn
-          class="ma-2"
-          color="secondary"
-          @click="updateMyWord()"
+          {{ props.item.word }}
+          <template #input>
+            <v-text-field
+              v-model="props.item.word"
+              label="Edit"
+              single-line
+              counter
+            />
+          </template>
+        </v-edit-dialog>
+      </template>
+      <!-- 分類 -->
+      <template #item.classification="props">
+        <v-edit-dialog
+          :return-value.sync="props.item.classification"
+          large
+          persistent
+          @save="save"
+          @cancel="cancel"
+          @open="open"
+          @close="close"
         >
-          Update
-        </v-btn>
-      </tbody>
-    </template>
-  </v-simple-table>
+          <div>{{ props.item.classification }}</div>
+          <template #input>
+            <div class="mt-4 title">
+              Update classification
+            </div>
+            <v-text-field
+              v-model="props.item.classification"
+              label="Edit"
+              single-line
+              counter
+              autofocus
+            />
+          </template>
+        </v-edit-dialog>
+      </template>
+      <!-- 意味 -->
+      <template #item.meaning="props">
+        <v-edit-dialog
+          :return-value.sync="props.item.meaning"
+          large
+          persistent
+          @save="save"
+          @cancel="cancel"
+          @open="open"
+          @close="close"
+        >
+          <div>{{ props.item.meaning }}</div>
+          <template #input>
+            <div class="mt-4 title">
+              Update meaning
+            </div>
+            <v-text-field
+              v-model="props.item.meaning"
+              label="Edit"
+              single-line
+              counter
+              autofocus
+            />
+          </template>
+        </v-edit-dialog>
+      </template>
+      <!-- 発音 -->
+      <template #item.pronunciation="props">
+        <v-edit-dialog
+          :return-value.sync="props.item.pronunciation"
+          large
+          persistent
+          @save="save"
+          @cancel="cancel"
+          @open="open"
+          @close="close"
+        >
+          <div>{{ props.item.pronunciation }}</div>
+          <template #input>
+            <div class="mt-4 title">
+              Update pronunciation
+            </div>
+            <v-text-field
+              v-model="props.item.pronunciation"
+              label="Edit"
+              single-line
+              counter
+              autofocus
+            />
+          </template>
+        </v-edit-dialog>
+      </template>
+    </v-data-table>
 
-  <div
-    v-else
-  >
-    ログインしてね
+    <v-snackbar
+      v-model="snack"
+      :timeout="3000"
+      :color="snackColor"
+    >
+      {{ snackText }}
+
+      <template #action="{ attrs }">
+        <v-btn
+          v-bind="attrs"
+          text
+          @click="snack = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
-
 <script>
   export default {
     data () {
       return {
-        words:[],
+        words: [],
+        snack: false,
+        snackColor: '',
+        snackText: '',
+        pagination: {},
+        headers: [
+          {
+            text: 'Word',
+            align: 'start',
+            sortable: false,
+            value: 'word',
+          },
+          { text: 'Classification', value: 'classification' },
+          { text: 'Meaning', value: 'meaning' },
+          { text: 'Pronunciation', value: 'pronunciation' },
+        ],
       };
     },
-    computed: {
-      isLogin () {
-        return this.$store.getters['auth/check'];
-      },
-      username () {
-        return this.$store.getters['auth/username'];
-      }
-    },
-    created () {
+     created () {
       this.requestMyWord();
     },
     methods: {
-      // 自分の単語リストを取得
+      save () {
+        this.snack = true;
+        this.snackColor = 'success';
+        this.snackText = 'Data saved';
+        axios.post('/api/word', {
+          word: this.words.word,
+          classification: this.props.item.classification,
+          meaning: this.words.meaning,
+          pronunciation: this.words.pronunciation,
+          _method: 'put'
+        }).then(res => {
+          console.log(res.data);
+        })
+        ;
+      },
+      cancel () {
+        this.snack = true;
+        this.snackColor = 'error';
+        this.snackText = 'Canceled';
+      },
+      open () {
+        this.snack = true;
+        this.snackColor = 'info';
+        this.snackText = 'Dialog opened';
+      },
+      close () {
+        console.log('Dialog closed');
+      },
+      //単語一覧取得
       requestMyWord: function() {
         axios.get('/api/word').then((res)=>{
           this.words = res.data;
           console.log(res.data);
         });
       },
-      //更新
-      updateMyWord: function() {
-        axios.post('/api/word', {
-          word: this.words.word,
-          classification: this.words.classification,
-          meaning: this.words.meaning,
-          pronunciation: this.words.pronunciation,
-          _method: 'put'
-        })
-        .then(res => {
-          console.log(res.data);
-        });
-      }
     },
   };
-  
 </script>
 
 <style>
-.list {
-  padding-top: 100px
-}
+  .list {
+    padding-top: 100px;
+  }
 </style>
-
