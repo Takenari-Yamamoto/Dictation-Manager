@@ -8,7 +8,7 @@
       <template #item.word="props">
         <v-edit-dialog
           :return-value.sync="props.item.word"
-          @save="save"
+          @save="save(props)"
           @cancel="cancel"
           @open="open"
           @close="close"
@@ -41,7 +41,7 @@
               Update classification
             </div>
             <v-text-field
-              v-model="props.item.classification"
+              v-model="words.classification"
               label="Edit"
               single-line
               counter
@@ -153,14 +153,15 @@
         this.snack = true;
         this.snackColor = 'success';
         this.snackText = 'Data saved';
-        axios.post('/api/word', {
+        axios.post('/api/word/', {
+          id: this.words.id,
           word: this.words.word,
-          classification: this.props.item.classification,
+          classification: this.words.classification,
           meaning: this.words.meaning,
           pronunciation: this.words.pronunciation,
           _method: 'put'
         }).then(res => {
-          console.log(res.data);
+          console.log(this.words.id);
         })
         ;
       },

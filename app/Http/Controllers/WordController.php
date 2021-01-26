@@ -32,16 +32,16 @@ class WordController extends Controller
       return response()->json($word);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $words = Word::all();
-        foreach($words as $word) {
-            $word->classification = $request->classification;
-            $word->meaning = $request->meaning;
-            $word->pronunciation = $request->pronunciation;
-            $word->save();
-            return response()->json($words);
-        }
+        $update = [
+            'word' => $request->word,
+            'classification' => $request->classification,
+            'meaning' => $request->meaning,
+            'pronunciation' => $request->pronunciation,
+        ];
+        $word = Word::where('id', $id)->update($update);
+        return response()->json($word);
     }
 
     public function destroy(Request $request)
