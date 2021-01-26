@@ -30,7 +30,7 @@
           :return-value.sync="props.item.classification"
           large
           persistent
-          @save="save"
+          @save="save(props)"
           @cancel="cancel"
           @open="open"
           @close="close"
@@ -41,7 +41,7 @@
               Update classification
             </div>
             <v-text-field
-              v-model="words.classification"
+              v-model="props.item.classification"
               label="Edit"
               single-line
               counter
@@ -56,7 +56,7 @@
           :return-value.sync="props.item.meaning"
           large
           persistent
-          @save="save"
+          @save="save(props)"
           @cancel="cancel"
           @open="open"
           @close="close"
@@ -82,7 +82,7 @@
           :return-value.sync="props.item.pronunciation"
           large
           persistent
-          @save="save"
+          @save="save(props)"
           @cancel="cancel"
           @open="open"
           @close="close"
@@ -149,21 +149,20 @@
       this.requestMyWord();
     },
     methods: {
-      save () {
+      save (props) {
         this.snack = true;
         this.snackColor = 'success';
         this.snackText = 'Data saved';
-        axios.post('/api/word/', {
-          id: this.words.id,
-          word: this.words.word,
-          classification: this.words.classification,
-          meaning: this.words.meaning,
-          pronunciation: this.words.pronunciation,
+        axios.post('/api/word/'+props.item.id, {
+          id: props.item.id,
+          word: props.item.word,
+          classification: props.item.classification,
+          meaning: props.item.meaning,
+          pronunciation: props.item.pronunciation,
           _method: 'put'
         }).then(res => {
-          console.log(this.words.id);
-        })
-        ;
+          console.log(props.item.id);
+        });
       },
       cancel () {
         this.snack = true;
