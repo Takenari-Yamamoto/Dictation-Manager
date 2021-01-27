@@ -13,13 +13,6 @@
     <div class="navbar__menu">
       <router-link
         v-if="isLogin"
-        to="/mypage"
-        class="navbar__item white--text text-decoration-none"
-      >
-        My PAGE
-      </router-link>
-      <router-link
-        v-if="isLogin"
         to="/list"
         class="navbar__item white--text text-decoration-none"
       >
@@ -83,6 +76,7 @@ export default {
         content: '',
         title: 'no title',
       };
+      // eslint-disable-next-line no-undef
       axios.post('/api/dictation', dictation).then(res => {
         this.$router.push('/Dictation/'+ res.data.id);
       });
