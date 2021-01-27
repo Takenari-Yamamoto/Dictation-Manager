@@ -102,6 +102,14 @@
           </template>
         </v-edit-dialog>
       </template>
+      <template #item.actions="props">
+        <v-icon
+          small
+          @click="deleteWord(props)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
     </v-data-table>
 
     <v-snackbar
@@ -142,6 +150,7 @@
           { text: 'Classification', value: 'classification' },
           { text: 'Meaning', value: 'meaning' },
           { text: 'Pronunciation', value: 'pronunciation' },
+          { text: 'Actions', value: 'actions', sortable: false },
         ],
       };
     },
@@ -149,6 +158,7 @@
       this.requestMyWord();
     },
     methods: {
+      //アップデート
       save (props) {
         this.snack = true;
         this.snackColor = 'success';
@@ -182,6 +192,15 @@
         axios.get('/api/word').then((res)=>{
           this.words = res.data;
           console.log(res.data);
+        });
+      },
+      deleteWord (props) {
+        axios.post('/api/word/'+props.item.id, {
+          _method: 'delete'
+        })
+        .then(res => {
+          console.log(res.data);
+          this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
       },
     },

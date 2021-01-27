@@ -44,11 +44,10 @@ class WordController extends Controller
         return response()->json($word);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $word = Word::where('id', $request->id)->delete();
-        $words = Word::all();
-        return $words;
+        $word = Word::where('id', $id)->delete();
+        return $word;
     }
 
 }
