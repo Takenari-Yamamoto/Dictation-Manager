@@ -47,11 +47,10 @@ class DictationController extends Controller
         return $dictation;
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $dictation = Dictation::where('id', $request->id)->delete();
-        $dictations = Dictation::all();
-        return $dictations;
+        $dictation = Dictation::where('id', $id)->delete();
+        return $dictation;
     }
 
     public function getPresignedUrl(Request $request)

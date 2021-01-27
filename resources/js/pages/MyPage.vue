@@ -77,14 +77,16 @@
           this.dictations = res.data;
         });
       },
-      //Dictationの削除（後で修正する）
-      deleteDictation: function(dictationId) {
-        axios.post('/api/del',{
-          id: dictationId
-        }).then((res)=>{
-          this.todos = res.data;
+      //Dictationの削除
+      deleteDictation (dictationId) {
+        axios.post('/api/dictation/'+dictationId, {
+          _method: 'delete'
+        })
+        .then(res => {
+          console.log(res.data);
           this.$router.go({path: this.$router.currentRoute.path, force: true});
-        });
+        })
+        ;
       },
       //editで詳細ページへ
       editDictation: function(dictationId) {
