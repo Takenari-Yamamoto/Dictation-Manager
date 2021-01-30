@@ -29,8 +29,8 @@
         </v-col>
         <v-col cols="3">
           <input 
+            id="selectedText"
             v-model="selectedText"
-            class="pt-10"
           >
           <v-btn
             color="success"
@@ -59,6 +59,92 @@
                   id="upload-file"
                   label="File input"
                 />
+                <v-dialog
+                  v-model="dialog"
+                  width="600px"
+                >
+                  <template #activator="{ on, attrs }">
+                    <!-- youtube upload -->
+                    <div
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <img
+                        src="https://freeiconshop.com/wp-content/uploads/edd/youtube-flat.png"
+                        alt="youtube"
+                        width="50px"
+                      >
+                    </div>
+                  </template>
+                  <v-card>
+                    <input
+                      v-model="keyword"
+                      size="40"
+                      placeholder="検索キーワードを入力"
+                    >
+                    <button @click="search_video">
+                      検索
+                    </button>
+                    <table
+                      v-show="results"
+                      cellspacing="0"
+                      cellpadding="5"
+                    >
+                      <tr>
+                        <th width="50">
+                          <font>No</font>
+                        </th>
+                        <th width="200">
+                          <font>Video</font>
+                        </th>
+                        <th width="700">
+                          <font>Contents</font>
+                        </th>
+                      </tr>
+
+                      <tr
+                        v-for="(movie, index) in results"
+                        :key="movie.id.videoId"
+                      >
+                        <!-- No -->
+                        <td
+                          valign="top"
+                          width="50"
+                        >
+                          {{ index + 1 }}
+                        </td>
+                        <!-- Video -->
+                        <td
+                          valign="top"
+                          width="300"
+                        >
+                          <a :href="'https://www.youtube.com/watch?v=' + movie.id.videoId">
+                            <img
+                              width="300"
+                              height="200"
+                              :src="movie.snippet.thumbnails.medium.url"
+                            >
+                          </a>
+                        </td>
+                        <!-- titleとdescription -->
+                        <td
+                          align="left"
+                          valign="top"
+                          width="700"
+                        >
+                          <font
+                            size="5"
+                            color="#c71585"
+                          >
+                            <b>{{ movie.snippet.title }}</b>
+                          </font>
+                          <br>
+                          {{ movie.snippet.description }}
+                        </td>
+                      </tr>
+                    </table>
+                  </v-card>
+                </v-dialog>
                 <v-btn
                   color="success"
                   class="mr-4"
@@ -118,7 +204,15 @@ export default {
       },
       selectedText: "",
       dictation: null,
-      username: this.$store.getters['auth/username']
+      username: this.$store.getters['auth/username'],
+      dialog: false,
+      params: {
+        q: "", // 検索クエリを指定します。
+        part: "snippet",
+        type: "",
+        maxResults: "20", // 最大検索数
+        key: ""
+      }
     };
   },
   computed: {
@@ -217,7 +311,15 @@ export default {
           console.log('S3 アップロード エラー');
           console.log(error);
       }
-  },
+    },
+    getYouTube () {
+      axios.get("https://www.googleapis.com/youtube/v3/search", {
+          params: this.params
+        })
+        .then(function(res) {
+          self.results = res.data.items;
+        });
+    }
         
   },
 };
@@ -234,5 +336,13 @@ export default {
 .ql-editor {
   line-height: 300% !important;
   font-size: 20px !important;
+}
+#selectedText {
+  padding-top: 150px;
+  font-size: 25px;
+}
+
+audio {
+  width: 30%;
 }
 </style>

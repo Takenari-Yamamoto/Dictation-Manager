@@ -7,6 +7,7 @@ import List from './pages/List.vue';
 import MyPage from './pages/MyPage.vue';
 import Support from './pages/Support.vue';
 import Login from './pages/Login.vue';
+import Video from './pages/Video.vue';
 import Error from './pages/errors/Error.vue';
 
 import store from './store';
@@ -44,6 +45,11 @@ export default new Router ({
             path: '/support',
             name: 'support',
             component: Support,
+        },
+        {
+            path: '/Video',
+            name: 'video',
+            component: Video,
         },
         {
             path: '/login',
