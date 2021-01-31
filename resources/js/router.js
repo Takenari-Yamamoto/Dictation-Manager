@@ -47,11 +47,6 @@ export default new Router ({
             component: Support,
         },
         {
-            path: '/Video',
-            name: 'Video',
-            component: Video,
-        },
-        {
             path: '/login',
             name: 'login',
             component: Login,

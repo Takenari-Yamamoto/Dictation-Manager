@@ -3,41 +3,24 @@
     <div id="app">
       <v-row>
         <v-col cols="7">
-          <div
-            class="editor"
-            @click.selected.prevent="selected"
-          >
-            <v-text-field
-              v-model="dictations.title"
-              label="Title"
-            />
-            <quill-editor
-              ref="quillEditor"
-              v-model="dictations.content"
-            />
-          </div>
-          <v-btn
-            class="ma-2"
-            color="info"
-            @click="updateDictation()"
-          >
-            UPDATE
-            <template #loader>
-              <span>Loading...</span>
-            </template>
-          </v-btn>
+          <Update />
         </v-col>
         <v-col cols="3">
-          <input 
-            id="selectedText"
-            v-model="selectedText"
+          <div 
+            class="word_add"
           >
-          <v-btn
-            color="success"
-            @click="addToList()"
-          >
-            Add to List
-          </v-btn>
+            <input 
+              id="selectedText"
+              v-model="selectedText"
+              @click="select_word()"
+            >
+            <v-btn
+              color="success"
+              @click="addToList()"
+            >
+              Add to List
+            </v-btn>
+          </div>
           <div
             class="updated_dictation"
           >
@@ -96,10 +79,12 @@
 
 <script type="text/javascript">
 import Video from "../pages/Video";
+import Update from "../pages/Update";
 export default {
   name: 'AwsS3Upload',
   components: {
-    Video
+    Video,
+    Update,
   },
   beforeRouteEnter: (to, from, next) => {
     axios.post("/api/checkDictationExist", {
@@ -134,22 +119,10 @@ export default {
   },
   data() {
     return {
-      dictations: [],
-      dictationsContent:"",
-      editorOption: {
-        theme: 'snow'
-      },
       selectedText: "",
       dictation: null,
       username: this.$store.getters['auth/username'],
       dialog: false,
-      params: {
-        q: "", // 検索クエリを指定します。
-        part: "snippet",
-        type: "",
-        maxResults: "20", // 最大検索数
-        key: ""
-      }
     };
   },
   computed: {
@@ -159,37 +132,11 @@ export default {
       url() {
         return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
       }
-    },
-  created() {
-    this.request();
   },
   methods: {
-    //選択した文字列を取得
-    selected: function() {
+    // 範囲選択した文字を表示
+    select_word: function() {
       this.selectedText = window.getSelection().toString();
-    },
-    //id毎に内容を取得
-    request: function() {
-      axios.get('/api/dictation/'+ this.$route.params['dictationId'])
-        .then((res)=>{
-          console.log(res.data);
-          this.dictations = res.data;
-          const responseCode = res.status;
-          if (responseCode === 403){
-            this.$router.push('/403');
-          }
-        });
-    },
-    //Dictationの更新
-    updateDictation: function() {
-      axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
-        content: this.dictations.content,
-        title: this.dictations.title,
-        _method: 'put'
-      })
-      .then((res) => {
-        console.log(res);
-      });
     },
     // 単語帳に追加
     addToList: function() {
@@ -254,17 +201,12 @@ export default {
 </script>
 
 <style>
-.editor  {
-  padding-top: 100px;
-}
+
 #selectedWord {
   padding-top: 150px;
   font-size: 20px;
 }
-.ql-editor {
-  line-height: 300% !important;
-  font-size: 20px !important;
-}
+
 #selectedText {
   padding-top: 150px;
   font-size: 25px;
