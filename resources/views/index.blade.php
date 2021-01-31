@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="https://hypertext-candy.s3-ap-northeast-1.amazonaws.com/posts/vue-laravel-tutorial/app.css">
   <link rel="stylesheet" href="{{ URL::to('/') }}">
   
+  
 </head>
 <body>
   <div id="app">
@@ -28,5 +29,6 @@
     </script>
 
   <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/setting.js') }}"></script>
 </body>
 </html>

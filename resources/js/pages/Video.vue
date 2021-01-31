@@ -84,8 +84,7 @@ export default {
       keyword: "",
       order: "viewCount", // リソースを再生回数の多い順に並べます。
       params: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Origin': 'http://127.0.0.1:8000/',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods' : 'GET, POST, PUT, DELETE, OPTIONS',
         q: "", // 検索クエリを指定します。
@@ -103,7 +102,8 @@ export default {
       axios
         .get("https://www.googleapis.com/youtube/v3/search", {
           params: this.params,
-          
+           withCredentials: true,
+           xsrfHeaderName: 'X-CSRF-Token',
         })
         .then(function(res) {
           self.results = res.data.items;

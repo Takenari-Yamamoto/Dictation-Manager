@@ -78,8 +78,10 @@
 </template>
 
 <script type="text/javascript">
+import axios from 'axios';
 import Video from "../pages/Video";
 import Update from "../pages/Update";
+
 export default {
   name: 'AwsS3Upload',
   components: {
@@ -100,15 +102,15 @@ export default {
   },
   beforeRouteUpdate: (to, from, next) => {
     axios.post("/api/checkDictationExist", {
-        dictation_id: to.params['dictationId'],
-      }).then((response) => {
-        if (response.data.length === 0) {
-          next({path: '/Error'});
-          console.log(response.data.length);
-        } else {
-          next();
-        }
-      });
+      dictation_id: to.params['dictationId'],
+    }).then((response) => {
+      if (response.data.length === 0) {
+        next({path: '/Error'});
+        console.log(response.data.length);
+      } else {
+        next();
+      }
+    });
   },
   props: {
     // dictationId: String
@@ -155,6 +157,7 @@ export default {
       let preSignedUrl = await this.getPresignedUrl();
       // S3へアップロード
       let uploadS3Path = await this.uploadS3(preSignedUrl, upload_file);
+      console.log(uploadS3Path);
     },
     async getPresignedUrl() {
       let filename = this.username + '/' + this.$route.params['dictationId'];
@@ -189,7 +192,7 @@ export default {
             headers: headers,
           }
         );
-        console.log('S3 アップロード 成功');
+        console.log(response);
         return data.url + '/' + data.fields.key;
       } catch (error) {
           console.log('S3 アップロード エラー');
