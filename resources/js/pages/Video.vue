@@ -83,6 +83,10 @@ export default {
       keyword: "",
       order: "viewCount", // リソースを再生回数の多い順に並べます。
       params: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods' : 'GET, POST, PUT, DELETE, OPTIONS',
         q: "", // 検索クエリを指定します。
         part: "snippet",
         type: "video",
@@ -97,13 +101,15 @@ export default {
       var self = this;
       axios
         .get("https://www.googleapis.com/youtube/v3/search", {
-          params: this.params
+          params: this.params,
+          
         })
         .then(function(res) {
           self.results = res.data.items;
         });
     }
-  }
+  },
+  
 };
 </script>
 
