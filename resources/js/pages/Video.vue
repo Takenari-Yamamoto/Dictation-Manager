@@ -1,5 +1,6 @@
+
 <template>
-  <div class="video">
+  <v-card>
     <input
       v-model="keyword"
       size="40"
@@ -66,7 +67,7 @@
         </td>
       </tr>
     </table>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -115,17 +116,17 @@ export default {
 
 <style>
 
-table {
+.youtube_list {
   border-collapse: collapse;
   border: solid 2px #c71585;/*表全体を線で囲う*/
 }
-table th {
+.youtube_list th {
   color: #fff0f5;/*文字色*/
   background: #ff69b4;/*背景色*/
   border: dashed 1px #c71585;
 }
 
-table td {
+.youtube_list td {
   background: #fff0f5;
   border: dashed 1px #c71585;
 }

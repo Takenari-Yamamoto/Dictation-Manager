@@ -48,7 +48,7 @@ export default new Router ({
         },
         {
             path: '/Video',
-            name: 'video',
+            name: 'Video',
             component: Video,
         },
         {

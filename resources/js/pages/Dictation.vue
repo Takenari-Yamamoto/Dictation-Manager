@@ -76,74 +76,7 @@
                       >
                     </div>
                   </template>
-                  <v-card>
-                    <input
-                      v-model="keyword"
-                      size="40"
-                      placeholder="検索キーワードを入力"
-                    >
-                    <button @click="search_video">
-                      検索
-                    </button>
-                    <table
-                      v-show="results"
-                      cellspacing="0"
-                      cellpadding="5"
-                    >
-                      <tr>
-                        <th width="50">
-                          <font>No</font>
-                        </th>
-                        <th width="200">
-                          <font>Video</font>
-                        </th>
-                        <th width="700">
-                          <font>Contents</font>
-                        </th>
-                      </tr>
-
-                      <tr
-                        v-for="(movie, index) in results"
-                        :key="movie.id.videoId"
-                      >
-                        <!-- No -->
-                        <td
-                          valign="top"
-                          width="50"
-                        >
-                          {{ index + 1 }}
-                        </td>
-                        <!-- Video -->
-                        <td
-                          valign="top"
-                          width="300"
-                        >
-                          <a :href="'https://www.youtube.com/watch?v=' + movie.id.videoId">
-                            <img
-                              width="300"
-                              height="200"
-                              :src="movie.snippet.thumbnails.medium.url"
-                            >
-                          </a>
-                        </td>
-                        <!-- titleとdescription -->
-                        <td
-                          align="left"
-                          valign="top"
-                          width="700"
-                        >
-                          <font
-                            size="5"
-                            color="#c71585"
-                          >
-                            <b>{{ movie.snippet.title }}</b>
-                          </font>
-                          <br>
-                          {{ movie.snippet.description }}
-                        </td>
-                      </tr>
-                    </table>
-                  </v-card>
+                  <Video />
                 </v-dialog>
                 <v-btn
                   color="success"
@@ -162,8 +95,12 @@
 </template>
 
 <script type="text/javascript">
+import Video from "../pages/Video";
 export default {
   name: 'AwsS3Upload',
+  components: {
+    Video
+  },
   beforeRouteEnter: (to, from, next) => {
     axios.post("/api/checkDictationExist", {
       dictation_id: to.params['dictationId']
@@ -311,16 +248,7 @@ export default {
           console.log('S3 アップロード エラー');
           console.log(error);
       }
-    },
-    getYouTube () {
-      axios.get("https://www.googleapis.com/youtube/v3/search", {
-          params: this.params
-        })
-        .then(function(res) {
-          self.results = res.data.items;
-        });
-    }
-        
+    }, 
   },
 };
 </script>
