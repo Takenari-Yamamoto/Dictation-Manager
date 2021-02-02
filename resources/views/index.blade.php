@@ -29,6 +29,5 @@
     </script>
 
   <script src="{{ asset('js/app.js') }}"></script>
-  <script src="{{ asset('js/setting.js') }}"></script>
 </body>
 </html>

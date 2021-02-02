@@ -184,7 +184,6 @@ export default {
         const headers = {
             "content-type": "multipart/form-data",
         };
-        console.log('S3 アップロード 開始');
         let response = await axios.post(
           data.url,
           formdata,
