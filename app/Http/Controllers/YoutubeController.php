@@ -9,7 +9,7 @@ class YoutubeController extends Controller
 {
     public function searchVideo() {
 
-        // require_once __DIR__ . "/../../autoload.php";
+        require_once (dirname(__FILE__) . '/vendor/autoload.php');
         
         define("API_KEY","AIzaSyCDAAeUb4K76kh4xgy1Tv_F0r6nGGyt9iE");
         
@@ -19,7 +19,7 @@ class YoutubeController extends Controller
         
         $youtube = new Google_Service_YouTube($client);
         
-        $keyword = "pokemon";
+        $keyword = "";
         $params['q'] = $keyword;
         $params['type'] = 'video';
         $params['maxResults'] = 10;

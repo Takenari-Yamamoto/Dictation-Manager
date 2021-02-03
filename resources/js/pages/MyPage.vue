@@ -18,7 +18,10 @@
             outlined
             @click="editDictation(dictation.id)"
           > 
-            <v-list-item three-line class="grey--text mb-2 title">
+            <v-list-item
+              three-line
+              class="grey--text mb-2 title"
+            >
               <v-list-item-content>
                 {{ dictation.title }}
 
@@ -28,16 +31,40 @@
                 />
               </v-list-item-content>
             </v-list-item>
-
-            <v-card-actions>
-              <v-icon
-                id="delete_button"
-                medium
-                @click="deleteDictation(dictation.id)"
-              >
-                mdi-delete
-              </v-icon>
-            </v-card-actions>
+            <v-dialog
+              v-model="dialog"
+              width="500"
+            >
+              <template #activator="{ on, attrs }">
+                <v-icon
+                  id="delete_button"
+                  medium
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  mdi-delete
+                </v-icon>
+              </template>
+  
+              <v-card>
+                <v-card-text
+                  class="pt-10"
+                  justify="center"
+                >
+                  Are you sure you want to delete this file?
+                </v-card-text> 
+                <v-card-actions>
+                  <v-btn
+                    id="delete_button"
+                    color="primary"
+                    text
+                    @click="deleteDictation(dictation.id)"
+                  >
+                    Delete
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-card>
         </v-col>
       </v-row>
@@ -57,6 +84,7 @@ import axios from 'axios';
       return {
         dictations: [],
         username: this.$store.getters['auth/username'],
+        dialog: false,
       };
     },
     computed: {

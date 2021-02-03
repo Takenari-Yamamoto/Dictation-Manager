@@ -2,11 +2,12 @@
 <template>
   <v-card>
     <input
-      v-model="keyword"
+      id="keyword"
+      v-model="videos.keyword"
       size="40"
       placeholder="検索キーワードを入力"
     >
-    <button @click="search_video()">
+    <button @click="search_video(videos.keyword)">
       検索
     </button>
     <table
@@ -78,12 +79,15 @@ export default {
   data() {
     return {
       results: null,
-      keyword: "",
+      videos: [],
     };
   },
   methods: {
-    search_video: function() {
-      axios.get("/api/searchYoutube")
+    search_video () {
+      
+      axios.get("/api/searchVideo", {
+        keyword: this.videos.keyword
+      })
       .then((res) => {
       console.log(res.data);
     });

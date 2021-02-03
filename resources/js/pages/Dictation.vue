@@ -135,12 +135,7 @@ export default {
         return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
       }
   },
-  created() {
-    axios.get('/api/searchYoutube')
-        .then((response) => {
-            console.log(response.data);
-        });
-  },
+  
   methods: {
     // 範囲選択した文字を表示
     select_word: function() {
@@ -190,6 +185,7 @@ export default {
         const headers = {
             "content-type": "multipart/form-data",
         };
+        // eslint-disable-next-line no-unused-vars
         let response = await axios.post(
           data.url,
           formdata,
@@ -197,11 +193,9 @@ export default {
             headers: headers,
           }
         );
-        console.log(response);
         return data.url + '/' + data.fields.key;
       } catch (error) {
           console.log('S3 アップロード エラー');
-          console.log(error);
       }
     }, 
   },
