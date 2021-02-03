@@ -6,7 +6,7 @@
       size="40"
       placeholder="検索キーワードを入力"
     >
-    <button @click="search_video">
+    <button @click="search_video()">
       検索
     </button>
     <table
@@ -75,42 +75,18 @@ import axios from 'axios';
 
 export default {
   name: "SearchVideo",
-  props: {
-    msg: String
-  },
-  data: function() {
+  data() {
     return {
       results: null,
       keyword: "",
-      order: "viewCount", // リソースを再生回数の多い順に並べます。
-      params: {
-        q: "", // 検索クエリを指定します。
-        part: "snippet",
-        type: "video",
-        maxResults: "20", // 最大検索数
-        key: "AIzaSyDWhzrGVA0kesFYpoVXUTL9BJlnGbu86ms"
-      },
     };
   },
   methods: {
     search_video: function() {
-      this.params.q = this.keyword;
-      var self = this;
-      axios
-        .get("https://www.googleapis.com/youtube/v3/search", {
-          params: this.params,
-          headers: {
-            "Referer": "http://127.0.0.1:8000/",
-            'Access-Control-Allow-Origin': 'http://127.0.0.1:8000/',
-            'Access-Control-Allow-Headers': 'Content-type',
-            'Access-Control-Allow-Methods' : 'GET, POST, PUT, DELETE, OPTIONS',
-          },
-          data: {}
-        })
-        .then(function(res) {
-          self.results = res.data.items;
-          
-        });
+      axios.get("/api/searchYoutube")
+      .then((res) => {
+      console.log(res.data);
+    });
     }
   },
   

@@ -135,6 +135,12 @@ export default {
         return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
       }
   },
+  created() {
+    axios.get('/api/searchYoutube')
+        .then((response) => {
+            console.log(response.data);
+        });
+  },
   methods: {
     // 範囲選択した文字を表示
     select_word: function() {
