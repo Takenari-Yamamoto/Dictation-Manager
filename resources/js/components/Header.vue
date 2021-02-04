@@ -10,34 +10,38 @@
     >
       Dictation Manager
     </RouterLink>
+    <v-spacer />
     <div class="navbar__menu">
       <router-link
         v-if="isLogin"
         to="/list"
         class="navbar__item white--text text-decoration-none"
       >
-        WORD LIST
+        <v-icon dark>
+          mdi-book-open-variant
+        </v-icon>
       </router-link>
       <router-link
         v-if="isLogin"
         class="navbar__item white--text text-decoration-none"
         to="/support"
       >
-        SUPPORT
+        <v-icon dark>
+          mdi-wrench
+        </v-icon>
       </router-link>
       <router-link
         v-if="isLogin"
         id="create_button"
-        class="text-decoration-none ml-10"
+        class="navbar__item white--text text-decoration-none"
         to="/Dictation"
       >
-        <v-btn
-          color="warning"
+        <v-icon
           dark
           @click="createDictation()"
         >
-          CREATE NEW DICTATION!!
-        </v-btn>
+          mdi-pencil
+        </v-icon>
       </router-link>
       <!-- ログインしていないときの表示↓ -->
       <div

@@ -1,10 +1,9 @@
 <template>
   <v-main>
-    <h2 class="ml-10">
-      {{ username }} さんのディクテーション一覧
-    </h2>
-
     <v-container v-if="isLogin">
+      <h2>
+        {{ username }} さんのディクテーション一覧
+      </h2>
       <v-row>
         <v-col
           v-for="(dictation, key) in dictations"
