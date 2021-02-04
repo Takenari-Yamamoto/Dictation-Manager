@@ -1,5 +1,5 @@
 <template>
-  <div class="container--small">
+  <div id="container">
     <ul class="tab">
       <li
         class="tab__item"
@@ -60,12 +60,13 @@
           class="form__item"
         >
         <div class="form__button">
-          <button
+          <v-btn
             type="submit"
             class="button button--inverse"
+            color="blue-grey"
           >
-            login
-          </button>
+            Login
+          </v-btn>
         </div>
       </form>
     </div>
@@ -135,12 +136,13 @@
           class="form__item"
         >
         <div class="form__button">
-          <button
+          <v-btn
+            color="blue-grey"
             type="submit"
             class="button button--inverse"
           >
             register
-          </button>
+          </v-btn>
         </div>
       </form>
     </div>
@@ -199,7 +201,15 @@ export default {
 </script>
 
 <style>
- .container--small {
+
+ #container {
    padding-top: 100px;
+   width: 70%;
+   margin: 0 auto;
  }
+
+button button--inverse {
+  color: white;
+}
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="list" v-if="isLogin">
     <v-data-table
       :headers="headers"
       :items="words"
@@ -130,9 +130,18 @@
       </template>
     </v-snackbar>
   </div>
+  <div v-else>
+    <AccessError />
+  </div>
 </template>
+
 <script>
+import AccessError from "../pages/errors/AccessError";
+
   export default {
+    components: {
+      AccessError,
+    },
     data () {
       return {
         words: [],
@@ -153,6 +162,11 @@
           { text: 'Actions', value: 'actions', sortable: false },
         ],
       };
+    },
+    computed: {
+      isLogin () {
+        return this.$store.getters['auth/check'];
+      },
     },
      created () {
       this.requestMyWord();

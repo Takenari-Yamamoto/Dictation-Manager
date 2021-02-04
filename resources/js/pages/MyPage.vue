@@ -70,15 +70,19 @@
     </v-container>
     
     <v-container v-else>
-      <div>ログインしてね</div>
+      <TopPage />
     </v-container>
   </v-main>
 </template>
 
 <script>
 import axios from 'axios';
+import TopPage from "../pages/TopPage";
 
   export default {
+    components: {
+      TopPage
+    },
     data: function() {
       return {
         dictations: [],

@@ -8,6 +8,7 @@ import MyPage from './pages/MyPage.vue';
 import Support from './pages/Support.vue';
 import Login from './pages/Login.vue';
 import Error from './pages/errors/Error.vue';
+import TopPage from './pages/TopPage.vue';
 
 import store from './store';
 import SystemError from './pages/errors/System.vue';
@@ -44,6 +45,11 @@ export default new Router ({
             path: '/support',
             name: 'support',
             component: Support,
+        },
+        {
+            path: '/TopPage',
+            name: 'TopPage',
+            component: TopPage,
         },
         {
             path: '/login',
