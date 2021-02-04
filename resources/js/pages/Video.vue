@@ -1,74 +1,98 @@
 
 <template>
-  <v-card>
-    <input
-      id="keyword"
-      v-model="videos.keyword"
-      size="40"
-      placeholder="検索キーワードを入力"
+  <v-form
+    ref="form"
+    lazy-validation
+    method="post"
+  >
+    <v-dialog
+      v-model="dialog"
+      width="600px"
     >
-    <button @click="search_video(videos.keyword)">
-      検索
-    </button>
-    <table
-      v-show="results"
-      cellspacing="0"
-      cellpadding="5"
-    >
-      <tr>
-        <th width="50">
-          <font>No</font>
-        </th>
-        <th width="200">
-          <font>Video</font>
-        </th>
-        <th width="700">
-          <font>Contents</font>
-        </th>
-      </tr>
-
-      <tr
-        v-for="(movie, index) in results"
-        :key="movie.id.videoId"
-      >
-        <!-- No -->
-        <td
-          valign="top"
-          width="50"
+      <template #activator="{ on, attrs }">
+        <!-- youtube upload -->
+        <div
+          v-bind="attrs"
+          v-on="on"
         >
-          {{ index + 1 }}
-        </td>
-        <!-- Video -->
-        <td
-          valign="top"
-          width="300"
-        >
-          <a :href="'https://www.youtube.com/watch?v=' + movie.id.videoId">
-            <img
-              width="300"
-              height="200"
-              :src="movie.snippet.thumbnails.medium.url"
-            >
-          </a>
-        </td>
-        <!-- titleとdescription -->
-        <td
-          align="left"
-          valign="top"
-          width="700"
-        >
-          <font
-            size="5"
-            color="#c71585"
+          <img
+            src="https://freeiconshop.com/wp-content/uploads/edd/youtube-flat.png"
+            alt="youtube"
+            width="48px"
           >
-            <b>{{ movie.snippet.title }}</b>
-          </font>
-          <br>
-          {{ movie.snippet.description }}
-        </td>
-      </tr>
-    </table>
-  </v-card>
+        </div>
+      </template>
+      <v-card>
+        <input
+          id="keyword"
+          v-model="videos.keyword"
+          size="40"
+          placeholder="検索キーワードを入力"
+        >
+        <button @click="search_video(videos.keyword)">
+          検索
+        </button>
+        <table
+          v-show="results"
+          cellspacing="0"
+          cellpadding="5"
+        >
+          <tr>
+            <th width="50">
+              <font>No</font>
+            </th>
+            <th width="200">
+              <font>Video</font>
+            </th>
+            <th width="700">
+              <font>Contents</font>
+            </th>
+          </tr>
+
+          <tr
+            v-for="(movie, index) in results"
+            :key="movie.id.videoId"
+          >
+            <!-- No -->
+            <td
+              valign="top"
+              width="50"
+            >
+              {{ index + 1 }}
+            </td>
+            <!-- Video -->
+            <td
+              valign="top"
+              width="300"
+            >
+              <a :href="'https://www.youtube.com/watch?v=' + movie.id.videoId">
+                <img
+                  width="300"
+                  height="200"
+                  :src="movie.snippet.thumbnails.medium.url"
+                >
+              </a>
+            </td>
+            <!-- titleとdescription -->
+            <td
+              align="left"
+              valign="top"
+              width="700"
+            >
+              <font
+                size="5"
+                color="#c71585"
+              >
+                <b>{{ movie.snippet.title }}</b>
+              </font>
+              <br>
+              {{ movie.snippet.description }}
+            </td>
+          </tr>
+        </table>
+      </v-card>
+    </v-dialog>
+  </v-form>
 </template>
 
 <script>
@@ -80,11 +104,11 @@ export default {
     return {
       results: null,
       videos: [],
+      dialog: false,
     };
   },
   methods: {
     search_video () {
-      
       axios.get("/api/searchVideo", {
         keyword: this.videos.keyword
       })
@@ -98,6 +122,7 @@ export default {
 </script>
 
 <style>
+
 
 .youtube_list {
   border-collapse: collapse;

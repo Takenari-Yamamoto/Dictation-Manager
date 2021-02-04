@@ -1,5 +1,8 @@
 <template>
-  <div class="list" v-if="isLogin">
+  <div
+    v-if="isLogin"
+    class="list"
+  >
     <v-data-table
       :headers="headers"
       :items="words"
@@ -103,12 +106,45 @@
         </v-edit-dialog>
       </template>
       <template #item.actions="props">
-        <v-icon
+        <!-- <v-icon
           small
           @click="deleteWord(props)"
         >
           mdi-delete
-        </v-icon>
+        </v-icon> -->
+        <v-dialog
+          v-model="dialog"
+          width="500"
+        >
+          <template #activator="{ on, attrs }">
+            <v-icon
+              small
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+  
+          <v-card>
+            <v-card-text
+              class="pt-10"
+              justify="center"
+            >
+              Are you sure you want to delete this file?
+            </v-card-text> 
+            <v-card-actions>
+              <v-btn
+                id="delete_button"
+                color="primary"
+                text
+                @click="deleteWord(props)"
+              >
+                Delete
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </template>
     </v-data-table>
 
@@ -161,6 +197,7 @@ import AccessError from "../pages/errors/AccessError";
           { text: 'Pronunciation', value: 'pronunciation' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
+        dialog: false,
       };
     },
     computed: {

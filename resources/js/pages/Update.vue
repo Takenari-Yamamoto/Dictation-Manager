@@ -10,13 +10,34 @@
       ref="quillEditor"
       v-model="dictations.content"
     />
-    <v-btn
-      class="ma-2 update_button"
-      color="info"
-      @click="updateDictation()"
-    >
-      UPDATE
-    </v-btn>
+    <div>
+      <v-btn
+        class="ma-2 mb-10 update_button"
+        color="info"
+        @click="updateDictation(); snackbar = true"
+      >
+        UPDATE
+      </v-btn>
+
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+        class="text-center"
+      >
+        {{ text }}
+
+        <template #action="{ attrs }">
+          <v-btn
+            color="blue"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
   </div>
 </template>
 
@@ -28,15 +49,17 @@ export default {
       dictations: [],
       dictationsContent:"",
       editorOption: {
-          theme: 'snow'
+        theme: 'snow'
       },
+      snackbar: false,
+      text: 'Content is updated!!',
+      timeout: 2000,
     };
   },
   created() {
     this.request();
   },
   methods: {
-    //内容取得
     request: function() {
       axios.get('/api/dictation/'+ this.$route.params['dictationId'])
         .then((res)=>{
@@ -70,5 +93,8 @@ export default {
   .ql-editor {
     line-height: 300% !important;
     font-size: 20px !important;
+  }
+  .update_button {
+    padding-bottom: 15px;
   }
 </style>

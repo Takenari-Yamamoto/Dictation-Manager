@@ -2,73 +2,66 @@
   <v-container>
     <div id="app">
       <v-row>
-        <v-col cols="7">
+        <v-col 
+          cols="7"
+          @click.selected.prevent="selected"
+        >
           <Update />
         </v-col>
+        <!-- 右側に固定表示 -->
         <v-col cols="3">
-          <div 
-            class="word_add"
-          >
-            <input 
-              id="selectedText"
-              v-model="selectedText"
-              @click="select_word()"
-            >
-            <v-btn
-              color="success"
-              @click="addToList()"
-            >
-              Add to List
-            </v-btn>
-          </div>
           <div
-            class="updated_dictation"
+            class="right_side pt-200 pl-30"
           >
             <audio
+              id="audio"
               controls
               :src="url"
             />
-
             <div
-              class="upload_dictation"
+              class="upload_material"
             >
-              <v-form
-                ref="form"
-                lazy-validation
-                method="post"
-              >
-                <!-- {{ csrf_field() }} -->
-                <v-file-input
-                  id="upload-file"
-                  label="File input"
-                />
-                <v-dialog
-                  v-model="dialog"
-                  width="600px"
-                >
-                  <template #activator="{ on, attrs }">
-                    <!-- youtube upload -->
-                    <div
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      <img
-                        src="https://freeiconshop.com/wp-content/uploads/edd/youtube-flat.png"
-                        alt="youtube"
-                        width="50px"
-                      >
-                    </div>
-                  </template>
+              <v-row>
+                <!-- Youtube用 -->
+                <v-col>
                   <Video />
-                </v-dialog>
-                <v-btn
-                  color="success"
-                  class="mr-4"
-                  @click="upload"
-                >
-                  submit
-                </v-btn>
-              </v-form>
+                </v-col>
+                <v-col>
+                  <MP3 />
+                </v-col>
+              </v-row>
+            </div>
+            <div 
+              class="word_add"
+            >
+              <v-text-field
+                v-model="selectedText"
+                label="Selected Word"
+              />
+              <v-btn
+                color="success"
+                @click="addToList(); snackbar = true"
+              >
+                Add to List
+              </v-btn>
+              <v-snackbar
+                v-model="snackbar"
+                :timeout="timeout"
+                class="text-center"
+              >
+                Added to List!!
+
+                <template #action="{ attrs }">
+                  <v-btn
+                    color="blue"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                  >
+                    Close
+                  </v-btn>
+                </template>
+              </v-snackbar>
             </div>
           </div>
         </v-col>
@@ -79,14 +72,15 @@
 
 <script type="text/javascript">
 import axios from 'axios';
-import Video from "../pages/Video";
 import Update from "../pages/Update";
+import MP3 from "../pages/MP3";
+import Video from "../pages/Video";
 
 export default {
-  name: 'AwsS3Upload',
   components: {
-    Video,
     Update,
+    MP3,
+    Video,
   },
   beforeRouteEnter: (to, from, next) => {
     axios.post("/api/checkDictationExist", {
@@ -124,7 +118,8 @@ export default {
       selectedText: "",
       dictation: null,
       username: this.$store.getters['auth/username'],
-      dialog: false,
+      snackbar: false,
+      timeout: 2000,
     };
   },
   computed: {
@@ -138,7 +133,7 @@ export default {
   
   methods: {
     // 範囲選択した文字を表示
-    select_word: function() {
+    selected: function() {
       this.selectedText = window.getSelection().toString();
     },
     // 単語帳に追加
@@ -150,71 +145,18 @@ export default {
         console.log(res.data);
       });
     },
-    //音声のアップロード
-    async upload() { 
-      const upload_files = document.getElementById('upload-file');
-      const upload_file = upload_files.files[0];
-      // 署名付きPOSTのAPI叩く
-      let preSignedUrl = await this.getPresignedUrl();
-      // S3へアップロード
-      let uploadS3Path = await this.uploadS3(preSignedUrl, upload_file);
-      console.log(uploadS3Path);
-    },
-    async getPresignedUrl() {
-      let filename = this.username + '/' + this.$route.params['dictationId'];
-      let filetype = 'audio/*';
-      let fileext = 'mp3';
-      try {
-          const url = '/api/get-presigned-url?filename=' +  filename + '&filetype=' + filetype + '&fileext=' + fileext;
-          let response = await axios.get(url);
-          console.log('S3署名付きURL取得 成功');
-          console.log(response);
-          return response;
-      } catch (error) {
-          console.log('S3 署名付きURL取得 失敗');
-      }
-    },
-    async uploadS3(presignedUrl, up_file) {
-      let data = presignedUrl.data;
-      try {
-        var formdata = new FormData();
-        for (let key in data.fields) {
-            formdata.append(key, data.fields[key]);
-        }
-        formdata.append("file", up_file);
-        const headers = {
-            "content-type": "multipart/form-data",
-        };
-        // eslint-disable-next-line no-unused-vars
-        let response = await axios.post(
-          data.url,
-          formdata,
-          {
-            headers: headers,
-          }
-        );
-        return data.url + '/' + data.fields.key;
-      } catch (error) {
-          console.log('S3 アップロード エラー');
-      }
-    }, 
+    
   },
 };
 </script>
 
 <style>
-
-#selectedWord {
-  padding-top: 150px;
-  font-size: 20px;
+#audio {
+  width: 200%;
+  padding: 0;
 }
-
-#selectedText {
+.right_side {
   padding-top: 150px;
-  font-size: 25px;
-}
-
-audio {
-  width: 30%;
+  padding-left: 30px;
 }
 </style>

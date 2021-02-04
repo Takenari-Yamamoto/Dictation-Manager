@@ -78,7 +78,7 @@
 <script>
 import axios from 'axios';
 import TopPage from "../pages/TopPage";
-
+// alter table dictations modify content LONGBLOB(4294967295);
   export default {
     components: {
       TopPage

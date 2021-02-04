@@ -22,6 +22,7 @@
 
 <style>
   .main {
+    margin-top: 100px;
     text-align: center;
   }
   #title {
