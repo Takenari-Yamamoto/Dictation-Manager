@@ -6,6 +6,7 @@
     <v-data-table
       :headers="headers"
       :items="words"
+      cols="6"
     >
       <!-- 単語 -->
       <template #item.word="props">
@@ -106,12 +107,6 @@
         </v-edit-dialog>
       </template>
       <template #item.actions="props">
-        <!-- <v-icon
-          small
-          @click="deleteWord(props)"
-        >
-          mdi-delete
-        </v-icon> -->
         <v-dialog
           v-model="dialog"
           width="500"

@@ -16,6 +16,7 @@
           v-on="on"
         >
           <img
+            id="mp3_icon"
             src="https://image.freepik.com/free-icon/mp3_318-1749.jpg"
             alt="youtube"
             width="60px"
@@ -134,4 +135,9 @@ export default {
 </script>
 
 <style>
+
+#mp3_icon:hover {
+  width: 70px;
+  transition: 0.2s ;
+}
 </style>

@@ -1,14 +1,25 @@
 <template>
   <v-main>
     <v-container v-if="isLogin">
-      <h2>
-        {{ username }} さんのディクテーション一覧
-      </h2>
       <v-row>
+        <v-col cols="6">
+          <h2>
+            {{ username }} さんのディクテーション一覧
+          </h2>
+        </v-col>
+        <v-col cols="2">
+          <ul>
+            <li><button @click="sort()">更新順</button></li>
+          </ul>
+        </v-col>
+      </v-row>
+      
+      <v-row class="your_list">
         <v-col
           v-for="(dictation, key) in dictations"
           :key="key"
-          cols="4"
+          cols="6"
+          sm="4"
         >
           <v-card
             id="detail"
@@ -22,7 +33,13 @@
               class="grey--text mb-2 title"
             >
               <v-list-item-content>
-                {{ dictation.title }}
+                <p id="title">
+                  {{ dictation.title }}
+                </p>
+                </br>
+                <p id="date">
+                  Updated at : {{ dictation.updated_at }}
+                </p>
 
                 <audio
                   controls
@@ -94,16 +111,17 @@ import TopPage from "../pages/TopPage";
       isLogin () {
         return this.$store.getters['auth/check'];
       },
-      
     },
     created () {
       this.requestAll();
+      
     },
     methods: {
       //自分の投稿一覧取得
       requestAll: function(){
         axios.get('/api/dictation').then((res)=>{
           this.dictations = res.data;
+          console.log(res.data);
         });
       },
       //Dictationの削除
@@ -128,15 +146,22 @@ import TopPage from "../pages/TopPage";
       //詳細に保存された音声を取得
       url(id) {
         return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+id+".mp3"; 
+      },
+      sort() {
+        const pairs = Object.entries(this.dictations);
+        pairs.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
+        this.dictations = Object.fromEntries(pairs);
+        console.log(this.dictations);
       }
-    },
+    }
   };
 </script>
 
 <style>
 #detail:hover {
- background-color: gold;
+ background-color:#CCCCCC;
  cursor: pointer;
+ transition: 0.5s ;
 }
 
 #detail {
@@ -150,8 +175,29 @@ import TopPage from "../pages/TopPage";
   bottom: 0;
   right: 0;
 }
+
+#delete_button:hover {
+  color: red;
+}
+
 audio {
   width: 70%;
   padding: 10px;
 }
+
+h2 {
+  font-family: sans-serif;
+  font-weight: lighter;
+  padding-bottom: 15px;
+}
+
+#title {
+  font-size: 18px;
+}
+
+#date {
+  font-size: 15px;
+  font-weight: 300;
+}
+
 </style>

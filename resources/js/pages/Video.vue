@@ -16,6 +16,7 @@
           v-on="on"
         >
           <img
+            id="youtube_icon"
             src="https://freeiconshop.com/wp-content/uploads/edd/youtube-flat.png"
             alt="youtube"
             width="48px"
@@ -123,6 +124,14 @@ export default {
 
 <style>
 
+#youtube_icon {
+  padding-top: 5px;
+}
+
+#youtube_icon:hover {
+  width: 55px;
+  transition: 0.2s ;
+}
 
 .youtube_list {
   border-collapse: collapse;

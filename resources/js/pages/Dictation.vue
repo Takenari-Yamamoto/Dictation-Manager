@@ -3,13 +3,13 @@
     <div id="app">
       <v-row>
         <v-col 
-          cols="7"
+          cols="12" sm="7"
           @click.selected.prevent="selected"
         >
           <Update />
         </v-col>
         <!-- 右側に固定表示 -->
-        <v-col cols="3">
+        <v-col cols="7" sm="3">
           <div
             class="right_side pt-200 pl-30"
           >
@@ -34,34 +34,41 @@
             <div 
               class="word_add"
             >
-              <v-text-field
-                v-model="selectedText"
-                label="Selected Word"
-              />
-              <v-btn
-                color="success"
-                @click="addToList(); snackbar = true"
-              >
-                Add to List
-              </v-btn>
-              <v-snackbar
-                v-model="snackbar"
-                :timeout="timeout"
-                class="text-center"
-              >
-                Added to List!!
-
-                <template #action="{ attrs }">
+              <v-row>
+                <!-- Youtube用 -->
+                <v-col>
+                  <v-text-field
+                    v-model="selectedText"
+                    label="Selected Word"
+                  />
+                </v-col>
+                <v-col>
                   <v-btn
-                    color="blue"
-                    text
-                    v-bind="attrs"
-                    @click="snackbar = false"
+                    color="success"
+                    @click="addToList(); snackbar = true"
                   >
-                    Close
+                    Add to List
                   </v-btn>
-                </template>
-              </v-snackbar>
+                  <v-snackbar
+                    v-model="snackbar"
+                    :timeout="timeout"
+                    class="text-center"
+                  >
+                    Added to List!!
+
+                    <template #action="{ attrs }">
+                      <v-btn
+                        color="blue"
+                        text
+                        v-bind="attrs"
+                        @click="snackbar = false"
+                      >
+                        Close
+                      </v-btn>
+                    </template>
+                  </v-snackbar>
+                </v-col>
+              </v-row>
             </div>
           </div>
         </v-col>
@@ -151,12 +158,44 @@ export default {
 </script>
 
 <style>
+
 #audio {
   width: 200%;
   padding: 0;
 }
+
+.upload_material {
+  width: 200%;
+  margin: 0 auto;
+}
+
 .right_side {
-  padding-top: 150px;
+  padding-top: 160px;
   padding-left: 30px;
+  position: sticky;
+  z-index: 5;
+  top: 0;
+}
+
+.ql-toolbar{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: white;
+}
+
+.word_add {
+  width: 200%;
+}
+
+@media screen and (max-width: 500px) {
+
+  .right_side {
+    padding-top: 0px;
+    margin: 20px;
+    padding-left: 0px;
+  }
+
+
 }
 </style>

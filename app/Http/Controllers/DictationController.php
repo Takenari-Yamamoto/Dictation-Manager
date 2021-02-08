@@ -15,7 +15,7 @@ class DictationController extends Controller
         
         $user_id = Auth::id();
         $dictations = Dictation::all()->where('user_id', $user_id);
-        return $dictations;
+        return response()->json($dictations);
     }
 
     // 後で修正する
