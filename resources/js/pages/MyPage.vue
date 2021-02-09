@@ -2,15 +2,29 @@
   <v-main>
     <v-container v-if="isLogin">
       <v-row>
-        <v-col cols="6">
+        <v-col
+          cols="12"
+          sm="4"
+        >
           <h2>
-            {{ username }} さんのディクテーション一覧
+            {{ username }}'s Dictations
           </h2>
         </v-col>
-        <v-col cols="2">
-          <ul>
-            <li><button @click="sort()">更新順</button></li>
-          </ul>
+        <v-col
+          cols="6"
+          sm="2"
+        >
+          <button @click="sortByDate()">
+            Sort by Date
+          </button>
+        </v-col>
+        <v-col
+          cols="6"
+          sm="2"
+        >
+          <button @click="sortByTitle()">
+            Sort by Title
+          </button>
         </v-col>
       </v-row>
       
@@ -105,6 +119,8 @@ import TopPage from "../pages/TopPage";
         dictations: [],
         username: this.$store.getters['auth/username'],
         dialog: false,
+        items: [
+        ]
       };
     },
     computed: {
@@ -147,9 +163,19 @@ import TopPage from "../pages/TopPage";
       url(id) {
         return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+id+".mp3"; 
       },
-      sort() {
-          this.dictations = Object.values(this.dictations)
-            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      sortByDate() {
+        this.dictations = Object.values(this.dictations)
+          .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      },
+      sortByTitle() {
+        this.dictations = Object.values(this.dictations)
+          .sort(function(a, b) {
+            if (a.title > b.title) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
       }
     }
   };
