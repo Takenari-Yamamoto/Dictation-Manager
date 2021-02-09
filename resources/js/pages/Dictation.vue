@@ -190,9 +190,30 @@ export default {
 
 @media screen and (max-width: 600px) {
 
+  #aaa {
+    padding: 0;
+  }
+  #audio {
+    width: 180%;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    z-index: 5;
+    bottom: 0px;
+  }
   .right_side {
-    width: 70%;
-    margin: 0 auto;
+    padding: 0;
+  }
+
+  .ql-toolbar{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: white;
+}
+
+  .word_add{
+    display: none;
   }
 
 }

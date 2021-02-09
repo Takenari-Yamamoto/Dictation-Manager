@@ -6,7 +6,7 @@
     <v-data-table
       :headers="headers"
       :items="words"
-      cols="6"
+      mobile-breakpoint="0"
     >
       <!-- 単語 -->
       <template #item.word="props">
@@ -168,8 +168,12 @@
 
 <script>
 import AccessError from "../pages/errors/AccessError";
+import Vuetify from 'vuetify/lib';
 
   export default {
+    breakpoint: {
+      mobileBreakpoint: 'col' // This is equivalent to a value of 960
+    },
     components: {
       AccessError,
     },
@@ -200,9 +204,11 @@ import AccessError from "../pages/errors/AccessError";
         return this.$store.getters['auth/check'];
       },
     },
-     created () {
+
+    created () {
       this.requestMyWord();
     },
+    
     methods: {
       //アップデート
       save (props) {
@@ -254,7 +260,26 @@ import AccessError from "../pages/errors/AccessError";
 </script>
 
 <style>
+
   .list {
     padding-top: 100px;
   }
+/* 
+@media screen and (max-width: 600px) {
+
+  tr {
+    float: left  !important;
+  }
+
+  .v-data-table__mobile-row {
+    float: left !important;
+  }
+
+  .v-data-table__mobile-row__header{
+    display: none !important;
+  }
+} */
+
+  
+
 </style>
