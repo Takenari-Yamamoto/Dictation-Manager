@@ -12,6 +12,7 @@
       <template #activator="{ on, attrs }">
         <!-- youtube upload -->
         <div
+          id="icon"
           v-bind="attrs"
           v-on="on"
         >
@@ -150,6 +151,12 @@ export default {
 
 .video {
   padding-top: 100px;
+}
+
+@media screen and (max-width: 600px) {
+  #youtube_icon {
+  display: none;
+}
 }
 
 </style>

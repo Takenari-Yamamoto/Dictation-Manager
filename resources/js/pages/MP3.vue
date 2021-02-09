@@ -140,4 +140,12 @@ export default {
   width: 70px;
   transition: 0.2s ;
 }
+
+@media screen and (max-width: 600px) {
+
+  #mp3_icon {
+    display: none;
+  }
+}
+
 </style>

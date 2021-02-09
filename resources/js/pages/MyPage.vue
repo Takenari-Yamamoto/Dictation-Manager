@@ -148,10 +148,8 @@ import TopPage from "../pages/TopPage";
         return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+id+".mp3"; 
       },
       sort() {
-        const pairs = Object.entries(this.dictations);
-        pairs.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
-        this.dictations = Object.fromEntries(pairs);
-        console.log(this.dictations);
+          this.dictations = Object.values(this.dictations)
+            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
       }
     }
   };

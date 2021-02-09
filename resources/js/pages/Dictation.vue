@@ -9,7 +9,7 @@
           <Update />
         </v-col>
         <!-- 右側に固定表示 -->
-        <v-col cols="7" sm="3">
+        <v-col cols="7" sm="3" id="aaa">
           <div
             class="right_side pt-200 pl-30"
           >
@@ -188,14 +188,12 @@ export default {
   width: 200%;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
 
   .right_side {
-    padding-top: 0px;
-    margin: 20px;
-    padding-left: 0px;
+    width: 70%;
+    margin: 0 auto;
   }
-
 
 }
 </style>
