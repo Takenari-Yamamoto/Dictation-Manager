@@ -57,8 +57,8 @@ class DictationController extends Controller
     {
         $s3Client = new \Aws\S3\S3Client([
             'credentials' => [
-                'key' => 'AKIA4ZW3CFNN252QQAZH',
-                'secret' => '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',
+                'key' => env('AWS_ACCESS_KEY_ID', false),
+                'secret' => env('AWS_SECRET_ACCESS_KEY', false),
             ],
             'region' => 'ap-northeast-1',
             'version' => 'latest'
