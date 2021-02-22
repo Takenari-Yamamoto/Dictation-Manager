@@ -71,7 +71,7 @@ export default {
     return this.$store.getters['auth/check'];
     },
     url() {
-    return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
+    return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
     }
   },
   watch: {

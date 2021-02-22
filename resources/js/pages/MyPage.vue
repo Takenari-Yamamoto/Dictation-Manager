@@ -161,7 +161,7 @@ import TopPage from "../pages/TopPage";
       },
       //詳細に保存された音声を取得
       url(id) {
-        return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/dictation/"+this.username+"/"+id+".mp3"; 
+        return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+id+".mp3"; 
       },
       sortByDate() {
         this.dictations = Object.values(this.dictations)

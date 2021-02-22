@@ -69,12 +69,12 @@ class DictationController extends Controller
         $formInputs = [
             //acl とはアクセスコントロールリスト
             'acl' => 'public-read',
-            'key' => 'dictation/' . $requestData['filename'] . '.' . $requestData['fileext'],
+            'key' => 'local/' . $requestData['filename'] . '.' . $requestData['fileext'],
         ];
         $options = [
             ['acl' => 'public-read'],
             ['bucket' => $bucket],
-            ['starts-with', '$key', 'dictation/'],
+            ['starts-with', '$key', 'local/'],
         ];
         $expires = '+20 minutes';
         $postObject = new \Aws\S3\PostObjectV4(
