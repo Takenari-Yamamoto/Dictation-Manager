@@ -40,11 +40,11 @@
             class="mx-auto font-weight-medium"
             max-width="344"
             outlined
-            @click="editDictation(dictation.id)"
           > 
             <v-list-item
               three-line
               class="grey--text mb-2 title"
+              @click="editDictation(dictation.id)"
             >
               <v-list-item-content>
                 <p id="title">
@@ -61,48 +61,46 @@
                 />
               </v-list-item-content>
             </v-list-item>
-            <v-dialog
-              v-model="dialog"
-              width="500"
+            <v-icon
+              @click="deleteConfirm(dictation.id)"
             >
-              <template #activator="{ on, attrs }">
-                <v-icon
-                  id="delete_button"
-                  medium
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  mdi-delete
-                </v-icon>
-              </template>
-  
-              <v-card>
-                <v-card-text
-                  class="pt-10"
-                  justify="center"
-                >
-                  Are you sure you want to delete this file?
-                </v-card-text> 
-                <v-card-actions>
-                  <v-btn
-                    id="delete_button"
-                    color="primary"
-                    text
-                    @click="deleteDictation(dictation.id)"
-                  >
-                    Delete
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+              mdi-delete
+            </v-icon>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
-    
-    <v-container v-else>
-      <TopPage />
-    </v-container>
+
+    <!-- 削除確認ダイアログを追加 -->
+    <v-dialog
+      v-model="deleteDialog"
+      persistent
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Comfirmation
+        </v-card-title>
+        <v-card-text>Are you sure you want to delete this file?</v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteDialog = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteItem(deleteID)"
+          >
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-main>
 </template>
 
@@ -119,8 +117,9 @@ import TopPage from "../pages/TopPage";
         dictations: [],
         username: this.$store.getters['auth/username'],
         dialog: false,
-        items: [
-        ]
+        items: [],
+        deleteDialog: false,	// 追加：初期値は非表示
+        deleteID: null,			// 追加：削除Itemのid
       };
     },
     computed: {
@@ -140,16 +139,20 @@ import TopPage from "../pages/TopPage";
           console.log(res.data);
         });
       },
+      // 削除確認ダイアログ表示を追加
+      deleteConfirm(id) {
+        this.deleteDialog = true;
+        this.deleteID = id;
+      },
       //Dictationの削除
-      deleteDictation (dictationId) {
-        axios.post('/api/dictation/'+dictationId, {
+      deleteItem (id) {
+        axios.post('/api/dictation/'+id, {
           _method: 'delete',
         })
         .then(res => {
           // console.log(res.data);
-          // this.$router.go({path: this.$router.currentRoute.path, force: true});
+          this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
-        console.log(dictationId);
       },
       //editで詳細ページへ
       editDictation: function(dictationId) {
@@ -158,6 +161,7 @@ import TopPage from "../pages/TopPage";
         }).then(()=>{
           this.$router.push('/Dictation/'+ dictationId);    
         });
+        console.log(dictationId);
       },
       //詳細に保存された音声を取得
       url(id) {

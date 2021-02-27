@@ -46,7 +46,8 @@ class WordController extends Controller
 
     public function destroy($id)
     {
-        $word = Word::find($request->id)->delete();
+        $word = Word::find($id);
+        $word->delete();
         return redirect('/');
     }
 

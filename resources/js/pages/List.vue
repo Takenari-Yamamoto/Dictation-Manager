@@ -106,42 +106,46 @@
           </template>
         </v-edit-dialog>
       </template>
+      <!-- 削除ボタン -->
       <template #item.actions="props">
-        <v-dialog
-          v-model="dialog"
-          width="500"
+        <v-icon
+          @click="deleteConfirm(props.item.id)"
         >
-          <template #activator="{ on, attrs }">
-            <v-icon
-              small
-              v-bind="attrs"
-              v-on="on"
-            >
-              mdi-delete
-            </v-icon>
-          </template>
-  
-          <v-card>
-            <v-card-text
-              class="pt-10"
-              justify="center"
-            >
-              Are you sure you want to delete this file?
-            </v-card-text> 
-            <v-card-actions>
-              <v-btn
-                id="delete_button"
-                color="primary"
-                text
-                @click="deleteWord(props.item.id)"
-              >
-                Delete
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+          mdi-delete
+        </v-icon>
       </template>
     </v-data-table>
+
+    <!-- 削除確認ダイアログを追加 -->
+    <v-dialog
+      v-model="deleteDialog"
+      persistent
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Comfirmation
+        </v-card-title>
+        <v-card-text>Are you sure you want to delete this file?</v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteDialog = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteItem(deleteID)"
+          >
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-snackbar
       v-model="snack"
@@ -180,6 +184,7 @@ import Vuetify from 'vuetify/lib';
     },
     data () {
       return {
+        //配列に格納
         words: [],
         snack: false,
         snackColor: '',
@@ -197,7 +202,8 @@ import Vuetify from 'vuetify/lib';
           { text: 'Pronunciation', value: 'pronunciation' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
-        dialog: false,
+        deleteDialog: false,	// 追加：初期値は非表示
+        deleteID: null,			// 追加：削除Itemのid
       };
     },
     computed: {
@@ -247,14 +253,18 @@ import Vuetify from 'vuetify/lib';
           console.log(res.data);
         });
       },
-      deleteWord (word_id) {
-        axios.post('/api/word/'+word_id, {
+      // 削除確認ダイアログ表示を追加
+      deleteConfirm(id) {
+        this.deleteDialog = true;
+        this.deleteID = id;
+      },
+      deleteItem (id) {
+        axios.post('/api/word/'+id, {
           _method: 'delete'
         })
         .then(res => {
-          console.log(res.data);
+          this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
-        console.log(word_id);
       },
     },
   };
