@@ -133,7 +133,7 @@
                 id="delete_button"
                 color="primary"
                 text
-                @click="deleteWord(props)"
+                @click="deleteWord(props.item.id)"
               >
                 Delete
               </v-btn>
@@ -168,6 +168,7 @@
 
 <script>
 import AccessError from "../pages/errors/AccessError";
+import axios from 'axios';
 import Vuetify from 'vuetify/lib';
 
   export default {
@@ -246,14 +247,14 @@ import Vuetify from 'vuetify/lib';
           console.log(res.data);
         });
       },
-      deleteWord (props) {
-        axios.post('/api/word/'+props.item.id, {
+      deleteWord (word_id) {
+        axios.post('/api/word/'+word_id, {
           _method: 'delete'
         })
         .then(res => {
           console.log(res.data);
-          this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
+        console.log(word_id);
       },
     },
   };
@@ -264,22 +265,5 @@ import Vuetify from 'vuetify/lib';
   .list {
     padding-top: 100px;
   }
-/* 
-@media screen and (max-width: 600px) {
-
-  tr {
-    float: left  !important;
-  }
-
-  .v-data-table__mobile-row {
-    float: left !important;
-  }
-
-  .v-data-table__mobile-row__header{
-    display: none !important;
-  }
-} */
-
-  
 
 </style>

@@ -14,7 +14,7 @@ class WordController extends Controller
 
         $user_id = Auth::id();
         $words = Word::all()->where('user_id', $user_id);
-        return $words;
+        return response()->json($words);
     
     }
 
@@ -46,8 +46,8 @@ class WordController extends Controller
 
     public function destroy($id)
     {
-        $word = Word::where('id', $id)->delete();
-        return $word;
+        $word = Word::find($request->id)->delete();
+        return redirect('/');
     }
 
 }

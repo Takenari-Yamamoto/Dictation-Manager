@@ -143,13 +143,13 @@ import TopPage from "../pages/TopPage";
       //Dictationの削除
       deleteDictation (dictationId) {
         axios.post('/api/dictation/'+dictationId, {
-          _method: 'delete'
+          _method: 'delete',
         })
         .then(res => {
-          console.log(res.data);
-          this.$router.go({path: this.$router.currentRoute.path, force: true});
-        })
-        ;
+          // console.log(res.data);
+          // this.$router.go({path: this.$router.currentRoute.path, force: true});
+        });
+        console.log(dictationId);
       },
       //editで詳細ページへ
       editDictation: function(dictationId) {
