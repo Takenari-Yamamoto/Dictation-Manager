@@ -47,7 +47,7 @@
               @click="editDictation(dictation.id)"
             >
               <v-list-item-content>
-                <p id="title">
+                <p id="dictation_title">
                   {{ dictation.title }}
                 </p>
                 </br>
@@ -106,12 +106,8 @@
 
 <script>
 import axios from 'axios';
-import TopPage from "../pages/TopPage";
 // alter table dictations modify content LONGBLOB(4294967295);
   export default {
-    components: {
-      TopPage
-    },
     data: function() {
       return {
         dictations: [],
@@ -219,7 +215,7 @@ h2 {
   padding-bottom: 15px;
 }
 
-#title {
+#dictation_title {
   font-size: 18px;
 }
 

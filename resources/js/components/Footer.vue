@@ -15,7 +15,7 @@
     <RouterLink
       v-else
       class="button button--link"
-      to="/TopPage"
+      to="/login"
     >
       Login / Register
     </RouterLink>
@@ -37,7 +37,7 @@ export default {
     async logout () {
       await this.$store.dispatch('auth/logout');
       if (this.apiStatus) {
-        this.$router.push('/TopPage');
+        this.$router.push('');
       }
     }
   }

@@ -13,6 +13,27 @@
     </RouterLink>
     <v-spacer />
     <div class="navbar__menu">
+      <!-- 新規作成 -->
+      <router-link
+        v-if="isLogin"
+        id="create_button"
+        class="navbar__item white--text text-decoration-none"
+        to="/Dictation"
+      >
+        <v-tooltip bottom>
+          <template #activator="{ on, attrs }">
+            <v-icon
+              dark
+              v-bind="attrs"
+              v-on="on"
+              @click="createDictation()"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          <span>Create New Dictation</span>
+        </v-tooltip>
+      </router-link>
       <!-- word list -->
       <router-link
         v-if="isLogin"
@@ -45,33 +66,13 @@
               v-bind="attrs"
               v-on="on"
             >
-              mdi-wrench
+              mdi-help-circle-outline
             </v-icon>
           </template>
           <span>Support</span>
         </v-tooltip>
       </router-link>
-      <!-- 新規作成 -->
-      <router-link
-        v-if="isLogin"
-        id="create_button"
-        class="navbar__item white--text text-decoration-none"
-        to="/Dictation"
-      >
-        <v-tooltip bottom>
-          <template #activator="{ on, attrs }">
-            <v-icon
-              dark
-              v-bind="attrs"
-              v-on="on"
-              @click="createDictation()"
-            >
-              mdi-pencil
-            </v-icon>
-          </template>
-          <span>Create New Dictation</span>
-        </v-tooltip>
-      </router-link>
+      
       <!-- ログインしていないときの表示↓ -->
       <div
         v-else
