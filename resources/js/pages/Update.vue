@@ -5,6 +5,8 @@
     <v-text-field
       v-model="dictations.title"
       label="Title"
+      :rules="[limit_length]"
+      counter="70"
     />
     <quill-editor
       ref="quillEditor"
@@ -14,7 +16,7 @@
       <v-btn
         class="ma-2 mb-10 update_button"
         color="info"
-        @click="updateDictation(); snackbar = true"
+        @click="updateDictation(); snackbar = false"
       >
         UPDATE
       </v-btn>
@@ -51,13 +53,14 @@ export default {
       editorOption: {
         theme: 'snow'
       },
-      snackbar: false,
-      text: 'Content is updated!!',
       timeout: 2000,
+      limit_length: value => value.length <= 70 || "within 70 characters!!",
+      snackbar: false,
     };
   },
   created() {
     this.request();
+    this.show();
   },
   methods: {
     request: function() {
@@ -76,10 +79,16 @@ export default {
       axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
         content: this.dictations.content,
         title: this.dictations.title,
+        text: this.text,
         _method: 'put'
       })
       .then((res) => {
-        console.log(res);
+        this.text = 'Content is updated!!';
+        this.snackbar = true;
+      })
+      .catch((err) => {
+        this.text = "Update is failed";
+        this.snackbar = true;
       });
     },
   }

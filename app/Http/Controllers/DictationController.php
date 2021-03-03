@@ -18,21 +18,21 @@ class DictationController extends Controller
         return response()->json($dictations);
     }
 
-    // 後で修正する
     public function store(Request $request)
     {
       $dictation = new Dictation;
-      $dictation->id = $request->id;
-      $dictation->content = $request->content;
-      $dictation->title = $request->title;
-      $dictation->user_id = $request->user()->id;
-      $dictation->save();
+      $dictation->save($request->all());
 
       return response()->json($dictation);
     }
 
     public function update(Request $request, $id)
     {
+        // バリデーション
+        $request->validate([
+            'title' => 'present|max:70',
+            'content' => 'present|max:65535'
+        ]);
         $update = [
             'content' => $request->content,
             'title' => $request->title
@@ -49,9 +49,9 @@ class DictationController extends Controller
 
     public function destroy($id)
     {
-        $dictation = Dictation::find($id);
-        $dictation->delete();
-        return redirect('/');
+        // $dictation = Dictation::find($id);
+        // $dictation->delete();
+        // return redirect('/');
     }
 
     public function getPresignedUrl(Request $request)

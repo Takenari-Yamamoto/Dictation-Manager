@@ -116,8 +116,8 @@ export default {
       })
       .then((res) => {
       console.log(res.data);
-    });
-    }
+      });
+    },
   },
   
 };
@@ -155,8 +155,8 @@ export default {
 
 @media screen and (max-width: 600px) {
   #youtube_icon {
-  display: none;
-}
+    display: none;
+  }
 }
 
 </style>

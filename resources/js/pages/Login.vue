@@ -16,6 +16,7 @@
         Register
       </li>
     </ul>
+    <!-- ログイン -->
     <div
       v-show="tab === 1"
       class="panel"
@@ -70,6 +71,7 @@
         </div>
       </form>
     </div>
+    <!-- 登録 -->
     <div
       v-show="tab === 2"
       class="panel"

@@ -20,20 +20,33 @@ class WordController extends Controller
 
     public function store(Request $request)
     {
-      $word = new Word;
-      $word->id = $request->id;
-      $word->word = $request->word;
-      $word->classification = $request->classification;
-      $word->meaning = $request->meaning;
-      $word->pronunciation = $request->pronunciation;
-      $word->user_id = $request->user()->id;
-      $word->save();
+        $word = new Word;
+        // バリデーション
+        $request->validate([
+            'word' => 'present|max:10',
+        ]);
 
-      return response()->json($word);
+        $word->id = $request->id;
+        $word->word = $request->word;
+        $word->classification = $request->classification;
+        $word->meaning = $request->meaning;
+        $word->pronunciation = $request->pronunciation;
+        $word->user_id = $request->user()->id;
+        $word->save();
+
+        return response()->json($word);
     }
 
     public function update(Request $request, $id)
     {
+        // バリデーション
+        $request->validate([
+            'word' => 'present|max:10',
+            'classification' => 'present|max:10',
+            'meaning' => 'present|max:10',
+            'pronunciation' => 'present|max:10',
+        ]);
+        // アップデート
         $update = [
             'word' => $request->word,
             'classification' => $request->classification,
