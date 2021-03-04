@@ -24,7 +24,7 @@
         UPDATE
       </v-btn>
 
-      <!-- <v-snackbar
+      <v-snackbar
         v-model="snackbar"
         :timeout="timeout"
         class="text-center"
@@ -41,7 +41,7 @@
             Close
           </v-btn>
         </template>
-      </v-snackbar> -->
+      </v-snackbar>
     </div>
   </div>
 </template>
@@ -84,6 +84,8 @@ export default {
           const responseCode = res.status;
           if (responseCode === 403){
             this.$router.push('/403');
+          } else {
+            console.log("成功")
           }
         });
     },
@@ -107,8 +109,10 @@ export default {
               this.errors[key] = true;
               this.messages[key] = response.errors[key];
             });
+          // 成功すると snackbar 表示
           } else {
-            console.log("成功！");
+             this.text = 'Content is updated!!';
+             this.snackbar = true;
           }
       })
       .catch((error) => {
