@@ -22,8 +22,12 @@
             <v-text-field
               v-model="props.item.word"
               label="Edit"
-              single-line
-              counter
+              :rules="[rules.max_10]"
+              :error="errors.word"
+              :error-messages="messages.word" 
+              counter="10"
+              single-line	
+              @keydown="clearError('word')"
             />
           </template>
         </v-edit-dialog>
@@ -47,8 +51,12 @@
             <v-text-field
               v-model="props.item.classification"
               label="Edit"
-              single-line
-              counter
+              :rules="[rules.max_10]"
+              :error="errors.classification"
+              :error-messages="messages.classification" 
+              counter="10"
+              single-line	
+              @keydown="clearError('word')"
               autofocus
             />
           </template>
@@ -73,9 +81,13 @@
             <v-text-field
               v-model="props.item.meaning"
               label="Edit"
-              single-line
-              counter
+              :rules="[rules.max_10]"
+              :error="errors.meaning"
+              :error-messages="messages.meaning" 
+              counter="10"
+              single-line	
               autofocus
+              @keydown="clearError('word')"
             />
           </template>
         </v-edit-dialog>
@@ -99,9 +111,13 @@
             <v-text-field
               v-model="props.item.pronunciation"
               label="Edit"
-              single-line
-              counter
+              :rules="[rules.max_10]"
+              :error="errors.pronunciation"
+              :error-messages="messages.pronunciation" 
+              counter="10"
+              single-line	
               autofocus
+              @keydown="clearError('word')"
             />
           </template>
         </v-edit-dialog>
@@ -217,6 +233,9 @@ import Vuetify from 'vuetify/lib';
           meaning: null,
           pronunciation: null
         },
+        rules: {
+          max_10: true
+        }
       };
     },
     computed: {
@@ -234,7 +253,6 @@ import Vuetify from 'vuetify/lib';
       save (props) {
         this.snack = true;
         this.snackColor = 'success';
-        this.snackText = 'Data saved';
         axios.post('/api/word/'+props.item.id, {
           id: props.item.id,
           word: props.item.word,
@@ -242,8 +260,22 @@ import Vuetify from 'vuetify/lib';
           meaning: props.item.meaning,
           pronunciation: props.item.pronunciation,
           _method: 'put'
-        }).then(res => {
-          console.log(props.item.id);
+        })
+        .then((res) => {
+        let response = res.data;
+        if (response.status == 400) {
+          // バリデーションエラー
+          Object.keys(response.errors).forEach((key) => {
+            this.errors[key] = true;
+            this.messages[key] = response.errors[key];
+          });
+        } else {
+          console.log("成功！");
+          this.snackText = 'Data saved';
+        }
+        })
+        .catch((error) => {
+          console.log(error.response);
         });
       },
       cancel () {
@@ -254,10 +286,10 @@ import Vuetify from 'vuetify/lib';
       open () {
         this.snack = true;
         this.snackColor = 'info';
-        this.snackText = 'Dialog opened';
+        this.snackText = 'Opened';
       },
       close () {
-        console.log('Dialog closed');
+        this.snackText = 'closed';
       },
       //単語一覧取得
       requestMyWord: function() {

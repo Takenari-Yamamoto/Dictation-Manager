@@ -141,7 +141,7 @@ export default {
         word: null
       },
       rules: {
-        max_16: true
+        max_10: true
       }
     };
   },
