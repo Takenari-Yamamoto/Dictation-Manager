@@ -204,6 +204,19 @@ import Vuetify from 'vuetify/lib';
         ],
         deleteDialog: false,	// 追加：初期値は非表示
         deleteID: null,			// 追加：削除Itemのid
+        //エラー情報初期化 
+        errors: {
+          word: false,
+          classification: false,
+          meaning: false,
+          pronunciation: false
+        },
+        messages: {
+          word: null,
+          classification: null,
+          meaning: null,
+          pronunciation: null
+        },
       };
     },
     computed: {

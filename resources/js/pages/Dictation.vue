@@ -19,7 +19,7 @@
               :src="url"
             />
             <div
-              class="uploaふrld_material"
+              class="upload_material"
             >
               <v-row>
                 <!-- Youtube用 -->
@@ -40,12 +40,17 @@
                   <v-text-field
                     v-model="selectedText"
                     label="Selected Word"
+                    :rules="[rules.max_10]"
+                    :error="errors.word"
+                    :error-messages="messages.word" 
+                    counter="10"
+                    @keydown="clearError('word')"	
                   />
                 </v-col>
                 <v-col>
                   <v-btn
                     color="success"
-                    @click="addToList(); snackbar = true"
+                    @click="addToList();"
                   >
                     Add to List
                   </v-btn>
@@ -54,7 +59,7 @@
                     :timeout="timeout"
                     class="text-center"
                   >
-                    Added to List!!
+                    {{ text }}
 
                     <template #action="{ attrs }">
                       <v-btn
@@ -127,6 +132,17 @@ export default {
       username: this.$store.getters['auth/username'],
       snackbar: false,
       timeout: 2000,
+      text: "",
+      //エラー情報初期化 
+      errors: {
+        word: false
+      },
+      messages: {
+        word: null
+      },
+      rules: {
+        max_16: true
+      }
     };
   },
   computed: {
@@ -140,18 +156,44 @@ export default {
   
   methods: {
     // 範囲選択した文字を表示
-    selected: function() {
+    selected () {
       this.selectedText = window.getSelection().toString();
     },
     // 単語帳に追加
-    addToList: function() {
+    addToList () {
+      // 全てのエラーをリセット
+      Object.keys(this.errors).forEach((key) => {
+        this.errors[key] = false;
+        this.messages[key] = null;
+      });
       const word = {
         word: this.selectedText,
       };
-      axios.post('/api/word',word).then(res => {
-        console.log(res.data);
+      axios.post('/api/word',word)
+      .then((res) => {
+        let response = res.data;
+        if (response.status == 400) {
+          // バリデーションエラー
+          Object.keys(response.errors).forEach((key) => {
+            this.errors[key] = true;
+            this.messages[key] = response.errors[key];
+          });
+        } else {
+          // 成功したらUserItemコンポーネントを表示
+          this.text = 'Add to List!!';
+          this.snackbar = true;
+          console.log("成功！");
+        }
+      })
+      .catch((error) => {
+        console.log(error.response);
       });
     },
+    clearError(word) {
+      this.errors[word] = false;
+      this.messages[word] = null;
+    },
+
     
   },
 };

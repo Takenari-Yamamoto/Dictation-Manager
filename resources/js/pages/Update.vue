@@ -57,6 +57,7 @@ export default {
         theme: 'snow'
       },
       //エラー情報初期化 
+      text: "",
       errors: {
         title: false,
         content: false
@@ -85,7 +86,7 @@ export default {
           if (responseCode === 403){
             this.$router.push('/403');
           } else {
-            console.log("成功")
+            console.log("成功");
           }
         });
     },
@@ -98,7 +99,6 @@ export default {
       axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
         content: this.dictations.content,
         title: this.dictations.title,
-        // text: this.text,
         _method: 'put'
       })
       .then((res) => {
