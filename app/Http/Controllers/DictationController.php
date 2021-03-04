@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Aws\S3\S3Client;  
 use Aws\Exception\AwsException;
+use App\Http\Requests\Ajax\User\DictationRequest;
 use App\Dictation;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,13 +27,12 @@ class DictationController extends Controller
       return response()->json($dictation);
     }
 
-    public function update(Request $request, $id)
+    public function update(DictationRequest $request, $id)
     {
-        // バリデーション
-        $request->validate([
-            'title' => 'present|max:70',
-            'content' => 'present|max:65535'
-        ]);
+
+        $status = 200;
+        $message = null;
+        
         $update = [
             'content' => $request->content,
             'title' => $request->title
@@ -49,9 +49,9 @@ class DictationController extends Controller
 
     public function destroy($id)
     {
-        // $dictation = Dictation::find($id);
-        // $dictation->delete();
-        // return redirect('/');
+        $dictation = Dictation::find($id);
+        $dictation->delete();
+        return redirect('/');
     }
 
     public function getPresignedUrl(Request $request)

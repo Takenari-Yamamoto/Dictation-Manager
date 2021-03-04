@@ -5,8 +5,11 @@
     <v-text-field
       v-model="dictations.title"
       label="Title"
-      :rules="[limit_length]"
+      :rules="[rules.max_70]"
+      :error="errors.title"
+      :error-messages="messages.title"
       counter="70"
+      @keydown="clearError('title')"
     />
     <quill-editor
       ref="quillEditor"
@@ -16,12 +19,12 @@
       <v-btn
         class="ma-2 mb-10 update_button"
         color="info"
-        @click="updateDictation(); snackbar = false"
+        @click="updateDictation();"
       >
         UPDATE
       </v-btn>
 
-      <v-snackbar
+      <!-- <v-snackbar
         v-model="snackbar"
         :timeout="timeout"
         class="text-center"
@@ -38,7 +41,7 @@
             Close
           </v-btn>
         </template>
-      </v-snackbar>
+      </v-snackbar> -->
     </div>
   </div>
 </template>
@@ -53,14 +56,24 @@ export default {
       editorOption: {
         theme: 'snow'
       },
+      //エラー情報初期化 
+      errors: {
+        title: false,
+        content: false
+      },
+      messages: {
+        title: null,
+        content: null
+      },
       timeout: 2000,
-      limit_length: value => value.length <= 70 || "within 70 characters!!",
       snackbar: false,
+      rules: {
+        max_70: true,
+      }
     };
   },
   created() {
     this.request();
-    this.show();
   },
   methods: {
     request: function() {
@@ -75,21 +88,36 @@ export default {
         });
     },
     // 更新
-    updateDictation: function() {
+    updateDictation () {
+      Object.keys(this.errors).forEach((key) => {
+        this.errors[key] = false;
+        this.messages[key] = null;
+      }),
       axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
         content: this.dictations.content,
         title: this.dictations.title,
-        text: this.text,
+        // text: this.text,
         _method: 'put'
       })
       .then((res) => {
-        this.text = 'Content is updated!!';
-        this.snackbar = true;
+        let response = res.data;
+          if (response.status == 400) {
+            // バリデーションエラー
+            Object.keys(response.errors).forEach((key) => {
+              this.errors[key] = true;
+              this.messages[key] = response.errors[key];
+            });
+          } else {
+            console.log("成功！");
+          }
       })
-      .catch((err) => {
-        this.text = "Update is failed";
-        this.snackbar = true;
+      .catch((error) => {
+        console.log(error.response);
       });
+    },
+    clearError(dictation) {
+      this.errors[dictation] = false;
+      this.messages[dictation] = null;
     },
   }
 };
