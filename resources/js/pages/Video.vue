@@ -5,6 +5,15 @@
     lazy-validation
     method="post"
   >
+    <input
+      id="keyword"
+      v-model="search_word"
+      size="40"
+      placeholder="検索キーワードを入力"
+    >
+    <v-btn @click="search_video()">
+      検索
+    </v-btn>
     <v-dialog
       v-model="dialog"
       width="600px"
@@ -27,13 +36,13 @@
       <v-card>
         <input
           id="keyword"
-          v-model="videos.keyword"
+          v-model="search_word"
           size="40"
           placeholder="検索キーワードを入力"
         >
-        <button @click="search_video(videos.keyword)">
+        <v-btn @click="search_video()">
           検索
-        </button>
+        </v-btn>
         <table
           v-show="results"
           cellspacing="0"
@@ -107,12 +116,13 @@ export default {
       results: null,
       videos: [],
       dialog: false,
+      search_word: "",
     };
   },
   methods: {
     search_video () {
       axios.get("/api/searchVideo", {
-        keyword: this.videos.keyword
+        keyword: this.search_word
       })
       .then((res) => {
       console.log(res.data);

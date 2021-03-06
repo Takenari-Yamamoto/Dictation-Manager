@@ -184,6 +184,8 @@ export default {
       if (this.apiStatus) {
         // トップページに移動する
         this.$router.push('/');
+      } else {
+        alert ("ERROR!");
       }
     },
     async register () {
@@ -192,6 +194,8 @@ export default {
       if (this.apiStatus) {
         // トップページに移動する
         this.$router.push('/');
+      } else {
+        alert ("ERROR!");
       }
     },
     clearError () {
@@ -203,15 +207,12 @@ export default {
 </script>
 
 <style>
-
  #container {
    padding-top: 100px;
    width: 70%;
    margin: 0 auto;
  }
-
 button button--inverse {
   color: white;
 }
-
 </style>

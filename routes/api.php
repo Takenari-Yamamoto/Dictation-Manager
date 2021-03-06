@@ -34,3 +34,4 @@ Route::group(['middleware' => ['api']],function(){
 
 //Youtube 動画検索
 Route::get('searchVideo', 'YoutubeController@searchVideo');
+Route::post('searchVideo', 'YoutubeController@searchVideo');

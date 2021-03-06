@@ -181,6 +181,7 @@
       </template>
     </v-snackbar>
   </div>
+  
   <div v-else>
     <AccessError />
   </div>
