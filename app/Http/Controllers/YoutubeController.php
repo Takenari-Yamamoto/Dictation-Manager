@@ -19,8 +19,7 @@ class YoutubeController extends Controller
         
         $youtube = new Google_Service_YouTube($client);
         
-        $keyword = "";
-        $params['q'] = $keyword;
+        $params ['q'] = $_GET['keyword'];
         $params['type'] = 'video';
         $params['maxResults'] = 10;
         
