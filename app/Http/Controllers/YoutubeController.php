@@ -11,11 +11,10 @@ class YoutubeController extends Controller
 
         // require_once (dirname(__FILE__) . '/vendor/autoload.php');
         
-        define("API_KEY","AIzaSyCDAAeUb4K76kh4xgy1Tv_F0r6nGGyt9iE");
-        
+        define("API_KEY",env('GOOGLE_API_KEY1'));
         $client = new Google_Client();
         $client->setApplicationName("Dictation Manager");
-        $client->setDeveloperKey("AIzaSyCDAAeUb4K76kh4xgy1Tv_F0r6nGGyt9iE");
+        $client->setDeveloperKey(env('GOOGLE_API_KEY1'));
         
         $youtube = new Google_Service_YouTube($client);
         
@@ -36,6 +35,6 @@ class YoutubeController extends Controller
             echo htmlspecialchars($e->getMessage());
             exit;
         }
-        return $videos;
+        return response()->json($videos);
     }
 }

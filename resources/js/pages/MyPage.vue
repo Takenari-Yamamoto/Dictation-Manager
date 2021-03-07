@@ -125,7 +125,6 @@ import axios from 'axios';
     },
     created () {
       this.requestAll();
-      
     },
     methods: {
       //自分の投稿一覧取得
