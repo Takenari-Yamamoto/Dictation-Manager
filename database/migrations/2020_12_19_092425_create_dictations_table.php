@@ -22,7 +22,7 @@ class CreateDictationsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
-
+// ALTER TABLE DictationManager MODIFY COLUMN selectted_videoId varchar;
     /**
      * Reverse the migrations.
      *
@@ -33,3 +33,4 @@ class CreateDictationsTable extends Migration
         Schema::dropIfExists('dictations');
     }
 }
+// ALTER TABLE dictations MODIFY selectted_videoId VARCHAR(255);

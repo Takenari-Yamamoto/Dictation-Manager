@@ -6,6 +6,29 @@
     lazy-validation
     method="post"
   >
+    <!-- 選択されたyoutube再生 -->
+    <youtube
+      ref="youtube"
+      :video-id="selectted_videoId"
+      :width="350"
+      height="250"
+      @playing="playingVideo()"
+    />
+    <div>
+      <button
+        v-if="playing"
+        @click="pauseVideo"
+      >
+        pause
+      </button>
+      <button
+        v-else
+        @click="playVideo"
+      >
+        play
+      </button>
+    </div>
+    <!-- youtube upload -->
     <v-dialog
       v-model="dialog"
       width="600px"
@@ -88,6 +111,7 @@ export default {
       dialog: false,
       keyword: "",
       videoId: '',
+      selectted_videoId: "",
       playing: false,
     };
   },
@@ -117,6 +141,8 @@ export default {
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
       console.log(videoId);
+      this.selectted_videoId = videoId;
+      console.log(this.selectted_videoId);
     },
     playVideo(){  // 再生処理
       this.player.playVideo();
