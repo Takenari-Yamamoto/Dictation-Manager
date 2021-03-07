@@ -38,7 +38,33 @@
         <v-list>
           <li v-for="(value, key) in videos">
             {{ value.snippet.title }} </br>
+            {{ value.snippet.thumbnails.default.url }} </br>
             {{ value.snippet.description }} </br></br>
+            <!-- youtube再生 -->
+            <youtube
+              ref="youtube"
+              :video-id="value.id.videoId"
+              :width="400"
+              height="250"
+              @playing="playingVideo()"
+            />
+            <div>
+              <button
+                v-if="playing"
+                @click="pauseVideo"
+              >
+                pause
+              </button>
+              <button
+                v-else
+                @click="playVideo"
+              >
+                play
+              </button>
+            </div>
+            <v-btn @click="get_videoId(value.id.videoId)">
+              videoId取得
+            </v-btn> 
           </li>
         </v-list>
       </v-card>
@@ -48,6 +74,11 @@
 
 <script>
 import axios from 'axios';
+import Vue from 'vue';
+import VueYoutube from 'vue-youtube';
+ 
+Vue.use(VueYoutube);
+
 export default {
   name: "SearchVideo",
   data() {
@@ -55,10 +86,18 @@ export default {
       results: null,
       videos: [],
       dialog: false,
-      keyword: ""
+      keyword: "",
+      videoId: '',
+      playing: false,
     };
   },
+  computed:{
+    player(){
+      return this.$refs.youtube.player;
+    }
+  },
   methods: {
+    //検索フォームから関連する動画を検索
     search_video () {
       console.log(this.keyword);
       axios.get("/api/searchVideo", {
@@ -68,13 +107,29 @@ export default {
       })
       .then((res) => {
         this.videos = res.data;
+        this.videoId = res.data.id.videoId;
         console.log(this.videos);
         // for (let i = 0; i < res.data.length; i++) {
         //   console.log(res.data[i].snippet.title);
         // }
       });
     },
-  },
+    //選択した動画の video_Id を取得
+    get_videoId(videoId) {
+      console.log(videoId);
+    },
+    playVideo(){  // 再生処理
+      this.player.playVideo();
+      this.playing = true;
+    },
+    pauseVideo(){ // 停止処理
+      this.player.pauseVideo();
+      this.playing = false;
+    },
+    playingVideo(){
+      console.log('play start!');
+    }
+  }
   
 };
 </script>
