@@ -34,4 +34,6 @@ Route::group(['middleware' => ['api']],function(){
 
 //Youtube 動画検索
 Route::get('searchVideo', 'YoutubeController@searchVideo');
-Route::post('searchVideo', 'YoutubeController@searchVideo');
+
+//Youtube videoID保存
+// Route::post('save_selected_videoId', "DictationController@save_selected_videoId");

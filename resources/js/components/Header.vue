@@ -109,13 +109,14 @@ export default {
       const dictation = {
         content: '',
         title: 'no title',
+        // selected_videoId: ''
       };
       // eslint-disable-next-line no-undef
       axios.post('/api/dictation', dictation).then(res => {
         this.$router.push('/Dictation/'+ res.data.id);
       });
     },
-    
+    // ALTER TABLE dictations RENAME COLUMN selectted_videoId TO selected_videoId
   }
 };
 </script>

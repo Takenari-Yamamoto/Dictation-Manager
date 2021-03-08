@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Google_Client;
 use Google_Service_YouTube;
+use App\Dictation;
 
 class YoutubeController extends Controller
 {
@@ -37,5 +38,4 @@ class YoutubeController extends Controller
         }
         return response()->json($videos);
     }
-    
 }

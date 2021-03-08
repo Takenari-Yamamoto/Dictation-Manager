@@ -9,7 +9,7 @@
     <!-- 選択されたyoutube再生 -->
     <youtube
       ref="youtube"
-      :video-id="selectted_videoId"
+      :video-id="dictations.selected_videoId"
       :width="350"
       height="250"
       @playing="playingVideo()"
@@ -111,7 +111,8 @@ export default {
       dialog: false,
       keyword: "",
       videoId: '',
-      selectted_videoId: "",
+      dictations: "",
+      selected_videoId: '',
       playing: false,
     };
   },
@@ -141,8 +142,7 @@ export default {
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
       console.log(videoId);
-      this.selectted_videoId = videoId;
-      console.log(this.selectted_videoId);
+      this.dictations.selected_videoId = videoId;
     },
     playVideo(){  // 再生処理
       this.player.playVideo();

@@ -21,8 +21,13 @@ class DictationController extends Controller
 
     public function store(Request $request)
     {
-      $dictation = new Dictation;
-      $dictation->save($request->all());
+        $dictation = new Dictation;
+        $dictation->id = $request->id;
+        $dictation->content = $request->content;
+        $dictation->title = $request->title;
+        $dictation->selected_videoId = $request->selected_videoId;
+        $dictation->user_id = $request->user()->id;
+        $dictation->save();
 
       return response()->json($dictation);
     }
@@ -35,7 +40,8 @@ class DictationController extends Controller
         
         $update = [
             'content' => $request->content,
-            'title' => $request->title
+            'title' => $request->title,
+            'selected_videoId' => $request->selected_videoId
         ];
         Dictation::where('id', $id)->update($update);
     }

@@ -4,7 +4,7 @@ import Router from "vue-router";
 import Dictation from './pages/Dictation.vue';
 import BulltenBorad from './pages/BulletenBoard.vue';
 import List from './pages/List.vue';
-import MyPage from './pages/MyPage.vue';
+// import MyPage from './pages/MyPage.vue';
 import Support from './pages/Support.vue';
 import Login from './pages/Login.vue';
 import Error from './pages/errors/Error.vue';

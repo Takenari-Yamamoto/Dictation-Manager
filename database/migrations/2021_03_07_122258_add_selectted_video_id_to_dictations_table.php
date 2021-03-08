@@ -14,7 +14,7 @@ class AddSelecttedVideoIdToDictationsTable extends Migration
     public function up()
     {
         Schema::table('dictations', function (Blueprint $table) {
-            $table->string('selectted_videoId')->nullable();
+            $table->string('selected_videoId')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddSelecttedVideoIdToDictationsTable extends Migration
     public function down()
     {
         Schema::table('dictations', function (Blueprint $table) {
-            $table->dropColumn('selectted_videoId');
+            $table->dropColumn('selected_videoId');
         });
     }
 }

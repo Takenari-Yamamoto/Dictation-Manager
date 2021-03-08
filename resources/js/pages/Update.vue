@@ -3,7 +3,7 @@
     class="editor"
   >
     <v-text-field
-      v-model="dictations.title"
+      v-model="dictation.title"
       label="Title"
       :rules="[rules.max_70]"
       :error="errors.title"
@@ -13,7 +13,7 @@
     />
     <quill-editor
       ref="quillEditor"
-      v-model="dictations.content"
+      v-model="dictation.content"
     />
     <div>
       <v-btn
@@ -51,11 +51,12 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      dictations: [],
-      dictationsContent:"",
+      dictation: [],
+      dictationContent:"",
       editorOption: {
         theme: 'snow'
       },
+      selected_videoId: '',
       //エラー情報初期化 
       text: "",
       errors: {
@@ -81,7 +82,7 @@ export default {
       axios.get('/api/dictation/'+ this.$route.params['dictationId'])
         .then((res)=>{
           console.log(res.data);
-          this.dictations = res.data;
+          this.dictation = res.data;
           const responseCode = res.status;
           if (responseCode === 403){
             this.$router.push('/403');
@@ -97,12 +98,14 @@ export default {
         this.messages[key] = null;
       }),
       axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
-        content: this.dictations.content,
-        title: this.dictations.title,
+        content: this.dictation.content,
+        title: this.dictation.title,
+        selected_videoId: this.dictation.selected_videoId,
         _method: 'put'
       })
       .then((res) => {
         let response = res.data;
+        console.log(this.selected_videoId);
           if (response.status == 400) {
             // バリデーションエラー
             Object.keys(response.errors).forEach((key) => {
