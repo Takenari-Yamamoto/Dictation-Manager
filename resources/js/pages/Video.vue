@@ -9,7 +9,7 @@
     <!-- 選択されたyoutube再生 -->
     <youtube
       ref="youtube"
-      :video-id="dictations.selected_videoId"
+      :video-id="selected_videoId"
       :width="350"
       height="250"
       @playing="playingVideo()"
@@ -60,8 +60,8 @@
         </v-btn>
         <v-list>
           <li v-for="(value, key) in videos">
-            {{ value.snippet.title }} </br>
-            {{ value.snippet.thumbnails.default.url }} </br>
+            {{ value.snippet.title }} </br></br>
+            {{ value.snippet.thumbnails.default.url }} </br></br>
             {{ value.snippet.description }} </br></br>
             <!-- youtube再生 -->
             <youtube
@@ -104,6 +104,13 @@ Vue.use(VueYoutube);
 
 export default {
   name: "SearchVideo",
+  props:{
+    dictation: {
+      type: null,
+      required: true,
+      default: () => {},
+    }
+  },
   data() {
     return {
       results: null,
@@ -111,7 +118,6 @@ export default {
       dialog: false,
       keyword: "",
       videoId: '',
-      dictations: "",
       selected_videoId: '',
       playing: false,
     };
@@ -120,6 +126,9 @@ export default {
     player(){
       return this.$refs.youtube.player;
     }
+  },
+  created() {
+    console.log(this.dictation);
   },
   methods: {
     //検索フォームから関連する動画を検索
@@ -142,7 +151,7 @@ export default {
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
       console.log(videoId);
-      this.dictations.selected_videoId = videoId;
+      this.dictation.selected_videoId = videoId;
     },
     playVideo(){  // 再生処理
       this.player.playVideo();

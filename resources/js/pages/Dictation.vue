@@ -3,13 +3,18 @@
     <div id="app">
       <v-row>
         <v-col 
-          cols="12" sm="7"
+          cols="12"
+          sm="7"
           @click.selected.prevent="selected"
         >
-          <Update />
+          <Update @catch-dictation="loadDictation" />
         </v-col>
         <!-- 右側に固定表示 -->
-        <v-col cols="7" sm="3" id="aaa">
+        <v-col
+          id="aaa"
+          cols="7"
+          sm="3"
+        >
           <div
             class="right_side pt-200 pl-30"
           >
@@ -24,7 +29,7 @@
               <v-row>
                 <!-- Youtube用 -->
                 <v-col>
-                  <Video />
+                  <Video :dictation="dictation" />
                 </v-col>
                 <v-col>
                   <MP3 />
@@ -100,7 +105,7 @@ export default {
     }).then((response) => {
       if (response.data.length === 0) {
         next({path: '/Error'});
-        console.log(response.data.length);
+        // console.log(response.data.length);
       } else {
         next();
       }
@@ -112,7 +117,7 @@ export default {
     }).then((response) => {
       if (response.data.length === 0) {
         next({path: '/Error'});
-        console.log(response.data.length);
+        // console.log(response.data.length);
       } else {
         next();
       }
@@ -128,7 +133,7 @@ export default {
   data() {
     return {
       selectedText: "",
-      dictation: null,
+      dictation: "",
       username: this.$store.getters['auth/username'],
       snackbar: false,
       timeout: 2000,
@@ -153,7 +158,9 @@ export default {
         return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
       }
   },
-  
+  created() {
+    this.loadDictation();
+  },
   methods: {
     // 範囲選択した文字を表示
     selected () {
@@ -186,15 +193,17 @@ export default {
         }
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
       });
     },
+    //エラー消去
     clearError(word) {
       this.errors[word] = false;
       this.messages[word] = null;
     },
-
-    
+    loadDictation(dictation) {
+      console.log(dictation);
+    }
   },
 };
 </script>

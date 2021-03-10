@@ -74,20 +74,23 @@ export default {
       }
     };
   },
+  mounted () {
+    this.$emit('catch-dictation', this.dictation);
+  },
   created() {
     this.request();
   },
   methods: {
+    //個別投稿表示
     request: function() {
       axios.get('/api/dictation/'+ this.$route.params['dictationId'])
         .then((res)=>{
-          console.log(res.data);
           this.dictation = res.data;
           const responseCode = res.status;
           if (responseCode === 403){
             this.$router.push('/403');
           } else {
-            console.log("成功");
+            this.$emit('catch-dictation', this.dictation);
           }
         });
     },
@@ -105,7 +108,6 @@ export default {
       })
       .then((res) => {
         let response = res.data;
-        console.log(this.selected_videoId);
           if (response.status == 400) {
             // バリデーションエラー
             Object.keys(response.errors).forEach((key) => {
@@ -119,7 +121,7 @@ export default {
           }
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
       });
     },
     clearError(dictation) {
