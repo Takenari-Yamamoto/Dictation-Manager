@@ -9,7 +9,7 @@
     <!-- 選択されたyoutube再生 -->
     <youtube
       ref="youtube"
-      :video-id="selected_videoId"
+      :video-id="dictation.selected_videoId"
       :width="350"
       height="250"
       @playing="playingVideo()"
@@ -63,7 +63,7 @@
             {{ value.snippet.title }} </br></br>
             {{ value.snippet.thumbnails.default.url }} </br></br>
             {{ value.snippet.description }} </br></br>
-            <!-- youtube再生 -->
+            <!-- youtube再生（サムネ的な） -->
             <youtube
               ref="youtube"
               :video-id="value.id.videoId"
@@ -107,7 +107,6 @@ export default {
   props:{
     dictation: {
       type: null,
-      required: true,
       default: () => {},
     }
   },
@@ -134,6 +133,7 @@ export default {
     //検索フォームから関連する動画を検索
     search_video () {
       console.log(this.keyword);
+      console.log(this.dictation);
       axios.get("/api/searchVideo", {
         params: {
           keyword: this.keyword
@@ -141,7 +141,7 @@ export default {
       })
       .then((res) => {
         this.videos = res.data;
-        this.videoId = res.data.id.videoId;
+        // this.videoId = res.data.id.videoId;
         console.log(this.videos);
         // for (let i = 0; i < res.data.length; i++) {
         //   console.log(res.data[i].snippet.title);
@@ -152,6 +152,7 @@ export default {
     get_videoId(videoId) {
       console.log(videoId);
       this.dictation.selected_videoId = videoId;
+      console.log(this.dictation.selected_videoId);
     },
     playVideo(){  // 再生処理
       this.player.playVideo();

@@ -133,7 +133,7 @@ export default {
   data() {
     return {
       selectedText: "",
-      dictation: "",
+      dictation: [],
       username: this.$store.getters['auth/username'],
       snackbar: false,
       timeout: 2000,
@@ -202,7 +202,8 @@ export default {
       this.messages[word] = null;
     },
     loadDictation(dictation) {
-      console.log(dictation);
+      this.dictation = dictation;
+      console.log(this.dictation);
     }
   },
 };

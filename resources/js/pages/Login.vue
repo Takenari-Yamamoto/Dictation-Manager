@@ -1,5 +1,6 @@
 <template>
   <div id="container">
+    <!-- 切り替えタブ -->
     <ul class="tab">
       <li
         class="tab__item"
