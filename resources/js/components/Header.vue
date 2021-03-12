@@ -112,7 +112,9 @@ export default {
         // selected_videoId: ''
       };
       // eslint-disable-next-line no-undef
-      axios.post('/api/dictation', dictation).then(res => {
+      axios
+        .post('/api/dictation', dictation)
+        .then(res => {
         this.$router.push('/Dictation/'+ res.data.id);
       });
     },

@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     //個別投稿表示
-    request: function() {
+    request () {
       axios.get('/api/dictation/'+ this.$route.params['dictationId'])
         .then((res)=>{
           this.dictation = res.data;
@@ -100,7 +100,8 @@ export default {
         this.errors[key] = false;
         this.messages[key] = null;
       }),
-      axios.post('/api/dictation/'+ this.$route.params['dictationId'], {
+      axios
+      .post('/api/dictation/'+ this.$route.params['dictationId'], {
         content: this.dictation.content,
         title: this.dictation.title,
         selected_videoId: this.dictation.selected_videoId,
@@ -121,7 +122,7 @@ export default {
           }
       })
       .catch((error) => {
-        // console.log(error.response);
+        console.log(error.response);
       });
     },
     clearError(dictation) {

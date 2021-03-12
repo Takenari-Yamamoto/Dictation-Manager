@@ -70,6 +70,9 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-container v-else>
+      <AccessError />
+    </v-container>
 
     <!-- 削除確認ダイアログを追加 -->
     <v-dialog
@@ -106,8 +109,13 @@
 
 <script>
 import axios from 'axios';
+import AccessError from '../pages/errors/AccessError';
+
 // alter table dictations modify content LONGBLOB(4294967295);
   export default {
+    components : {
+      AccessError
+    },
     data: function() {
       return {
         dictations: [],

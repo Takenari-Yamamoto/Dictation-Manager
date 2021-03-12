@@ -22,10 +22,13 @@
       v-show="tab === 1"
       class="panel"
     >
-      <form
+      <v-form
+        ref="form"
+        lazy-validation
         class="form"
         @submit.prevent="login"
       >
+        <!-- ログインエラー時 -->
         <div
           v-if="loginErrors"
           class="errors"
@@ -47,40 +50,49 @@
             </li>
           </ul>
         </div>
-        <label for="login-email">Email</label>
-        <input
-          id="login-email"
+        <!-- 入力フォーム -->
+        <v-text-field
           v-model="loginForm.email"
-          type="text"
-          class="form__item"
-        >
-        <label for="login-password">Password</label>
-        <input
-          id="login-password"
+          label="Email"
+          required
+        />
+
+        <v-text-field
           v-model="loginForm.password"
-          type="password"
-          class="form__item"
-        >
-        <div class="form__button">
-          <v-btn
-            type="submit"
-            class="button button--inverse"
-            color="blue-grey"
+          :type="'password'"
+          label="Password"
+          required
+        />
+        <v-row>
+          <v-col
+            md="2"
+            offset-md="10"
           >
-            Login
-          </v-btn>
-        </div>
-      </form>
+            <v-btn
+              id="login_button"
+              type="submit"
+              class="button button--inverse"
+              color="primary"
+              :align-self="align"
+            >
+              Login
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-form>
     </div>
     <!-- 登録 -->
     <div
       v-show="tab === 2"
       class="panel"
     >
-      <form
+      <v-form
+        ref="form"
+        lazy-validation
         class="form"
         @submit.prevent="register"
       >
+        <!-- エラー時 -->
         <div
           v-if="registerErrors"
           class="errors"
@@ -110,44 +122,50 @@
             </li>
           </ul>
         </div>
-        <label for="username">Name</label>
-        <input
+        <!-- 入力フォーム -->
+        <v-text-field
           id="username"
           v-model="registerForm.name"
-          type="text"
-          class="form__item"
-        >
-        <label for="email">Email</label>
-        <input
+          label="Name"
+          required
+        />
+
+        <v-text-field
           id="email"
           v-model="registerForm.email"
-          type="text"
-          class="form__item"
-        >
-        <label for="password">Password</label>
-        <input
+          label="E-mail"
+          required
+        />
+
+        <v-text-field
           id="password"
           v-model="registerForm.password"
-          type="password"
-          class="form__item"
-        >
-        <label for="password-confirmation">Password (confirm)</label>
-        <input
+          :type="'password'"
+          label="Passsword"
+          required
+        />
+
+        <v-text-field
           id="password-confirmation"
           v-model="registerForm.password_confirmation"
-          type="password"
-          class="form__item"
+          :type="'password'"
+          label="Password (confirm)"
+          required
+        />
+
+        <v-col
+          md="2"
+          offset-md="10"
         >
-        <div class="form__button">
           <v-btn
-            color="blue-grey"
+            color="primary"
             type="submit"
             class="button button--inverse"
           >
-            register
+            Register
           </v-btn>
-        </div>
-      </form>
+        </v-col>
+      </v-form>
     </div>
   </div>
 </template>
@@ -213,7 +231,5 @@ export default {
    width: 70%;
    margin: 0 auto;
  }
-button button--inverse {
-  color: white;
-}
+
 </style>

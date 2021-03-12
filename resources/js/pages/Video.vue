@@ -151,6 +151,7 @@ export default {
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
       console.log(videoId);
+      // eslint-disable-next-line vue/no-mutating-props
       this.dictation.selected_videoId = videoId;
       console.log(this.dictation.selected_videoId);
     },
