@@ -21,7 +21,7 @@
             <audio
               id="audio"
               controls
-              :src="url"
+              :url="require(MP3_URL)"
             />
             <div
               class="upload_material"
@@ -105,7 +105,6 @@ export default {
     }).then((response) => {
       if (response.data.length === 0) {
         next({path: '/Error'});
-        // console.log(response.data.length);
       } else {
         next();
       }
@@ -117,7 +116,6 @@ export default {
     }).then((response) => {
       if (response.data.length === 0) {
         next({path: '/Error'});
-        // console.log(response.data.length);
       } else {
         next();
       }
@@ -138,6 +136,7 @@ export default {
       snackbar: false,
       timeout: 2000,
       text: "",
+      MP3_URL: "",
       //エラー情報初期化 
       errors: {
         word: false
@@ -147,19 +146,18 @@ export default {
       },
       rules: {
         max_10: true
-      }
+      },
+      
     };
   },
   computed: {
-      isLogin () {
-        return this.$store.getters['auth/check'];
-      },
-      url() {
-        return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
-      }
+    isLogin () {
+      return this.$store.getters['auth/check'];
+    },
   },
   created() {
     this.loadDictation();
+    this.getURL();
   },
   methods: {
     // 範囲選択した文字を表示
@@ -176,25 +174,25 @@ export default {
       const word = {
         word: this.selectedText,
       };
-      axios.post('/api/word',word)
-      .then((res) => {
-        let response = res.data;
-        if (response.status == 400) {
-          // バリデーションエラー
-          Object.keys(response.errors).forEach((key) => {
-            this.errors[key] = true;
-            this.messages[key] = response.errors[key];
-          });
-        } else {
-          // 成功したらUserItemコンポーネントを表示
-          this.text = 'Add to List!!';
-          this.snackbar = true;
-          console.log("成功！");
-        }
-      })
-      .catch((error) => {
-        // console.log(error.response);
-      });
+      axios
+        .post('/api/word',word)
+        .then((res) => {
+          let response = res.data;
+          if (response.status == 400) {
+            // バリデーションエラー
+            Object.keys(response.errors).forEach((key) => {
+              this.errors[key] = true;
+              this.messages[key] = response.errors[key];
+            });
+          } else {
+            // 成功したらUserItemコンポーネントを表示
+            this.text = 'Add to List!!';
+            this.snackbar = true;
+          }
+        })
+        .catch((error) => {
+          // console.log(error.response);
+        });
     },
     //エラー消去
     clearError(word) {
@@ -203,9 +201,22 @@ export default {
     },
     loadDictation(dictation) {
       this.dictation = dictation;
-      console.log(this.dictation);
+    },
+    //S3から音源取得
+    async getURL() {
+      axios.get("https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3")
+      .then((res) => {
+        const responseCode = res.status;
+        if (responseCode === 403){
+          console.log("エラー");
+        } else {
+          this.MP3_URL = res.config.url;
+          console.log(this.MP3_URL);
+          console.log("取得した");
+        }
+      });
     }
-  },
+  }
 };
 </script>
 

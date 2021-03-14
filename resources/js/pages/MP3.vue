@@ -68,18 +68,15 @@ export default {
   },
   computed: {
     isLogin () {
-    return this.$store.getters['auth/check'];
+      return this.$store.getters['auth/check'];
     },
-    url() {
-    return "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3"; 
-    }
   },
   watch: {
-      loading (val) {
-        if (!val) return;
-        setTimeout(() => (this.loading = false), 100000);
-      },
+    loading (val) {
+      if (!val) return;
+      setTimeout(() => (this.loading = false), 100000);
     },
+  },
   methods: {
     async upload() { 
       const upload_files = document.getElementById('upload-file');
@@ -128,7 +125,7 @@ export default {
       } catch (error) {
           console.log('S3 アップロード エラー');
       }
-    }, 
+    },
   },
   
 };

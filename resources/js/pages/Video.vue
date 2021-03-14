@@ -1,5 +1,3 @@
-
-
 <template>
   <v-form
     ref="form"
@@ -8,6 +6,7 @@
   >
     <!-- 選択されたyoutube再生 -->
     <youtube
+      v-if="dictation.selected_videoId !== null"
       ref="youtube"
       :video-id="dictation.selected_videoId"
       :width="350"
@@ -101,7 +100,6 @@ import Vue from 'vue';
 import VueYoutube from 'vue-youtube';
  
 Vue.use(VueYoutube);
-
 export default {
   name: "SearchVideo",
   props:{
@@ -117,7 +115,6 @@ export default {
       dialog: false,
       keyword: "",
       videoId: '',
-      selected_videoId: '',
       playing: false,
     };
   },
@@ -127,7 +124,7 @@ export default {
     }
   },
   created() {
-    console.log(this.dictation);
+    // console.log(this.dictation);
   },
   methods: {
     //検索フォームから関連する動画を検索
@@ -175,7 +172,6 @@ export default {
 #youtube_icon {
   padding-top: 5px;
 }
-
 .video {
   padding-top: 100px;
 }

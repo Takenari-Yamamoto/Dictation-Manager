@@ -54,14 +54,22 @@
         <v-text-field
           v-model="loginForm.email"
           label="Email"
+          :rules="[rules.required, rules.string, rules.max_20,]"
+          :error="errors.email"
+          :error-messages="messages.email"
           required
+          @keydown="ErrorClear('email')"
         />
 
         <v-text-field
           v-model="loginForm.password"
           :type="'password'"
           label="Password"
+          :rules="[rules.required, rules.string, rules.min_8,]"
+          :error="errors.password"
+          :error-messages="messages.password"
           required
+          @keydown="ErrorClear('password')"
         />
         <v-row>
           <v-col
@@ -185,7 +193,26 @@ export default {
         email: '',
         password: '',
         password_confirmation: ''
-      }
+      },
+      // メッセージ
+      messages: {
+        name: null,
+        email: null,
+        password: null,
+      },
+      // エラー
+      errors: {
+        name: false,
+        email: false,
+        password: false,
+      },
+      // validation rule
+      rules: {
+        required: true,
+        max_255: true,
+        string: true,
+        min_8: true,
+      },
     };
   },
   computed: mapState({
@@ -198,14 +225,37 @@ export default {
   },
   methods: {
     async login () {
+      // 全てのエラーをリセット
+      Object.keys(this.errors).forEach((key) => {
+        this.errors[key] = false;
+        this.messages[key] = null;
+      });
+      // 送信処理
       // authストアのloginアクションを呼び出す
-      await this.$store.dispatch('auth/login', this.loginForm);
+      await this.$store.dispatch('auth/login', this.loginForm)
+      .then((res) => {
+          let response = res.data;
+          if (response.status == 400) {
+            // バリデーションエラー
+            Object.keys(response.errors).forEach((key) => {
+              this.errors[key] = true;
+              this.messages[key] = response.errors[key];
+            });
+          } else {
+            // 成功したらUserItemコンポーネントを表示
+            this.$router.push('/user/item');
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
       if (this.apiStatus) {
         // トップページに移動する
         this.$router.push('/');
       } else {
-        alert ("ERROR!");
+        // alert ("ERROR!");
       }
+      
     },
     async register () {
       // authストアのresigterアクションを呼び出す
@@ -220,7 +270,12 @@ export default {
     clearError () {
       this.$store.commit('auth/setLoginErrorMessages', null);
       this.$store.commit('auth/setRegisterErrorMessages', null);
-    }
+    },
+    // 各エラーのリセット
+    ErrorClear(item) {
+      this.errors[item] = false;
+      this.messages[item] = null;
+    },
   }
 };
 </script>

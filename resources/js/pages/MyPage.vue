@@ -13,6 +13,7 @@
         <v-col
           cols="6"
           sm="2"
+          class="p-0"
         >
           <button @click="sortByDate()">
             Sort by Date
@@ -46,26 +47,31 @@
               class="grey--text mb-2 title"
               @click="editDictation(dictation.id)"
             >
-              <v-list-item-content>
+              <v-list-item-content
+                class="pb-0"  
+              >
                 <p id="dictation_title">
                   {{ dictation.title }}
                 </p>
                 </br>
-                <p id="date">
+                <p 
+                  id="date"
+                  class="p-0"
+                >
                   Updated at : {{ dictation.updated_at }}
                 </p>
-
-                <audio
-                  controls
-                  :src="url(dictation.id)"
-                />
               </v-list-item-content>
             </v-list-item>
-            <v-icon
-              @click="deleteConfirm(dictation.id)"
+            <v-col
+              md="2"
+              offset-md="10"
             >
-              mdi-delete
-            </v-icon>
+              <v-icon
+                @click="deleteConfirm(dictation.id)"
+              >
+                mdi-delete
+              </v-icon>
+            </v-col>
           </v-card>
         </v-col>
       </v-row>
@@ -124,6 +130,7 @@ import AccessError from '../pages/errors/AccessError';
         items: [],
         deleteDialog: false,	// 追加：初期値は非表示
         deleteID: null,			// 追加：削除Itemのid
+        audioUrl:""
       };
     },
     computed: {
@@ -158,7 +165,7 @@ import AccessError from '../pages/errors/AccessError';
         });
       },
       //editで詳細ページへ
-      editDictation: function(dictationId) {
+      editDictation (dictationId) {
         axios.get('/Dictation/+ dictationId',{
           id: dictationId
         }).then(()=>{

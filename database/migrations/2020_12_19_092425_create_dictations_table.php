@@ -33,4 +33,3 @@ class CreateDictationsTable extends Migration
         Schema::dropIfExists('dictations');
     }
 }
-// ALTER TABLE dictations MODIFY selectted_videoId VARCHAR(255);

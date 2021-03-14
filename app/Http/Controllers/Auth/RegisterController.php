@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Requests\Ajax\User\ItemRequest;
+use App\Http\Requests\Ajax\User\RegisterRequest;
 
 class RegisterController extends Controller
 {
