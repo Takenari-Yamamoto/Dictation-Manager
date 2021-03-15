@@ -11,18 +11,13 @@
         </v-col>
         <!-- 右側に固定表示 -->
         <v-col
-          id="aaa"
+          id="right_side_col"
           cols="7"
           sm="3"
         >
           <div
             class="right_side pt-200 pl-30"
           >
-            <audio
-              id="audio"
-              controls
-              :url="require(MP3_URL)"
-            />
             <div
               class="upload_material"
             >
@@ -31,6 +26,7 @@
                 <v-col>
                   <Video :dictation="dictation" />
                 </v-col>
+                <!-- MP3 -->
                 <v-col>
                   <MP3 />
                 </v-col>
@@ -84,6 +80,13 @@
         </v-col>
       </v-row>
     </div>
+    <vuetify-audio
+      :file="file"
+      color="success"
+      :ended="audioFinish"
+      downloadable
+      width="100%"
+    />
   </v-container>
 </template>
 
@@ -95,6 +98,7 @@ import Video from "../pages/Video";
 
 export default {
   components: {
+    VuetifyAudio: () => import('vuetify-audio'),
     Update,
     MP3,
     Video,
@@ -122,7 +126,6 @@ export default {
     });
   },
   props: {
-    // dictationId: String
     dictationId: {
       type: String,
       required: true
@@ -136,7 +139,6 @@ export default {
       snackbar: false,
       timeout: 2000,
       text: "",
-      MP3_URL: "",
       //エラー情報初期化 
       errors: {
         word: false
@@ -147,7 +149,7 @@ export default {
       rules: {
         max_10: true
       },
-      
+      file: ''
     };
   },
   computed: {
@@ -157,7 +159,7 @@ export default {
   },
   created() {
     this.loadDictation();
-    this.getURL();
+    this.mounted();
   },
   methods: {
     // 範囲選択した文字を表示
@@ -202,20 +204,22 @@ export default {
     loadDictation(dictation) {
       this.dictation = dictation;
     },
-    //S3から音源取得
-    async getURL() {
-      axios.get("https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3")
+    // S3から音源取得
+    async mounted() {
+      this.response = await axios.get("https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3")
       .then((res) => {
-        const responseCode = res.status;
-        if (responseCode === 403){
-          console.log("エラー");
-        } else {
-          this.MP3_URL = res.config.url;
-          console.log(this.MP3_URL);
-          console.log("取得した");
-        }
-      });
-    }
+        return res;
+      }, this);
+      if (this.response.status === 403) {
+        console.log("エラー！");
+        this.file = undefined;
+        console.log(this.file);
+      } else {
+        console.log("取得した");
+        this.file = this.response.config.url;
+        console.log(this.file);
+      }
+    },
   }
 };
 </script>
@@ -253,16 +257,8 @@ export default {
 
 @media screen and (max-width: 600px) {
 
-  #aaa {
+  #right_side_col {
     padding: 0;
-  }
-  #audio {
-    width: 180%;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    z-index: 5;
-    bottom: 0px;
   }
   .right_side {
     padding: 0;

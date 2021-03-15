@@ -13,6 +13,26 @@
     </RouterLink>
     <v-spacer />
     <div class="navbar__menu">
+      <!-- マイページへ -->
+      <router-link
+        v-if="isLogin"
+        id="mypage"
+        class="navbar__item white--text text-decoration-none"
+        to="/"
+      >
+        <v-tooltip bottom>
+          <template #activator="{ on, attrs }">
+            <v-icon
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-account
+            </v-icon>
+          </template>
+          <span>My Page</span>
+        </v-tooltip>
+      </router-link>
       <!-- 新規作成 -->
       <router-link
         v-if="isLogin"

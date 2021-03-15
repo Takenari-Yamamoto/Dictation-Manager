@@ -45,6 +45,7 @@
         "vue-simple-spinner": "^1.2.10",
         "vue-youtube": "^1.4.0",
         "vuetify": "^2.3.18",
+        "vuetify-audio": "^0.3.3",
         "vuetify-loader": "^1.4.3"
     }
 }

@@ -13,6 +13,12 @@
       height="250"
       @playing="playingVideo()"
     />
+    <v-btn
+      color="green darken-1"
+      @click="deleteMovie()"
+    >
+      Delete Movie
+    </v-btn>
     <div>
       <button
         v-if="playing"
@@ -70,7 +76,7 @@
               height="250"
               @playing="playingVideo()"
             />
-            <div>
+            <!-- <div>
               <button
                 v-if="playing"
                 @click="pauseVideo"
@@ -83,7 +89,7 @@
               >
                 play
               </button>
-            </div>
+            </div> -->
             <v-btn @click="get_videoId(value.id.videoId)">
               videoId取得
             </v-btn> 
@@ -106,7 +112,7 @@ export default {
     dictation: {
       type: null,
       default: () => {},
-    }
+    },
   },
   data() {
     return {
@@ -116,6 +122,7 @@ export default {
       keyword: "",
       videoId: '',
       playing: false,
+      Dictation: this.dictation
     };
   },
   computed:{
@@ -123,14 +130,10 @@ export default {
       return this.$refs.youtube.player;
     }
   },
-  created() {
-    // console.log(this.dictation);
-  },
   methods: {
     //検索フォームから関連する動画を検索
     search_video () {
       console.log(this.keyword);
-      console.log(this.dictation);
       axios.get("/api/searchVideo", {
         params: {
           keyword: this.keyword
@@ -138,12 +141,13 @@ export default {
       })
       .then((res) => {
         this.videos = res.data;
-        // this.videoId = res.data.id.videoId;
         console.log(this.videos);
-        // for (let i = 0; i < res.data.length; i++) {
-        //   console.log(res.data[i].snippet.title);
-        // }
       });
+    },
+     // 選択した動画を削除
+    deleteMovie() {
+      this.dictation.selected_videoId = null;
+      alert('Press update button if you wanna delete!');
     },
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
@@ -152,17 +156,18 @@ export default {
       this.dictation.selected_videoId = videoId;
       console.log(this.dictation.selected_videoId);
     },
-    playVideo(){  // 再生処理
+    // 再生処理
+    playVideo(){  
       this.player.playVideo();
       this.playing = true;
+      console.log('play start!');
     },
-    pauseVideo(){ // 停止処理
+    // 停止処理
+    pauseVideo(){
       this.player.pauseVideo();
       this.playing = false;
     },
-    playingVideo(){
-      console.log('play start!');
-    }
+   
   }
   
 };

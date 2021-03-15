@@ -15,12 +15,12 @@
           v-bind="attrs"
           v-on="on"
         >
-          <img
+          <v-icon
             id="mp3_icon"
-            src="https://image.freepik.com/free-icon/mp3_318-1749.jpg"
-            alt="youtube"
-            width="60px"
+            large
           >
+            mdi-folder-music-outline
+          </v-icon>
         </div>
       </template>
       <v-card>
