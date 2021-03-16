@@ -10,7 +10,7 @@
       width="600px"
     >
       <template #activator="{ on, attrs }">
-        <!-- youtube upload -->
+        <!-- mp3 upload -->
         <div
           v-bind="attrs"
           v-on="on"

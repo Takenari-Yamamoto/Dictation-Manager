@@ -81,7 +81,6 @@
               type="submit"
               class="button button--inverse"
               color="primary"
-              :align-self="align"
             >
               Login
             </v-btn>
@@ -135,14 +134,20 @@
           id="username"
           v-model="registerForm.name"
           label="Name"
-          required
+          :rules="[rules.required, rules.max_20]"
+          :error="errors.name"
+          :error-message="messages.name"
+          @keydown="clearError('name')"
         />
 
         <v-text-field
           id="email"
           v-model="registerForm.email"
           label="E-mail"
-          required
+          :rules="[rules.required, rules.max_255]"
+          :error="errors.email"
+          :error-message="messages.email"
+          @keydown="clearError('email')"
         />
 
         <v-text-field
@@ -150,7 +155,10 @@
           v-model="registerForm.password"
           :type="'password'"
           label="Passsword"
-          required
+          :rules="[rules.required, rules.max_20]"
+          :error="errors.password"
+          :error-message="messages.password"
+          @keydown="clearError('password')"
         />
 
         <v-text-field
@@ -158,7 +166,10 @@
           v-model="registerForm.password_confirmation"
           :type="'password'"
           label="Password (confirm)"
-          required
+          :rules="[rules.required, rules.max_20]"
+          :error="errors.password"
+          :error-message="messages.password"
+          @keydown="clearError('password')"
         />
 
         <v-col
@@ -255,16 +266,37 @@ export default {
       } else {
         // alert ("ERROR!");
       }
-      
     },
+    // 登録処理
     async register () {
+      // 全てのエラーをリセット
+        Object.keys(this.errors).forEach((key) => {
+          this.errors[key] = false;
+          this.messages[key] = null;
+        });
       // authストアのresigterアクションを呼び出す
-      await this.$store.dispatch('auth/register', this.registerForm);
+      await this.$store.dispatch('auth/register', this.registerForm)
+      .then((res) => {
+          let response = res.data;
+          if (response.status == 400) {
+            // バリデーションエラー
+            Object.keys(response.errors).forEach((key) => {
+              this.errors[key] = true;
+              this.messages[key] = response.errors[key];
+            });
+          } else {
+            // 成功したらUserItemコンポーネントを表示
+            this.$router.push('/user/item');
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
       if (this.apiStatus) {
         // トップページに移動する
         this.$router.push('/');
       } else {
-        alert ("ERROR!");
+        // alert ("ERROR!");
       }
     },
     clearError () {

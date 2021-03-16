@@ -5,21 +5,25 @@
     method="post"
   >
     <!-- 選択されたyoutube再生 -->
-    <youtube
+    <div
       v-if="dictation.selected_videoId !== null"
-      ref="youtube"
-      :video-id="dictation.selected_videoId"
-      :width="350"
-      height="250"
-      @playing="playingVideo()"
-    />
-    <v-btn
-      color="green darken-1"
-      @click="deleteMovie()"
+      class="youtube"
     >
-      Delete Movie
-    </v-btn>
-    <div>
+      <youtube
+        ref="youtube"
+        :video-id="dictation.selected_videoId"
+        :width="350"
+        height="250"
+        @playing="playingVideo()"
+      />
+      <v-btn
+        color="green darken-1"
+        @click="deleteMovie()"
+      >
+        Delete Movie
+      </v-btn>
+    </div>
+    <!-- <div>
       <button
         v-if="playing"
         @click="pauseVideo"
@@ -32,7 +36,7 @@
       >
         play
       </button>
-    </div>
+    </div> -->
     <!-- youtube upload -->
     <v-dialog
       v-model="dialog"
@@ -45,30 +49,35 @@
           v-bind="attrs"
           v-on="on"
         >
-          <img
+          <v-icon
             id="youtube_icon"
-            src="https://freeiconshop.com/wp-content/uploads/edd/youtube-flat.png"
-            alt="youtube"
-            width="48px"
+            large
           >
+            mdi-movie-edit
+          </v-icon>
         </div>
       </template>
       <v-card>
-        <input
+        <v-text-field
           id="keyword"
           v-model="keyword"
           size="40"
           placeholder="検索キーワードを入力"
         >
-        <v-btn @click="search_video()">
-          検索
-        </v-btn>
-        <v-list>
+          <template #append-outer>
+            <v-btn
+              color="primary"
+              @click="search_video()"
+            >
+              検索
+            </v-btn>
+          </template>
+        </v-text-field>
+        <!-- <v-list>
           <li v-for="(value, key) in videos">
-            {{ value.snippet.title }} </br></br>
-            {{ value.snippet.thumbnails.default.url }} </br></br>
-            {{ value.snippet.description }} </br></br>
-            <!-- youtube再生（サムネ的な） -->
+            {{ value.snippet.title }}
+            {{ value.snippet.thumbnails.default.url }}
+            {{ value.snippet.description }}
             <youtube
               ref="youtube"
               :video-id="value.id.videoId"
@@ -76,24 +85,46 @@
               height="250"
               @playing="playingVideo()"
             />
-            <!-- <div>
-              <button
-                v-if="playing"
-                @click="pauseVideo"
-              >
-                pause
-              </button>
-              <button
-                v-else
-                @click="playVideo"
-              >
-                play
-              </button>
-            </div> -->
             <v-btn @click="get_videoId(value.id.videoId)">
               videoId取得
             </v-btn> 
           </li>
+        </v-list> -->
+        <v-list three-line>
+          <template v-for="(value, key) in videos">
+            <v-card
+              :key="key"
+              class="mx-auto"
+              max-width="100%"
+              outlined
+            >
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <v-list-item-title class="headline mb-1">
+                    {{ value.snippet.title }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>{{ value.snippet.description }}</v-list-item-subtitle>
+                </v-list-item-content>
+
+                <v-list-item-avatar
+                  tile
+                />
+                <youtube
+                  ref="youtube"
+                  :video-id="value.id.videoId"
+                  width="150px"
+                  height="100px"
+                  @playing="playingVideo()"
+                />
+              </v-list-item>
+
+              <v-card-actions>
+                <v-btn @click="get_videoId(value.id.videoId)">
+                  videoId取得
+                </v-btn> 
+              </v-card-actions>
+            </v-card>
+          </template>
         </v-list>
       </v-card>
     </v-dialog>

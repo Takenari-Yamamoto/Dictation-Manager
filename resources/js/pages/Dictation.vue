@@ -14,10 +14,17 @@
           id="right_side_col"
           cols="7"
           sm="3"
+         
         >
           <div
             class="right_side pt-200 pl-30"
           >
+        <audio
+                v-if="mp3_url!==null"
+                id="audio"
+                controls
+                :src="mp3_url"
+              />
             <div
               class="upload_material"
             >
@@ -80,13 +87,13 @@
         </v-col>
       </v-row>
     </div>
-    <vuetify-audio
+    <!-- <vuetify-audio
       :file="file"
       color="success"
       :ended="audioFinish"
       downloadable
       width="100%"
-    />
+    /> -->
   </v-container>
 </template>
 
@@ -149,7 +156,8 @@ export default {
       rules: {
         max_10: true
       },
-      file: ''
+      file: '',
+      mp3_url: ""
     };
   },
   computed: {
@@ -212,12 +220,12 @@ export default {
       }, this);
       if (this.response.status === 403) {
         console.log("エラー！");
-        this.file = undefined;
-        console.log(this.file);
+        this.mp3_url = null;
+        console.log(this.mp3_url);
       } else {
         console.log("取得した");
-        this.file = this.response.config.url;
-        console.log(this.file);
+        this.mp3_url = this.response.config.url;
+        console.log(this.mp3_url);
       }
     },
   }
