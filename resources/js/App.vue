@@ -12,6 +12,7 @@
   import Message from './components/Message.vue';
   import Header from './components/Header';
   import Footer from './components/Footer';
+  
   import { INTERNAL_SERVER_ERROR } from './util';
 
   export default {

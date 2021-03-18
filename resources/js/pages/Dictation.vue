@@ -19,12 +19,6 @@
           <div
             class="right_side pt-200 pl-30"
           >
-        <audio
-                v-if="mp3_url!==null"
-                id="audio"
-                controls
-                :src="mp3_url"
-              />
             <div
               class="upload_material"
             >
@@ -87,13 +81,13 @@
         </v-col>
       </v-row>
     </div>
-    <!-- <vuetify-audio
-      :file="file"
+    <vuetify-audio
+      v-if="mp3_url!==null"
+      :file="mp3_url"
       color="success"
-      :ended="audioFinish"
       downloadable
       width="100%"
-    /> -->
+    />
   </v-container>
 </template>
 

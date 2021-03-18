@@ -122,10 +122,10 @@ export default {
     },
     username () {
       return this.$store.getters['auth/username'];
-    }
+    },
   },
   methods: {
-    createDictation: function() {
+    createDictation () {
       const dictation = {
         content: '',
         title: 'no title',
@@ -139,6 +139,12 @@ export default {
       });
     },
     // ALTER TABLE dictations RENAME COLUMN selectted_videoId TO selected_videoId
+  },
+  async logout () {
+    await this.$store.dispatch('auth/logout');
+    if (this.apiStatus) {
+      this.$router.push('');
+    }
   }
 };
 </script>

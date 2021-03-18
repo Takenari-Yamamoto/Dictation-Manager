@@ -15,8 +15,9 @@ class DictationController extends Controller
     public function index() {
         
         $user_id = Auth::id();
-        $dictations = Dictation::all()->where('user_id', $user_id);
-        return response()->json($dictations);
+        $dictations = Dictation::where('user_id', $user_id)->paginate(8);
+        return response()->json(['result' => $dictations]);
+
     }
 
     public function store(Request $request)

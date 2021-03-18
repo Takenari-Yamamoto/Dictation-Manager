@@ -17,27 +17,12 @@
         @playing="playingVideo()"
       />
       <v-btn
-        color="green darken-1"
-        @click="deleteMovie()"
+        color="error"
+        @click="deleteMovie(); alert_delete()"
       >
         Delete Movie
       </v-btn>
     </div>
-    <!-- <div>
-      <button
-        v-if="playing"
-        @click="pauseVideo"
-      >
-        pause
-      </button>
-      <button
-        v-else
-        @click="playVideo"
-      >
-        play
-      </button>
-    </div> -->
-    <!-- youtube upload -->
     <v-dialog
       v-model="dialog"
       width="600px"
@@ -73,23 +58,6 @@
             </v-btn>
           </template>
         </v-text-field>
-        <!-- <v-list>
-          <li v-for="(value, key) in videos">
-            {{ value.snippet.title }}
-            {{ value.snippet.thumbnails.default.url }}
-            {{ value.snippet.description }}
-            <youtube
-              ref="youtube"
-              :video-id="value.id.videoId"
-              :width="400"
-              height="250"
-              @playing="playingVideo()"
-            />
-            <v-btn @click="get_videoId(value.id.videoId)">
-              videoId取得
-            </v-btn> 
-          </li>
-        </v-list> -->
         <v-list three-line>
           <template v-for="(value, key) in videos">
             <v-card
@@ -119,7 +87,7 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-btn @click="get_videoId(value.id.videoId)">
+                <v-btn @click="get_videoId(value.id.videoId); alert_save()">
                   videoId取得
                 </v-btn> 
               </v-card-actions>
@@ -135,6 +103,8 @@
 import axios from 'axios';
 import Vue from 'vue';
 import VueYoutube from 'vue-youtube';
+import VueSwal from 'vue-swal';
+Vue.use(VueSwal);
  
 Vue.use(VueYoutube);
 export default {
@@ -178,7 +148,9 @@ export default {
      // 選択した動画を削除
     deleteMovie() {
       this.dictation.selected_videoId = null;
-      alert('Press update button if you wanna delete!');
+    },
+    alert_delete () {
+     this.$swal('完全に削除するには Update ボタンを押してください');
     },
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
@@ -186,6 +158,9 @@ export default {
       // eslint-disable-next-line vue/no-mutating-props
       this.dictation.selected_videoId = videoId;
       console.log(this.dictation.selected_videoId);
+    },
+    alert_save () {
+     this.$swal('選択した動画を保存するには Update ボタンを押してください');
     },
     // 再生処理
     playVideo(){  

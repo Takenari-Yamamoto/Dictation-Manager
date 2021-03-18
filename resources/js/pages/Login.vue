@@ -186,11 +186,28 @@
         </v-col>
       </v-form>
     </div>
+    <div
+      justify="center"
+    >
+      <v-btn
+        depressed
+        color="error"
+        class="font-weight-black mt-5"
+        @click="guest_login()"
+        large
+      >
+        ゲストの方はこちらからどうぞ
+      </v-btn>
+    </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
 import { mapState } from 'vuex';
+import VueSwal from 'vue-swal';
+Vue.use(VueSwal);
+
 export default {
   data () {
     return {
@@ -264,8 +281,11 @@ export default {
         // トップページに移動する
         this.$router.push('/');
       } else {
-        // alert ("ERROR!");
+        this.alert_login();
       }
+    },
+    alert_login () {
+     this.$swal('入力内容に誤りがあります');
     },
     // 登録処理
     async register () {
@@ -296,7 +316,7 @@ export default {
         // トップページに移動する
         this.$router.push('/');
       } else {
-        // alert ("ERROR!");
+        this.alert_login();
       }
     },
     clearError () {
@@ -308,6 +328,12 @@ export default {
       this.errors[item] = false;
       this.messages[item] = null;
     },
+    // ゲストログイン
+    guest_login() {
+      this.loginForm.email = "sample@sample.jp";
+      this.loginForm.password = "sample1216";
+      this.login();
+    }
   }
 };
 </script>

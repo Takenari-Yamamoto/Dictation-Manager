@@ -7,9 +7,13 @@
     Dictation Manager
     <button
       v-if="isLogin"
+      id="logout"
       class="button button--link"
       @click="logout"
     >
+      <v-icon>
+        mdi-logout
+      </v-icon>
       Logout
     </button>
     <RouterLink
@@ -43,3 +47,14 @@ export default {
   }
 };
 </script>
+
+<style>
+
+#logout {
+  color: white;
+}
+
+.v-footer {
+  justify-content: space-between;
+}
+</style>
