@@ -81,6 +81,13 @@
         </v-col>
       </v-row>
     </div>
+    <v-btn 
+      @click="undisplay_mp3" 
+      class="m-2"
+      color="error"
+    >
+      {{ mp3_text }}
+    </v-btn>
     <vuetify-audio
       v-if="mp3_url!==null"
       :file="mp3_url"
@@ -88,6 +95,7 @@
       downloadable
       width="100%"
     />
+    
   </v-container>
 </template>
 
@@ -140,6 +148,7 @@ export default {
       snackbar: false,
       timeout: 2000,
       text: "",
+      mp3_text: "Hide",
       //エラー情報初期化 
       errors: {
         word: false
@@ -222,6 +231,15 @@ export default {
         console.log(this.mp3_url);
       }
     },
+    undisplay_mp3() {
+      if(this.mp3_url !== null) {
+        this.mp3_url = null;
+        this.mp3_text = "Show"
+      } else {
+        this.mp3_url = "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3";
+        this.mp3_text = "Hide"
+      }
+    }
   }
 };
 </script>

@@ -111,7 +111,7 @@ export default {
         }
         formdata.append("file", up_file);
         const headers = {
-            "content-type": "multipart/form-data",
+            "content-type": "audio/mpeg",
         };
         // eslint-disable-next-line no-unused-vars
         let response = await axios.post(

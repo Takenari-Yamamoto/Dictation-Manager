@@ -19,7 +19,7 @@
           <div class="dic_list">
             <v-row>
               <v-col
-                cols="12"
+                cols=""
                 sm="12"
               >
                 <h2>

@@ -110,6 +110,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data: function() {
       return {
@@ -129,9 +131,7 @@ export default {
       const dictation = {
         content: '',
         title: 'no title',
-        // selected_videoId: ''
       };
-      // eslint-disable-next-line no-undef
       axios
         .post('/api/dictation', dictation)
         .then(res => {
