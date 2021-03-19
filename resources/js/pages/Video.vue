@@ -118,6 +118,7 @@ export default {
   data() {
     return {
       results: null,
+      maxResults: 10,
       videos: [],
       dialog: false,
       keyword: "",

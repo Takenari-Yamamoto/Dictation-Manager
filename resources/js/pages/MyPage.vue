@@ -143,11 +143,13 @@
 import axios from 'axios';
 import AccessError from '../pages/errors/AccessError';
 import Sidebar from "../pages/Sidebar";
+import Recommend from "../pages/Recommend";
 // alter table dictations modify content LONGBLOB(4294967295);
   export default {
     components : {
       AccessError,
-      Sidebar
+      Sidebar,
+      Recommend
     },
     data: function() {
       return {

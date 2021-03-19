@@ -14,7 +14,7 @@ class WordController extends Controller
     public function index() {
 
         $user_id = Auth::id();
-        $words = Word::all()->where('user_id', $user_id);
+        $words = Word::where('user_id', $user_id)->get();
         return response()->json($words);
     
     }

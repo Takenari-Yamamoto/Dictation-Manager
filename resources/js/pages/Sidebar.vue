@@ -39,19 +39,16 @@ export default {
   methods: {
     create(text) {
       if (text === "Create") {
-          console.log("create!!");
-          const dictation = {
-      content: '',
-      title: 'no title',
-    };
-    axios
-      .post('/api/dictation', dictation)
-      .then(res => {
-      this.$router.push('/Dictation/'+ res.data.id);
-    });
-      } else {
-          console.log("その他");
-      }
+        const dictation = {
+          content: '',
+          title: 'no title',
+        };
+        axios
+          .post('/api/dictation', dictation)
+          .then(res => {
+          this.$router.push('/Dictation/'+ res.data.id);
+          });
+      } 
     }
   }
 };
