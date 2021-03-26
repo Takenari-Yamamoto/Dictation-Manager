@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class DictationTest extends TestCase
+class DictationPostApiTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -47,7 +47,11 @@ class DictationTest extends TestCase
                 "title" => $title,
                 "content" => $content,
             ]);
+            
+        $this->assertEquals(1, $dictation->count());
         // 内容がAPIでリクエストしたものであること
         $this->assertEquals($content, $dictations[0]->content);
+        $this->assertEquals($title, $dictations[0]->title);
     }
+
 }
