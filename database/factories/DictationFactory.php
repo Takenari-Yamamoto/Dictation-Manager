@@ -7,6 +7,10 @@ use Faker\Generator as Faker;
 
 $factory->define(Dictaion::class, function (Faker $faker) {
     return [
-        'content' => "test tests test test tests tests"
+        'title' => substr($faker->text, 0, 500),
+        'content' => substr($faker->text, 0, 500),
+        'user_id' => function() {
+            factory(App\User::class)->create()->id;
+        }
     ];
 });

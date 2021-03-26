@@ -1,67 +1,69 @@
 <template>
-  <v-tabs
-    color="deep-purple accent-4"
-    right
-  >
-    <p>Recommendation For ...</p>
-    <v-tab>Beginner</v-tab>
-    <v-tab>Intermediate</v-tab>
-    <v-tab>Advanced</v-tab>
+  <v-list>
+    <v-toolbar>
+      <template #extension>
+        <v-tabs
+          v-model="tabs"
+          centered
+        >
+          <v-tab>
+            Beginners
+          </v-tab>
+          <v-tab>
+            Intermediate
+          </v-tab>
+          <v-tab>
+            Advanced
+          </v-tab>
+        </v-tabs>
+      </template>
+    </v-toolbar>
 
-    <v-tab-item
-      v-for="n in 3"
-      :key="n"
-    >
-      <v-container fluid>
-        <v-row>
-          <v-col
-            cols="12"
-            md="3"
-          >
-            <v-img
-              :src="`https://picsum.photos/500/300?image=${i * n * 5 + 10}`"
-              :lazy-src="`https://picsum.photos/10/6?image=${i * n * 5 + 10}`"
-              aspect-ratio="1"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-tab-item>
-  </v-tabs>
+    <v-tabs-items v-model="tabs">
+      <v-tab-item>
+        <v-card
+          class="mx-auto"
+          max-width="90%"
+          height="30vh"
+          outlined
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-list-item-title class="headline mb-1">
+                Headline 5
+              </v-list-item-title>
+              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+              <youtube
+                ref="youtube"
+                width="30%"
+                :video-id="videoId"
+                @playing="playingVideo()"
+              />
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item>
+        テスト２
+      </v-tab-item>
+      <v-tab-item>
+        テスト３
+      </v-tab-item>
+    </v-tabs-items>
+  </v-list>
 </template>
 
 <script>
-import axios from 'axios';
 import Vue from 'vue';
 import VueYoutube from 'vue-youtube';
-
 Vue.use(VueYoutube);
 
-export default {
-  name: "Recommend",
-  data() {
-    return {
-      videoId: '',
-      videos_for_beginners: [],
-      videos_for_intermdediate: [],
-      videos_for_advanced: [],
-    };
-  },
-  created() {
-    this.beginner();
-  },
-  methods: {
-    beginner() {
-      axios.get("/api/searchVideo", {
-        params: {
-          keyword: "Ted Ed"
-        }
-      })
-      .then((res) => {
-        this.videos_for_beginners = res.data;
-        console.log(this.videos_for_beginners);
-      });
-    }
-  }
-};
+  export default {
+    data () {
+      return {
+        tabs: null,
+        videoId: 'mL2_zXCgbXI',
+      };
+    },
+  };
 </script>

@@ -9,6 +9,7 @@ import Support from './pages/Support.vue';
 import Login from './pages/Login.vue';
 import Error from './pages/errors/Error.vue';
 import TopPage from './pages/TopPage.vue';
+import Recommend from './pages/Recommend.vue';
 
 import store from './store';
 import SystemError from './pages/errors/System.vue';
@@ -45,6 +46,11 @@ export default new Router ({
             path: '',
             name: 'TopPage',
             component: TopPage,
+        },
+        {
+            path: '/Recommend',
+            name: 'Recommend',
+            component: Recommend,
         },
         {
             path: '/login',

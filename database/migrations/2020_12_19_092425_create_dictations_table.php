@@ -17,12 +17,11 @@ class CreateDictationsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->string('title', 100)->nullable();
-            $table->string('content', 65535)->nullable();
+            $table->text('content', 65535)->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
-// ALTER TABLE DictationManager MODIFY COLUMN selectted_videoId varchar;
     /**
      * Reverse the migrations.
      *

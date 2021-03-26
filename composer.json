@@ -13,6 +13,7 @@
         "fideloper/proxy": "^4.4",
         "google/apiclient": "^2.9",
         "laravel/framework": "^6.20",
+        "laravel/helpers": "^1.4",
         "laravel/tinker": "^2.5",
         "league/flysystem-aws-s3-v3": "~1.0"
     },

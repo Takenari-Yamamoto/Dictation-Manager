@@ -27,7 +27,7 @@ class DictationController extends Controller
         $dictation->content = $request->content;
         $dictation->title = $request->title;
         $dictation->selected_videoId = $request->selected_videoId;
-        $dictation->user_id = $request->user()->id;
+        $dictation->user_id = auth()->user()->id;
         $dictation->save();
 
       return response()->json($dictation);
