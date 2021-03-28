@@ -12,13 +12,6 @@ use Tests\TestCase;
 
 class DictationPostApiTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     * @test
-     */
-    
     use RefreshDatabase;
 
     public function setUp(): void
@@ -29,29 +22,23 @@ class DictationPostApiTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    public function ディクテーションを投稿()
+    public function test_ディクテーションを投稿()
     {
+
         factory(Dictation::class)->create();
+        $user_id = factory(Dictation::class)->create()->id;
         $dictation = Dictation::first();
-
-        $title ="sample title";
-        $content = 'sample content';
-
-        $response = $this->json('GET', route('dictation.create', [
+        
+        $response = $this->postJson('dictation.store', [
+            'user_id' => $user_id,
             'id' => $dictation->id,
-        ]), compact('title', 'content'));
-
-        $response->assertStatus(201)
-            // JSONフォーマットが期待通りであること
-            ->assertJsonFragment([
-                "title" => $title,
-                "content" => $content,
+            'title' => $dictation->title,
+            'content' => $dictation->content,
             ]);
-            
-        $this->assertEquals(1, $dictation->count());
-        // 内容がAPIでリクエストしたものであること
-        $this->assertEquals($content, $dictations[0]->content);
-        $this->assertEquals($title, $dictations[0]->title);
+        
+        // dd($response);
+        
+        $response->assertStatus(201);
     }
 
 }

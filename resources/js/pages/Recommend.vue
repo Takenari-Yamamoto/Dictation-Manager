@@ -1,56 +1,43 @@
 <template>
-  <v-list>
-    <v-toolbar>
-      <template #extension>
-        <v-tabs
-          v-model="tabs"
-          centered
-        >
-          <v-tab>
-            Beginners
-          </v-tab>
-          <v-tab>
-            Intermediate
-          </v-tab>
-          <v-tab>
-            Advanced
-          </v-tab>
-        </v-tabs>
-      </template>
-    </v-toolbar>
-
-    <v-tabs-items v-model="tabs">
-      <v-tab-item>
+  <v-main>
+    <v-list
+      three-line
+    >
+      <p>おすすめ動画</p>
+      <template v-for="(value, key) in recommend_video">
         <v-card
+          :key="key"
           class="mx-auto"
           max-width="90%"
-          height="30vh"
           outlined
         >
-          <v-list-item three-line>
+          <v-list-item
+            two-line
+          >
             <v-list-item-content>
               <v-list-item-title class="headline mb-1">
-                Headline 5
+                {{ value.snippet.title }}
               </v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-              <youtube
-                ref="youtube"
-                width="30%"
-                :video-id="videoId"
-                @playing="playingVideo()"
-              />
+              <v-list-item-subtitle>
+                {{ value.snippet.description }}
+              </v-list-item-subtitle>
             </v-list-item-content>
+
+            <v-list-item-avatar
+              tile
+            />
+            <youtube
+              ref="youtube"
+              :video-id="value.id.videoId"
+              width="300px"
+              height="200px"
+              @playing="playingVideo()"
+            />
           </v-list-item>
         </v-card>
-      </v-tab-item>
-      <v-tab-item>
-        テスト２
-      </v-tab-item>
-      <v-tab-item>
-        テスト３
-      </v-tab-item>
-    </v-tabs-items>
-  </v-list>
+      </template>
+    </v-list>
+  </v-main>
 </template>
 
 <script>
@@ -58,12 +45,28 @@ import Vue from 'vue';
 import VueYoutube from 'vue-youtube';
 Vue.use(VueYoutube);
 
-  export default {
-    data () {
-      return {
-        tabs: null,
-        videoId: 'mL2_zXCgbXI',
-      };
+export default {
+  data () {
+    return {
+      tabs: null,
+      recommend_video: []
+    };
+  },
+  created() {
+    this.get_video();
+  },
+  methods: {
+    get_video () {
+      axios.get("/api/searchVideo", {
+        params: {
+          keyword: "Ted Ed",
+        }
+      })
+      .then((res) => {
+        this.recommend_video = res.data;
+        console.log(this.recommend_video);
+      });
     },
-  };
+  }
+};
 </script>

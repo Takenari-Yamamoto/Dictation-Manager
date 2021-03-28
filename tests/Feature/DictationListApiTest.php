@@ -14,10 +14,7 @@ class DictationListApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     */
-    public function 投稿一覧を表示()
+    public function test_投稿一覧を表示()
     {
         // 5つの写真データを生成する
         factory(Dictation::class, 5)->create();
@@ -25,7 +22,8 @@ class DictationListApiTest extends TestCase
         $response = $this->json('GET', route('dictation.index'));
 
         // 生成した写真データを作成日降順で取得
-        $dictations = Dictation::with(['owner'])->orderBy('created_at', 'desc')->get();
+        // あとで聞く
+        $dictations = Dictation::with('user_id')->orderBy('created_at', 'desc')->get();
 
         // data項目の期待値
         $expected_data = $dictations->map(function ($dictation) {
