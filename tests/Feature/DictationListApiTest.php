@@ -14,33 +14,27 @@ class DictationListApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    //user作成
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // テストユーザー作成
+        $this->user = factory(User::class)->create();
+    }
+
     public function test_投稿一覧を表示()
     {
-        // 5つの写真データを生成する
-        factory(Dictation::class, 5)->create();
+        $user = factory(User::class)->create();
+        $dictations = factory(Dictation::class, 5)->actingAs($user)->create();
 
-        $response = $this->json('GET', route('dictation.index'));
+        dd($user);
 
-        // 生成した写真データを作成日降順で取得
-        // あとで聞く
-        $dictations = Dictation::with('user_id')->orderBy('created_at', 'desc')->get();
+        $response = $this->actingAs($user)->getJson(route('dictation.index'), [
+            'title' => $dictation->title,
+            'content' => $dictation->content,
+        ]);
 
-        // data項目の期待値
-        $expected_data = $dictations->map(function ($dictation) {
-            return [
-                'id' => $dictation->id,
-                'title' => $dictation->title,
-                'content' => $dictation->content,
-            ];
-        })
-        ->all();
-
-        $response->assertStatus(200)
-            // レスポンスJSONのdata項目に含まれる要素が5つであること
-            ->assertJsonCount(5, 'data')
-            // レスポンスJSONのdata項目が期待値と合致すること
-            ->assertJsonFragment([
-                "data" => $expected_data,
-            ]);
+        $response->assertStatus(200);
     }
 }

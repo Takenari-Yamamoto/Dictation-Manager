@@ -14,6 +14,7 @@ class DictationPostApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    //user作成
     public function setUp(): void
     {
         parent::setUp();
@@ -22,23 +23,57 @@ class DictationPostApiTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-    public function test_ディクテーションを投稿()
+    // 投稿、更新、削除
+    public function test_ディクテーションCRUD()
     {
+        // ダミーユーザー作成
+        $user = factory(User::class)->create();
 
-        factory(Dictation::class)->create();
-        $user_id = factory(Dictation::class)->create()->id;
-        $dictation = Dictation::first();
-        
-        $response = $this->postJson('dictation.store', [
-            'user_id' => $user_id,
-            'id' => $dictation->id,
-            'title' => $dictation->title,
-            'content' => $dictation->content,
+        // 投稿機能テスト
+        $response = $this->actingAs($user)
+            ->postJson(route('dictation.store'), [
+                'title' => 'test',
+                'content' => 'test test test test',
             ]);
-        
-        // dd($response);
-        
-        $response->assertStatus(201);
+            
+        $response
+            ->assertOk()
+            ->assertJsonFragment([ # レスポンス JSON に以下の値を含む
+                'title' => 'test',
+                'content' => 'test test test test',
+            ]);
+        $this->assertEquals(1, Dictation::count());
+
+        // 一覧取得
+        $response_list = $this->actingAs($user)
+            ->getJson(route('dictation.index'));
+        $response_list
+            ->assertOk() 
+            ->assertJsonCount(1)
+            ->assertJsonFragment([
+                'title' => 'test',
+                'content' => 'test test test test',
+            ]);
+
+        //詳細取得
+        $dictaion_id = $response['id'];
+        $response_detail = $this->actingAs($user)
+            ->getJson(route('dictation.show', $dictaion_id));
+        $response->assertOk();
+
+        // 投稿更新
+        $response_update = $this->actingAs($user)
+            ->putJson(route('dictation.update', $dictaion_id), [
+                'title' => 'updated test',
+                'content' => 'update update update',
+            ]);
+        $response_update->assertOk();
+
+        // 投稿削除
+        $response_delete = $this->actingAs($user)
+            ->deleteJson(route('dictation.destroy', $dictaion_id));
+        $response_update->assertOk();
+            
     }
 
 }
