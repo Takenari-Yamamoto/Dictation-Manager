@@ -58,7 +58,7 @@ class DictationController extends Controller
     {
         $dictation = Dictation::find($id);
         $dictation->delete();
-        return redirect('/');
+        return $dictation;
     }
 
     public function getPresignedUrl(Request $request)
