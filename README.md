@@ -15,22 +15,35 @@ Dictation Manager は自分がディクテーションした文章をまとめ�
 
 ディクテーションができるサービスはTED やスタディサプリなど他にもあります。ですがそれらは「予め素材が決まってる」「穴埋め問題や字数が指定されているので当てずっぽうでも正解できてしまう可能性がある」と感じました。このサービスでは「自分の好きな音声素材を用いてディクテーションができる」というところがポイントです。
 
+## 機能
+・ユーザー登録、ログイン機能 </br>
+・ディクテーションの作成/編集/削除 </br>
+・「聞き取れなかった箇所」「間違えて聞き取った箇所」「わからない単語」などは色分けして区別 </br>
+・わからない、聞き取れない単語や音の連結をリストにまとめる
+
 ## 使用技術
 
 ### フロントエンド
 
-Vue.js @2.6.12 </br>
-Vuetify</br>
-VueX</br>
-YouTube API 
+・Single Page Application </br>
+・Vue.js @2.6.12 </br>
+・Vuetify</br>
+・VueX</br>
+・YouTube API 
 
 ### バックエンド
 
-PHP 7.3.26</br>
-Laravel Framework 6.20.16
+・PHP 7.3.26</br>
+・Laravel Framework 6.20.16</br>
+・MySQL
 
 ### インフラ
 
-Amazon Web Service</br>
+・Amazon Web Service</br>
  EC2, RDS, s3, Route53</br>
-Apache 2.4.46
+・Apache 2.4.46
+
+### テスト
+
+PHP unit</br>
+・フィーチャーテスト
