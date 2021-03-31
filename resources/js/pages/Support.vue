@@ -12,12 +12,12 @@
           offset-md="1"
           md="7"
         >
-          <v-img
+          <img
             class="support_img mt-5"
-            src="../storage/support1.jpg"
+            src="image/support1.jpg"
             alt="support1"
             width="90%"
-          />
+          >
         </v-col>
         <v-col md="4">
           <div class="text">
@@ -43,12 +43,12 @@
           offset-md="1"
           md="7"
         >
-          <v-img
+          <img
             class="support_img mt-5"
-            src="../storage/support2.jpg"
+            src="image/support2.jpg"
             alt="support1"
             width="90%"
-          />
+          >
         </v-col>
         <v-col md="4">
           <div class="text">
@@ -74,12 +74,12 @@
           offset-md="1"
           md="7"
         >
-          <v-img
+          <img
             class="support_img mt-5"
-            src="../storage/support3.jpg"
+            src="image/support3.jpg"
             alt="support1"
             width="90%"
-          />
+          >
         </v-col>
         <v-col md="4">
           <div class="text">
@@ -93,12 +93,12 @@
           offset-md="1"
           md="7"
         >
-          <v-img
+          <img
             class="support_img mt-5"
-            src="../storage/support4.jpg"
-            alt="support4"
+            src="image/support4.jpg"
+            alt="support1"
             width="90%"
-          />
+          >
         </v-col>
         <v-col md="4">
           <div class="text">
@@ -109,7 +109,7 @@
         </v-col>
       </v-row>
     </div>
-     <!-- MP3 upload -->
+    <!-- MP3 upload -->
     <div
       id="support2"
     >
@@ -121,12 +121,12 @@
           offset-md="1"
           md="7"
         >
-          <v-img
+          <img
             class="support_img mt-5"
-            src="../storage/support5.jpg"
-            alt="support5"
+            src="image/support5.jpg"
+            alt="support1"
             width="90%"
-          />
+          >
         </v-col>
         <v-col md="4">
           <div class="text">
@@ -139,12 +139,12 @@
           offset-md="1"
           md="7"
         >
-          <v-img
+          <img
             class="support_img mt-5"
-            src="../storage/support6.jpg"
-            alt="support6"
+            src="image/support6.jpg"
+            alt="support1"
             width="90%"
-          />
+          >
         </v-col>
         <v-col md="4">
           <div class="text">
