@@ -14,7 +14,6 @@
           id="right_side_col"
           cols="7"
           sm="3"
-         
         >
           <div
             class="right_side pt-200 pl-30"
@@ -83,6 +82,7 @@
     </div>
     <v-btn 
       @click="undisplay_mp3" 
+      v-if="mp3_url!==null"
       class="m-2"
       color="error"
     >
@@ -94,6 +94,7 @@
       color="success"
       downloadable
       width="100%"
+      class="mb-5"
     />
     
   </v-container>

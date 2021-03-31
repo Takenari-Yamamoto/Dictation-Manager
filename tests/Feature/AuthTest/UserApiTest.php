@@ -25,7 +25,6 @@ class UserApiTest extends TestCase
     public function should_ログイン中のユーザーを返却する()
     {
         $response = $this->actingAs($this->user)->json('GET', route('user'));
-
         $response
             ->assertStatus(200)
             ->assertJson([

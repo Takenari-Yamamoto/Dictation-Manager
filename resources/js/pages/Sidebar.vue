@@ -33,6 +33,7 @@ export default {
       { text: 'My Page', icon: 'mdi-account' },
       { text: 'Create', icon: 'mdi-pencil' },
       { text: 'List', icon: 'mdi-book-open-variant', link: '/list'},
+      { text: 'Recommendation', icon: 'mdi-thumb-up-outline', link: '/recommendation'},
       { text: 'Support', icon: 'mdi-help-circle-outline', link: '/support' },
     ],
   }),

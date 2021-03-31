@@ -3,29 +3,19 @@
     <v-list
       three-line
     >
-      <p>おすすめ動画</p>
+      <p class="ml-5">
+        おすすめ動画
+      </p>
       <template v-for="(value, key) in recommend_video">
         <v-card
           :key="key"
-          class="mx-auto"
+          class="mx-auto mt-5"
           max-width="90%"
           outlined
         >
           <v-list-item
-            two-line
+            three-line
           >
-            <v-list-item-content>
-              <v-list-item-title class="headline mb-1">
-                {{ value.snippet.title }}
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                {{ value.snippet.description }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-            />
             <youtube
               ref="youtube"
               :video-id="value.id.videoId"
@@ -33,6 +23,14 @@
               height="200px"
               @playing="playingVideo()"
             />
+            <v-list-item-content class="ml-5">
+              <h2>
+                {{ value.snippet.title }}
+              </h2>
+              <p>
+                {{ value.snippet.description }}
+              </p>
+            </v-list-item-content>
           </v-list-item>
         </v-card>
       </template>

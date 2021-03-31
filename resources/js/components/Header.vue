@@ -73,6 +73,25 @@
           <span>Word List</span>
         </v-tooltip>
       </router-link>
+      <!-- recommend -->
+      <router-link
+        v-if="isLogin"
+        to="/recommendation"
+        class="navbar__item white--text text-decoration-none"
+      >
+        <v-tooltip left>
+          <template #activator="{ on, attrs }">
+            <v-icon
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-thumb-up-outline
+            </v-icon>
+          </template>
+          <span>Recommendation</span>
+        </v-tooltip>
+      </router-link>
       <!-- 説明書 -->
       <router-link
         v-if="isLogin"
