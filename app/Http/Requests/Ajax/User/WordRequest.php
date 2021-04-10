@@ -26,7 +26,7 @@ class WordRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => 'required|max:10',
+            'word' => 'required|max:30',
             'classification' => 'nullable|max:10',
             'meaning' => 'nullable|max:10',
             'pronunciation' => 'nullable|max:10'
@@ -35,7 +35,7 @@ class WordRequest extends FormRequest
     public function messages()
     {
         return [
-            'word.max' => 'Please input 10 characters or less',
+            'word.max' => 'Please input 30 characters or less',
             'classification.max' => 'Please input 10 characters or less',
             'meaning.max' => 'Please input 10 characters or less',
             'pronunciation.max' => 'Please input 10 characters or less'

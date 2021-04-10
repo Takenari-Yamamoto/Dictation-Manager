@@ -41,10 +41,10 @@
                   <v-text-field
                     v-model="selectedText"
                     label="Selected Word"
-                    :rules="[rules.max_10]"
+                    :rules="[rules.max_30]"
                     :error="errors.word"
                     :error-messages="messages.word" 
-                    counter="10"
+                    counter="30"
                     @keydown="clearError('word')"	
                   />
                 </v-col>
@@ -158,7 +158,7 @@ export default {
         word: null
       },
       rules: {
-        max_10: true
+        max_30: true
       },
       file: '',
       mp3_url: ""
