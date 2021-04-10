@@ -6,6 +6,7 @@
       prominent
       type="error"
       icon="mdi-cloud-alert"
+      class="pt-10"
     >
       This action is unauthorized.
     </v-alert>
@@ -17,6 +18,6 @@
     text-align: center;
     justify-content: center;
     width: 70%;
-    margin: 0 auto
+    margin: 0 auto;
 }
 </style>

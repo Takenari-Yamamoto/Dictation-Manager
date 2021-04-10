@@ -6,9 +6,9 @@
   <v-main
     v-else
   >
-    <transition name="fade">
+    <transition appear>
       <div
-        id="aaa"
+        id="toppage_main"
         class="grey lighten-2 text-center"
       >
         <v-icon
@@ -37,22 +37,30 @@
           あなたの英語力を高めます。
         </p>
         <v-btn
+          id="login_btn"
           color="primary"
           href="/login"
+          large
         >
-          Let's Get Started
+          今すぐ始める
         </v-btn>
       </div>
     </transition>
+    <div id="support">
+
+    <Support />
+    </div>
   </v-main>
 </template>
 
 <script>
 import MyPage from "../pages/MyPage";
+import Support from "../pages/Support";
 
 export default {
   components: {
-    MyPage
+    MyPage,
+    Support
   },
   computed: {
     isLogin () {
@@ -63,21 +71,24 @@ export default {
 </script>
 
 <style>
-  #aaa {
-    background-color: #EEEEEE;
+  #toppage_main {
     padding-top: 150px;
-  }
-
-  .v-icon {
-    width: 200px;
   }
 
   .v-main {
     width: 100%;
   }
 
-  .v-btn {
+  #login_btn {
     margin-bottom: 200px;
+  }
+
+  .v-enter-active, .v-leave-active {
+    transition: opacity 2.5s;
+  }
+
+  .v-enter, .v-leave-to {
+    opacity: 0;
   }
 
   #title {
@@ -85,10 +96,14 @@ export default {
     font-family: 'Montserrat', sans-serif;
   }
 
-  p {
+  #toppage_main p {
     padding-top: 10px;
     font-size: 15px;
     font-family: 'Montserrat', sans-serif;
+  }
+
+  #support {
+    margin: 50px;
   }
 
 </style>

@@ -2,15 +2,18 @@
   <v-list
     id="side_list"
     rounded
+    class="blue-grey lighten-5"
   >
     <v-list-item-group
       v-model="selectedItem"
       color="primary"
+      active-class="border"
     >
       <v-list-item
         v-for="(item, i) in items"
         :key="i"
         :to="item.link"
+        class="white"
         @click="create(item.text) "
       >
         <v-list-item-icon>
@@ -30,7 +33,7 @@ export default {
   data: () => ({
     selectedItem: 0,
     items: [
-      { text: 'My Page', icon: 'mdi-account' },
+      { text: 'My Page', icon: 'mdi-account'},
       { text: 'Create', icon: 'mdi-pencil' },
       { text: 'List', icon: 'mdi-book-open-variant', link: '/list'},
       { text: 'Recommendation', icon: 'mdi-thumb-up-outline', link: '/recommendation'},
@@ -55,8 +58,10 @@ export default {
 };
 </script>
 
-<style >
-#side_list {
-    padding-right: 10px;
+<style>
+
+.border {
+  border: 3px dashed;
 }
+
 </style>

@@ -1,8 +1,10 @@
 <template>
-  <v-main id="main">
+  <v-main
+    id="main"
+  >
     <v-container
       v-if="isLogin"
-      id="container"
+      id="my_page_container"
     >
       <v-row>
         <v-col sm="4">
@@ -22,9 +24,9 @@
                 cols=""
                 sm="12"
               >
-                <h2>
+                <div id="username">
                   {{ username }}'s Dictations
-                </h2>
+                </div>
               </v-col>
               <v-col
                 cols="6"
@@ -69,7 +71,7 @@
                       <p id="dictation_title">
                         {{ dictation.title }}
                       </p>
-                      </br>
+                      <br>
                       <p 
                         id="date"
                         class="p-0"
@@ -143,13 +145,11 @@
 import axios from 'axios';
 import AccessError from '../pages/errors/AccessError';
 import Sidebar from "../pages/Sidebar";
-import Recommend from "../pages/Recommend";
 // alter table dictations modify content LONGBLOB(4294967295);
   export default {
     components : {
       AccessError,
       Sidebar,
-      Recommend
     },
     data: function() {
       return {
@@ -198,7 +198,7 @@ import Recommend from "../pages/Recommend";
           _method: 'delete',
         })
         .then(res => {
-          // console.log(res.data);
+          console.log(res.data);
           this.$router.go({path: this.$router.currentRoute.path, force: true});
         });
       },
@@ -243,7 +243,13 @@ body {
   margin-top: 0;
 }
 
-.container {
+
+.v-main__wrap {
+  background-color: #ECEFF1;
+}
+
+
+.my_page_container {
   margin: 0;
   justify-content: space-between; 
 }
@@ -270,10 +276,9 @@ audio {
   width: 70%;
   padding: 10px;
 }
-h2 {
-  font-family: sans-serif;
-  font-weight: lighter;
-  padding-bottom: 15px;
+
+#username {
+  font-size: 25px;
 }
 #dictation_title {
   font-size: 18px;
