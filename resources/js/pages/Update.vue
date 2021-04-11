@@ -10,10 +10,13 @@
       :error-messages="messages.title"
       counter="70"
       @keydown="clearError('title')"
+      @click="updateDictation()"
     />
     <quill-editor
+      id="text_editor"
       ref="quillEditor"
       v-model="dictation.content"
+      @click="updateDictation()"
     />
     <div>
       <v-btn
@@ -143,5 +146,9 @@ export default {
   }
   .update_button {
     padding-bottom: 15px;
+  }
+  #text_editor {
+    overflow: scroll;
+  resize: both;
   }
 </style>

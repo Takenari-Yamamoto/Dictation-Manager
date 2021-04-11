@@ -12,8 +12,8 @@
       <youtube
         ref="youtube"
         :video-id="dictation.selected_videoId"
-        :width="350"
-        height="250"
+        :width="550"
+        height="450"
         @playing="playingVideo()"
       />
       <v-btn
