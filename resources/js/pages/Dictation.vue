@@ -253,13 +253,6 @@ export default {
   top: 0;
 }
 
-.ql-toolbar{
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background-color: white;
-}
-
 .word_add {
   width: 200%;
 }
@@ -276,28 +269,20 @@ export default {
     width: 110%;
   }
 
-  .ql-toolbar{
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    background-color: white;
-    margin: 0;
-  }
-
   #audio {
     margin-right: 10px;
   }
 
-  .ql-toolbar{
+  .word_add {
+    display: none;
+  }
+
+  .ql-toolbar {
     position: sticky;
     top: 0;
     z-index: 5;
     background-color: white;
   }
-
-.word_add{
-  display: none;
-}
 
 }
 </style>

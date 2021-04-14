@@ -12,12 +12,15 @@
       @keydown="clearError('title')"
       @click="updateDictation()"
     />
-    <quill-editor
-      id="text_editor"
-      ref="quillEditor"
-      v-model="dictation.content"
-      @click="updateDictation()"
-    />
+    <div id="editor">
+      <quill-editor
+        id="text_editor"
+        ref="quillEditor"
+        v-model="dictation.content"
+        :options="editorOption"
+        @click="updateDictation()"
+      />
+    </div>
     <div>
       <v-btn
         class="ma-2 mb-10 update_button"
@@ -57,7 +60,7 @@ export default {
       dictation: [],
       dictationContent:"",
       editorOption: {
-        theme: 'snow'
+        theme: 'snow',
       },
       selected_videoId: '',
       //エラー情報初期化 
@@ -137,18 +140,25 @@ export default {
 </script>
 
 <style>
+
   .editor  {
     padding-top: 100px;
   }
+
   .ql-editor {
     line-height: 300% !important;
     font-size: 20px !important;
   }
+
+  .ql-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background-color: white;
+  }
+
   .update_button {
     padding-bottom: 15px;
   }
-  #text_editor {
-    overflow: scroll;
-  resize: both;
-  }
+
 </style>
