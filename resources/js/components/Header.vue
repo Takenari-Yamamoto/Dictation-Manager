@@ -1,131 +1,160 @@
 <template class="header">
-  <v-app-bar
-    app
-    color="primary"
-    class="white--text header_items"
-  >
-    <RouterLink
-      id="nav_title"
-      class="navbar__brand"
-      to="/"
+  <header>
+    <v-app-bar
+      app
+      color="primary"
     >
-      Dictation Manager
-    </RouterLink>
-    <v-spacer />
-    <div class="navbar__menu">
-      <!-- マイページへ -->
-      <router-link
-        v-if="isLogin"
-        id="mypage"
-        class="navbar__item white--text text-decoration-none"
-        to="/"
-      >
-        <v-tooltip bottom>
-          <template #activator="{ on, attrs }">
-            <v-icon
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              mdi-account
-            </v-icon>
-          </template>
-          <span>My Page</span>
-        </v-tooltip>
-      </router-link>
-      <!-- 新規作成 -->
-      <router-link
-        v-if="isLogin"
-        id="create_button"
-        class="navbar__item white--text text-decoration-none"
-        to="/Dictation"
-      >
-        <v-tooltip bottom>
-          <template #activator="{ on, attrs }">
-            <v-icon
-              dark
-              v-bind="attrs"
-              v-on="on"
-              @click="createDictation()"
-            >
-              mdi-pencil
-            </v-icon>
-          </template>
-          <span>Create New Dictation</span>
-        </v-tooltip>
-      </router-link>
-      <!-- word list -->
-      <router-link
-        v-if="isLogin"
-        to="/list"
-        class="navbar__item white--text text-decoration-none"
-      >
-        <v-tooltip left>
-          <template #activator="{ on, attrs }">
-            <v-icon
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              mdi-book-open-variant
-            </v-icon>
-          </template>
-          <span>Word List</span>
-        </v-tooltip>
-      </router-link>
-      <!-- recommend -->
-      <router-link
-        v-if="isLogin"
-        to="/recommendation"
-        class="navbar__item white--text text-decoration-none"
-      >
-        <v-tooltip left>
-          <template #activator="{ on, attrs }">
-            <v-icon
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              mdi-thumb-up-outline
-            </v-icon>
-          </template>
-          <span>Recommendation</span>
-        </v-tooltip>
-      </router-link>
-      <!-- 説明書 -->
-      <router-link
-        v-if="isLogin"
-        class="navbar__item white--text text-decoration-none"
-        to="/support"
-      >
-        <v-tooltip bottom>
-          <template #activator="{ on, attrs }">
-            <v-icon
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              mdi-help-circle-outline
-            </v-icon>
-          </template>
-          <span>Support</span>
-        </v-tooltip>
-      </router-link>
       
-      <!-- ログインしていないときの表示↓ -->
-      <div
-        v-else
-        class="navbar__item"
-      >
+      <v-toolbar-title to="/">
         <RouterLink
-          class="button button--link"
-          to="/login"
+          id="nav_title"
+          class="navbar__brand"
+          to="/"
         >
-          Login / Register
+          Dictation Manager
         </RouterLink>
+      </v-toolbar-title>
+      <v-app-bar-nav-icon
+        id="for_smartphone"
+        class="hidden-sm-and-up"
+        @click="drawer = true"
+      />
+      <!-- PC用表示 -->
+      <!-- マイページへ -->
+      <div
+        id="pc_menu"
+        class="hidden-xs-only"
+      >
+        <router-link
+          v-if="isLogin"
+          id="mypage"
+          class="navbar__item white--text text-decoration-none"
+          to="/"
+        >
+          <v-tooltip bottom>
+            <template #activator="{ on, attrs }">
+              <v-icon
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-account
+              </v-icon>
+            </template>
+            <span>My Page</span>
+          </v-tooltip>
+        </router-link>
+        <!-- 新規作成 -->
+        <router-link
+          v-if="isLogin"
+          id="create_button"
+          class="navbar__item white--text text-decoration-none"
+          to="/Dictation"
+        >
+          <v-tooltip bottom>
+            <template #activator="{ on, attrs }">
+              <v-icon
+                dark
+                v-bind="attrs"
+                v-on="on"
+                @click="createDictation()"
+              >
+                mdi-pencil
+              </v-icon>
+            </template>
+            <span>Create New Dictation</span>
+          </v-tooltip>
+        </router-link>
+        <!-- word list -->
+        <router-link
+          v-if="isLogin"
+          to="/list"
+          class="navbar__item white--text text-decoration-none"
+        >
+          <v-tooltip left>
+            <template #activator="{ on, attrs }">
+              <v-icon
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-book-open-variant
+              </v-icon>
+            </template>
+            <span>Word List</span>
+          </v-tooltip>
+        </router-link>
+        <!-- recommend -->
+        <router-link
+          v-if="isLogin"
+          to="/recommendation"
+          class="navbar__item white--text text-decoration-none"
+        >
+          <v-tooltip left>
+            <template #activator="{ on, attrs }">
+              <v-icon
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-thumb-up-outline
+              </v-icon>
+            </template>
+            <span>Recommendation</span>
+          </v-tooltip>
+        </router-link>
+        <!-- 説明書 -->
+        <router-link
+          v-if="isLogin"
+          class="navbar__item white--text text-decoration-none"
+          to="/support"
+        >
+          <v-tooltip bottom>
+            <template #activator="{ on, attrs }">
+              <v-icon
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-help-circle-outline
+              </v-icon>
+            </template>
+            <span>Support</span>
+          </v-tooltip>
+        </router-link>
       </div>
-    </div>
-  </v-app-bar>
+    </v-app-bar>
+    <!-- スマホ用ハンバーガーメニュー ここから -->
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group>
+          <v-list-item to="/">
+            <v-list-item-title>HOME</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="createDictation()">
+            <v-list-item-title>Create</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/list">
+            <v-list-item-title>List</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="recommendation">
+            <v-list-item-title>Recommendation</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="support">
+            <v-list-item-title>Support</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+    <!-- スマホ用ハンバーガーメニュー ここまで -->
+  </header>
 </template>
 
 <script>
@@ -135,6 +164,7 @@ export default {
   data: function() {
       return {
         dictations: [],
+        drawer: false
       };
     },
   computed: {
@@ -171,8 +201,16 @@ export default {
 <style>
 
 .v-toolbar__content {
-  width: 80%;
+  color: white;
   margin: 0 auto;
+  width: 80%;
+  justify-content: space-between;
+}
+
+
+.v-toolbar__title {
+  overflow: visible !important;
+  margin-right: 50px !important;
 }
 
 #nav_title {

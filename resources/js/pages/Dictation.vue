@@ -18,6 +18,12 @@
           <div
             class="right_side pt-200 pl-30"
           >
+            <audio
+              v-if="mp3_url!==null"
+              id="audio"
+              controls
+              :src="mp3_url"
+            />
             <div
               class="upload_material"
             >
@@ -80,23 +86,6 @@
         </v-col>
       </v-row>
     </div>
-    <v-btn 
-      @click="undisplay_mp3" 
-      v-if="mp3_url!==null"
-      class="m-2"
-      color="error"
-    >
-      {{ mp3_text }}
-    </v-btn>
-    <vuetify-audio
-      v-if="mp3_url!==null"
-      :file="mp3_url"
-      color="success"
-      downloadable
-      width="100%"
-      class="mb-5"
-    />
-    
   </v-container>
 </template>
 
@@ -108,7 +97,6 @@ import Video from "../pages/Video";
 
 export default {
   components: {
-    VuetifyAudio: () => import('vuetify-audio'),
     Update,
     MP3,
     Video,
@@ -205,7 +193,7 @@ export default {
           }
         })
         .catch((error) => {
-          // console.log(error.response);
+          console.log(error.response);
         });
     },
     //エラー消去
@@ -235,10 +223,10 @@ export default {
     undisplay_mp3() {
       if(this.mp3_url !== null) {
         this.mp3_url = null;
-        this.mp3_text = "Show"
+        this.mp3_text = "Show";
       } else {
         this.mp3_url = "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3";
-        this.mp3_text = "Hide"
+        this.mp3_text = "Hide";
       }
     }
   }
