@@ -18,7 +18,7 @@
       />
       <v-btn
         color="error"
-        @click="deleteMovie(); alert_delete()"
+        @click="deleteMovie();"
       >
         Delete Movie
       </v-btn>
@@ -87,7 +87,7 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-btn @click="get_videoId(value.id.videoId); alert_save()">
+                <v-btn @click="get_videoId(value.id.videoId);">
                   videoId取得
                 </v-btn> 
               </v-card-actions>
@@ -150,19 +150,26 @@ export default {
     deleteMovie() {
       // eslint-disable-next-line vue/no-mutating-props
       this.dictation.selected_videoId = null;
-    },
-    alert_delete () {
-     this.$swal('完全に削除するには Update ボタンを押してください');
+      axios
+      .post('/api/dictation/'+ this.$route.params['dictationId'], {
+        content: this.dictation.content,
+        title: this.dictation.title,
+        selected_videoId: this.dictation.selected_videoId,
+        _method: 'put'
+      });
     },
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
-      console.log(videoId);
       // eslint-disable-next-line vue/no-mutating-props
       this.dictation.selected_videoId = videoId;
-      console.log(this.dictation.selected_videoId);
-    },
-    alert_save () {
-     this.$swal('選択した動画を保存するには Update ボタンを押してください');
+      axios
+      .post('/api/dictation/'+ this.$route.params['dictationId'], {
+        content: this.dictation.content,
+        title: this.dictation.title,
+        selected_videoId: this.dictation.selected_videoId,
+        _method: 'put'
+      });
+      console.log(videoId);
     },
     // 再生処理
     playVideo(){  
@@ -175,7 +182,6 @@ export default {
       this.player.pauseVideo();
       this.playing = false;
     },
-   
   }
   
 };

@@ -284,5 +284,9 @@ export default {
     background-color: white;
   }
 
+  .ql-editor {
+    margin-bottom: 80px;
+  }
+
 }
 </style>

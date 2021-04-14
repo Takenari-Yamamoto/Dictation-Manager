@@ -10,26 +10,20 @@
       :error-messages="messages.title"
       counter="70"
       @keydown="clearError('title')"
-      @click="updateDictation()"
+      @change="updateDictation()"
     />
-    <div id="editor">
+    <div
+      id="editor"
+    >
       <quill-editor
         id="text_editor"
         ref="quillEditor"
         v-model="dictation.content"
         :options="editorOption"
-        @click="updateDictation()"
+        @change="updateDictation()"
       />
     </div>
     <div>
-      <v-btn
-        class="ma-2 mb-10 update_button"
-        color="info"
-        @click="updateDictation();"
-      >
-        UPDATE
-      </v-btn>
-
       <v-snackbar
         v-model="snackbar"
         :timeout="timeout"
@@ -121,11 +115,7 @@ export default {
               this.errors[key] = true;
               this.messages[key] = response.errors[key];
             });
-          // 成功すると snackbar 表示
-          } else {
-             this.text = 'Content is updated!!';
-             this.snackbar = true;
-          }
+          } 
       })
       .catch((error) => {
         console.log(error.response);
@@ -155,10 +145,6 @@ export default {
     top: 0;
     z-index: 5;
     background-color: white;
-  }
-
-  .update_button {
-    padding-bottom: 15px;
   }
 
 </style>
