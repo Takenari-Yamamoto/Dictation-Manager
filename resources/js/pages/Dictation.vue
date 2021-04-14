@@ -1,10 +1,12 @@
 <template>
   <v-container>
     <div id="app">
-      <v-row>
+      <v-row id="dictation_main">
+        <!-- エディター -->
         <v-col 
           cols="12"
           sm="7"
+          xs="12"
           @click.selected.prevent="selected"
         >
           <Update @catch-dictation="loadDictation" />
@@ -12,17 +14,19 @@
         <!-- 右側に固定表示 -->
         <v-col
           id="right_side_col"
-          cols="7"
-          sm="3"
+          cols="12"
+          sm="4"
+          xs="12"
         >
           <div
-            class="right_side pt-200 pl-30"
+            class="right_side"
           >
-            <audio
+            <vuetify-audio
               v-if="mp3_url!==null"
+              :file="mp3_url"
+              color="success"
+              class="mb-5"
               id="audio"
-              controls
-              :src="mp3_url"
             />
             <div
               class="upload_material"
@@ -97,6 +101,7 @@ import Video from "../pages/Video";
 
 export default {
   components: {
+    VuetifyAudio: () => import('vuetify-audio'),
     Update,
     MP3,
     Video,
@@ -235,11 +240,6 @@ export default {
 
 <style>
 
-#audio {
-  width: 200%;
-  padding: 0;
-}
-
 .upload_material {
   width: 200%;
   margin: 0 auto;
@@ -269,20 +269,35 @@ export default {
   #right_side_col {
     padding: 0;
   }
+
   .right_side {
-    padding: 0;
+    margin-top: 450px;
+    position: fixed;
+    width: 110%;
   }
 
   .ql-toolbar{
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background-color: white;
-}
-
-  .word_add{
-    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background-color: white;
+    margin: 0;
   }
+
+  #audio {
+    margin-right: 10px;
+  }
+
+  .ql-toolbar{
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background-color: white;
+  }
+
+.word_add{
+  display: none;
+}
 
 }
 </style>

@@ -4,7 +4,6 @@
       app
       color="primary"
     >
-      
       <v-toolbar-title to="/">
         <RouterLink
           id="nav_title"
@@ -15,6 +14,7 @@
         </RouterLink>
       </v-toolbar-title>
       <v-app-bar-nav-icon
+        v-if="isLogin"
         id="for_smartphone"
         class="hidden-sm-and-up"
         @click="drawer = true"
@@ -22,6 +22,7 @@
       <!-- PC用表示 -->
       <!-- マイページへ -->
       <div
+        v-if="isLogin"
         id="pc_menu"
         class="hidden-xs-only"
       >
