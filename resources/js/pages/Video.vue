@@ -10,22 +10,17 @@
       class="youtube"
     >
       <youtube
-        id="youtube_player"
         ref="youtube"
         :video-id="dictation.selected_videoId"
+        :width="350"
+        height="250"
         @playing="playingVideo()"
       />
       <v-btn
         color="error"
-        @click="deleteMovie();"
+        @click="deleteMovie(); alert_delete()"
       >
         Delete Movie
-      </v-btn>
-      <v-btn
-        color="error"
-        @click="PiP();"
-      >
-        PiP
       </v-btn>
     </div>
     <v-dialog
@@ -92,7 +87,7 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-btn @click="get_videoId(value.id.videoId);">
+                <v-btn @click="get_videoId(value.id.videoId); alert_save()">
                   videoId取得
                 </v-btn> 
               </v-card-actions>
@@ -155,26 +150,19 @@ export default {
     deleteMovie() {
       // eslint-disable-next-line vue/no-mutating-props
       this.dictation.selected_videoId = null;
-      axios
-      .post('/api/dictation/'+ this.$route.params['dictationId'], {
-        content: this.dictation.content,
-        title: this.dictation.title,
-        selected_videoId: this.dictation.selected_videoId,
-        _method: 'put'
-      });
+    },
+    alert_delete () {
+     this.$swal('完全に削除するには Update ボタンを押してください');
     },
     //選択した動画の video_Id を取得
     get_videoId(videoId) {
+      console.log(videoId);
       // eslint-disable-next-line vue/no-mutating-props
       this.dictation.selected_videoId = videoId;
-      axios
-      .post('/api/dictation/'+ this.$route.params['dictationId'], {
-        content: this.dictation.content,
-        title: this.dictation.title,
-        selected_videoId: this.dictation.selected_videoId,
-        _method: 'put'
-      });
-      console.log(videoId);
+      console.log(this.dictation.selected_videoId);
+    },
+    alert_save () {
+     this.$swal('選択した動画を保存するには Update ボタンを押してください');
     },
     // 再生処理
     playVideo(){  
@@ -187,20 +175,22 @@ export default {
       this.player.pauseVideo();
       this.playing = false;
     },
-    // pip
-    
+   
   }
   
 };
 </script>
 
 <style>
+
 #youtube_icon {
   padding-top: 5px;
 }
+
 .video {
   padding-top: 100px;
 }
+
 @media screen and (max-width: 600px) {
   #youtube_icon {
     display: none;

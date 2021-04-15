@@ -3,7 +3,7 @@
     <div id="app">
       <v-row id="dictation_main">
         <!-- エディター -->
-        <v-col 
+        <v-col
           cols="12"
           sm="7"
           xs="12"
@@ -263,12 +263,16 @@ export default {
 
 @media screen and (max-width: 600px) {
 
+  #audio {
+    margin-top: 300px;
+    width: 70%;
+  }
+
   #right_side_col {
     padding: 0;
   }
 
   .right_side {
-    margin-top: 350px;
     position: fixed;
     width: 110%;
   }
