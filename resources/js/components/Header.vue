@@ -208,7 +208,6 @@ export default {
   justify-content: space-between;
 }
 
-
 .v-toolbar__title {
   overflow: visible !important;
   margin-right: 50px !important;

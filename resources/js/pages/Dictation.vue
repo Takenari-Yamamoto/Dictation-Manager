@@ -240,6 +240,10 @@ export default {
 
 <style>
 
+#audio {
+  cursor: move;
+}
+
 .upload_material {
   width: 200%;
   margin: 0 auto;
@@ -264,15 +268,11 @@ export default {
   }
 
   .right_side {
-    margin-top: 450px;
+    margin-top: 350px;
     position: fixed;
     width: 110%;
   }
-
-  #audio {
-    margin-right: 10px;
-  }
-
+  
   .word_add {
     display: none;
   }
@@ -285,7 +285,7 @@ export default {
   }
 
   .ql-editor {
-    margin-bottom: 80px;
+    margin-bottom: 100px;
   }
 
 }

@@ -10,10 +10,9 @@
       class="youtube"
     >
       <youtube
+        id="youtube_player"
         ref="youtube"
         :video-id="dictation.selected_videoId"
-        :width="550"
-        height="450"
         @playing="playingVideo()"
       />
       <v-btn
@@ -21,6 +20,12 @@
         @click="deleteMovie();"
       >
         Delete Movie
+      </v-btn>
+      <v-btn
+        color="error"
+        @click="PiP();"
+      >
+        PiP
       </v-btn>
     </div>
     <v-dialog
@@ -182,6 +187,8 @@ export default {
       this.player.pauseVideo();
       this.playing = false;
     },
+    // pip
+    
   }
   
 };

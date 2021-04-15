@@ -47,8 +47,7 @@
       </div>
     </transition>
     <div id="support">
-
-    <Support />
+      <Support />
     </div>
   </v-main>
 </template>
@@ -104,6 +103,23 @@ export default {
 
   #support {
     margin: 50px;
+  }
+
+  @media screen and (max-width: 600px) {
+
+    #title {
+      font-size: 25px;
+    }
+
+    #toppage_main p {
+      font-size: 12px;
+    }
+
+    #login_btn {
+      width: 5px;
+      font-size: 9px;
+    }
+
   }
 
 </style>

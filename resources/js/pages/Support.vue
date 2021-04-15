@@ -14,7 +14,7 @@
         ディクテーションとは？
       </h1>
       <img
-        width="30%"
+        width="40%"
         src="https://irasutohonpo.com/wp-content/uploads/2018/03/%E5%8B%89%E5%BC%B7%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E4%BA%BA%E3%81%AE%E7%84%A1%E6%96%99%E3%82%A4%E3%83%A9%E3%82%B9%E3%83%88%EF%BC%88%E7%94%B7%E6%80%A7%EF%BC%89.png"
       >
       <p
@@ -164,6 +164,29 @@
     font-size: 18px;
     font-family: 'Montserrat', sans-serif;
     opacity: 0.7;
+  }
+
+  @media screen and (max-width: 600px) {
+
+    #dictation_toha {
+      font-size: 19px;
+    }
+
+    #dictation_exp {
+      font-size: 15px
+    }
+
+    #support_main h1 {
+      font-size: 19px;
+    }
+
+    #support_main p {
+      font-size: 14px;
+      text-align: left;
+    }
+
+    
+
   }
 
 </style>

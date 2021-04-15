@@ -6,7 +6,6 @@
       prominent
       type="error"
       icon="mdi-cloud-alert"
-      class="pt-10"
     >
       This action is unauthorized.
     </v-alert>
