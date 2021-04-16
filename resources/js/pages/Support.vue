@@ -19,7 +19,7 @@
       >
       <p
         id="dictation_exp"
-        class="pt-10"
+        class="pt-10 mr-10 ml-10"
       >
         英語を聞きながら聞こえてくる英語を一語一句残らず書き取るだけの極めて単純な学習法です。
       </p>
@@ -32,7 +32,7 @@
         alt="support1"
         width="90%"
       >
-      <div class="text-center">
+      <div class="text-center mr-10 ml-10">
         <p>① My Page : ログイン後に遷移する画像のページ</p>
         <p>② Create : 新規ディクテーションの作成</p>
         <p>③ List : ディクテーションの中でまとめた単語がまとめてあるページです</p>
@@ -70,10 +70,10 @@
       <h1 class="mt-15">
         YouTube 動画をディクテーションする
       </h1>
-      <p class="mt-5">
+      <p class="mt-5 mr-10 ml-10">
         Dictation Manager では YouTube 音源をディクテーションすることもできます。<br>
       </p>
-      <p>
+      <p class="mr-10 ml-10">
         あなたの好きな海外スターの声を聞いて英語学習ができます。
       </p>
       <img
@@ -107,10 +107,10 @@
       <h1 class="mt-15">
         MP3 アップロード
       </h1>
-      <p class="mt-5">
+      <p class="mt-5 mr-10 ml-10">
         Dictation Manager ではMP3音源をディクテーションすることもできます。<br>
       </p>
-      <p>
+      <p mr-10 ml-10>
         TOEICなどのお手持ちの英語教材の音声をディクテーションすることも可能です。
       </p>
       <img
@@ -155,8 +155,7 @@
   }
 
   .support_img {
-    width: 750px;
-    height: 400px;
+    width: 70%;
   }
 
   #support_main p {
@@ -173,7 +172,7 @@
     }
 
     #dictation_exp {
-      font-size: 15px
+      font-size: 15px;
     }
 
     #support_main h1 {
@@ -182,11 +181,11 @@
 
     #support_main p {
       font-size: 14px;
-      text-align: left;
     }
 
-    
-
+    .text p {
+      margin: 0 13px;
+    }
   }
 
 </style>
