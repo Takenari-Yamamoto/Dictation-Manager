@@ -10,7 +10,7 @@
       :error-messages="messages.title"
       counter="70"
       @keydown="clearError('title')"
-      @change="updateDictation()"
+      @input="updateDictation()"
     />
     <div
       id="editor"
@@ -20,7 +20,7 @@
         ref="quillEditor"
         v-model="dictation.content"
         :options="editorOption"
-        @change="updateDictation()"
+        @input="updateDictation()"
       />
     </div>
     <div>
