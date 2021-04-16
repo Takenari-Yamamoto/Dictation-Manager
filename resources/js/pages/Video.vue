@@ -10,6 +10,7 @@
       class="youtube"
     >
       <youtube
+        id="youtube_play"
         ref="youtube"
         :video-id="dictation.selected_videoId"
         :width="350"
@@ -21,6 +22,12 @@
         @click="deleteMovie(); alert_delete()"
       >
         Delete Movie
+      </v-btn>
+      <v-btn
+        color="error"
+        @click="pip()"
+      >
+        PIP
       </v-btn>
     </div>
     <v-dialog
@@ -175,7 +182,11 @@ export default {
       this.player.pauseVideo();
       this.playing = false;
     },
-   
+    pip() {
+      const video = document.querySelector('iframe');
+      console.log(video);
+      video.requestPictureInPicture();
+    }
   }
   
 };

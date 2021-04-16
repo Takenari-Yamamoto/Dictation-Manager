@@ -21,17 +21,19 @@
           <div
             class="right_side"
           >
-            <vuetify-audio
+            <audio
               v-if="mp3_url!==null"
-              :file="mp3_url"
-              color="success"
-              class="mb-5"
               id="audio"
+              v-drag
+              controls 
+              :src="mp3_url"
+              controlslist="nodownload"
+              style="position:absolute"
             />
             <div
               class="upload_material"
             >
-              <v-row>
+              <v-row class="mt-15">
                 <!-- Youtube用 -->
                 <v-col>
                   <Video :dictation="dictation" />
@@ -98,10 +100,13 @@ import axios from 'axios';
 import Update from "../pages/Update";
 import MP3 from "../pages/MP3";
 import Video from "../pages/Video";
+import drag from '@branu-jp/v-drag';
 
 export default {
+  directives: {
+    drag
+  },
   components: {
-    VuetifyAudio: () => import('vuetify-audio'),
     Update,
     MP3,
     Video,
@@ -242,6 +247,7 @@ export default {
 
 #audio {
   cursor: move;
+  width: 120%;
 }
 
 .upload_material {
@@ -264,7 +270,6 @@ export default {
 @media screen and (max-width: 600px) {
 
   #audio {
-    margin-top: 300px;
     width: 70%;
   }
 
