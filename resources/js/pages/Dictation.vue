@@ -256,7 +256,7 @@ export default {
 }
 
 .right_side {
-  padding-top: 160px;
+  padding-top: 100px;
   padding-left: 30px;
   position: sticky;
   z-index: 5;

@@ -14,9 +14,11 @@ import VueQuillEditor from 'vue-quill-editor';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
+import { VPip } from 'v-pip';
 
 Vue.use(VueQuillEditor);
 Vue.use(VueResource);
+Vue.use(VPip);
 
 Vue.config.productionTip = false;
 Vue.use(vuetify);

@@ -52,10 +52,11 @@
         >
           <template #append-outer>
             <v-btn
+              id="search_button"
               color="primary"
               @click="search_video()"
             >
-              検索
+              Search
             </v-btn>
           </template>
         </v-text-field>
@@ -68,16 +69,6 @@
               outlined
             >
               <v-list-item three-line>
-                <v-list-item-content>
-                  <v-list-item-title class="headline mb-1">
-                    {{ value.snippet.title }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle>{{ value.snippet.description }}</v-list-item-subtitle>
-                </v-list-item-content>
-
-                <v-list-item-avatar
-                  tile
-                />
                 <youtube
                   ref="youtube"
                   :video-id="value.id.videoId"
@@ -85,13 +76,28 @@
                   height="100px"
                   @playing="playingVideo()"
                 />
+                <div
+                  id="list_content"
+                  class="ml-5"
+                >
+                  <div id="movie_title">
+                    <p>
+                      {{ value.snippet.title }}
+                    </p>
+                  </div>
+                  <div id="movie_description">
+                    <p>{{ value.snippet.description }}</p>
+                  </div>
+                  <div
+                    id="get_button"
+                    class="mb-2"
+                  >
+                    <v-btn @click="get_videoId(value.id.videoId);">
+                      videoId取得
+                    </v-btn> 
+                  </div>
+                </div>
               </v-list-item>
-
-              <v-card-actions>
-                <v-btn @click="get_videoId(value.id.videoId);">
-                  videoId取得
-                </v-btn> 
-              </v-card-actions>
             </v-card>
           </template>
         </v-list>
@@ -105,9 +111,12 @@ import axios from 'axios';
 import Vue from 'vue';
 import VueYoutube from 'vue-youtube';
 import VueSwal from 'vue-swal';
+// import VPip from 'v-pip';
+
 Vue.use(VueSwal);
- 
 Vue.use(VueYoutube);
+// Vue.use(VPip);
+
 export default {
   name: "SearchVideo",
   props:{
@@ -125,7 +134,20 @@ export default {
       keyword: "",
       videoId: '',
       playing: false,
-      Dictation: this.dictation
+      Dictation: this.dictation,
+
+      isPip: false,
+      videoOptions: {
+        wrapper: '',
+        src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        poster: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg',
+      },
+      buttonOptions: {
+        wrapper: '',
+        type: 'button',
+        class: '',
+        label: 'Toggle picture-in-picture',
+      },
     };
   },
   computed:{
@@ -184,11 +206,17 @@ export default {
       this.player.pauseVideo();
       this.playing = false;
     },
-    pip() {
-      const video = document.querySelector('iframe');
-      console.log(video);
-      video.requestPictureInPicture();
-    }
+    
+    
+    handlePIP(e) {
+      this.isPip = e;
+    },
+    handlePipOpenFailure(err) {
+      console.log('Video failed to enter Picture-in-Picture mode.', err);
+    },
+    handlePipExitFailure(err) {
+      console.log('Video failed to leave Picture-in-Picture mode.', err);
+    },
   }
   
 };
@@ -204,9 +232,33 @@ export default {
   padding-top: 100px;
 }
 
+#get_button {
+  text-align: right;
+}
+
+#movie_title {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 @media screen and (max-width: 600px) {
   #youtube_icon {
+    /* display: none; */
+  }
+
+  #movie_description {
     display: none;
   }
+
+  #movie_title {
+    font-size: 16px;
+  }
+
+  #get_button {
+    /* text-align: right; */
+  }
+
+  
 }
 </style>

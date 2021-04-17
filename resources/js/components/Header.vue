@@ -213,6 +213,7 @@ export default {
   margin-right: 50px !important;
 }
 
+
 #nav_title {
   font-size: 15px;
 }
@@ -222,6 +223,8 @@ export default {
     width: 100%;
     margin: 0 auto;
   }
+
+  
 }
 
 </style>

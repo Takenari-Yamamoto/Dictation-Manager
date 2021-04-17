@@ -125,6 +125,9 @@ export default {
       this.errors[dictation] = false;
       this.messages[dictation] = null;
     },
+    click() {
+      console.log("ok");
+    }
   }
 };
 </script>
