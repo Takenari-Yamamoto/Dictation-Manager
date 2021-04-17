@@ -1,44 +1,51 @@
 <template>
   <v-main>
-    <v-list
-      three-line
-    >
-      <p class="ml-5">
-        おすすめ動画
-      </p>
-      <template v-for="(value, key) in recommend_video">
-        <v-card
-          :key="key"
-          class="mx-auto mt-5"
-          max-width="90%"
-          outlined
-        >
-          <v-list-item
-            three-line
+    <p class="ml-5 mt-5">
+      おすすめ動画
+    </p>
+    <template v-for="(value, key) in recommend_video">
+      <v-card
+        :key="key"
+        class="mx-auto"
+        max-width="80%"
+        outlined
+      >
+        <v-row>
+          <v-col
+            md="6"
+            sm="12"
           >
             <youtube
+              id="rec_youtube"
               ref="youtube"
+              class="mr-0 ml-5"
               :video-id="value.id.videoId"
-              width="300px"
+              width="400px"
               height="200px"
               @playing="playingVideo()"
             />
-            <v-list-item-content class="ml-5">
-              <h2>
-                {{ value.snippet.title }}
-              </h2>
+          </v-col>
+          <v-col
+            md="6"
+            sm="12"
+          >
+            <div id="movie_title">
               <p>
-                {{ value.snippet.description }}
+                {{ value.snippet.title }}
               </p>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </template>
-    </v-list>
+            </div>
+            <div id="movie_description">
+              <p>{{ value.snippet.description }}</p>
+            </div>
+          </v-col>
+        </v-row>
+      </v-card>
+    </template>
   </v-main>
 </template>
 
 <script>
+import axios from 'axios';
 import Vue from 'vue';
 import VueYoutube from 'vue-youtube';
 Vue.use(VueYoutube);
@@ -68,3 +75,19 @@ export default {
   }
 };
 </script>
+
+<style>
+
+@media screen and (max-width: 600px) {
+ #rec_youtube {
+   width: 300px;
+ }
+}
+
+@media screen and (max-width: 430px) {
+ #rec_youtube {
+   width: 120px;
+ }
+}
+
+</style>

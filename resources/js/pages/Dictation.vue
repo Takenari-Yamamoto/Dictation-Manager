@@ -25,6 +25,7 @@
               v-if="mp3_url!==null"
               id="audio"
               v-drag
+              class="mt-10 mb-10"
               controls 
               :src="mp3_url"
               controlslist="nodownload"
@@ -33,7 +34,7 @@
             <div
               class="upload_material"
             >
-              <v-row class="mt-15">
+              <v-row>
                 <!-- Youtube用 -->
                 <v-col>
                   <Video :dictation="dictation" />
@@ -159,7 +160,7 @@ export default {
         max_30: true
       },
       file: '',
-      mp3_url: ""
+      mp3_url: "",
     };
   },
   computed: {
@@ -252,7 +253,7 @@ export default {
 
 .upload_material {
   width: 200%;
-  margin: 0 auto;
+  margin-top: 100px;
 }
 
 .right_side {
@@ -271,10 +272,6 @@ export default {
 
   #audio {
     width: 70%;
-  }
-
-  #right_side_col {
-    padding: 0;
   }
 
   .right_side {

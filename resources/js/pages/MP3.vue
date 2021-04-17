@@ -60,10 +60,10 @@ export default {
   name: 'AwsS3Upload',
   data() {
     return {
-        dialog: false,
-        dictation: null,
-        loading: false,
-        username: this.$store.getters['auth/username'],
+      dialog: false,
+      dictation: null,
+      loading: false,
+      username: this.$store.getters['auth/username'],
     };
   },
   computed: {
