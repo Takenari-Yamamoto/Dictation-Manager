@@ -24,11 +24,9 @@
             <audio
               v-if="mp3_url!==null"
               id="audio"
-              v-drag
               controls 
               :src="mp3_url"
               controlslist="nodownload"
-              style="position:absolute"
             />
             <div id="for_smartphone_right">
               <div
@@ -98,7 +96,7 @@
       <!-- スマホ用ハンバーガー右側 ここから -->
       <v-app-bar-nav-icon
         id="for_smartphone_right_icon"
-        class="mx-auto overflow-hidden"
+        class="hidden-sm-and-up"
         @click="drawer = true"
       />
       <v-navigation-drawer
@@ -106,66 +104,59 @@
         fixed
         temporary
         bottom
+        height="160px"
       >
-        <v-list
-          nav
-          dense
-          :height="10"
-        >
-          <v-list-item-group>
-            <v-row>
-              <!-- Youtube用 -->
-              <v-col>
-                <v-list-item>
-                  <Video :dictation="dictation" />
-                </v-list-item>
-              </v-col>
-              <!-- MP3 -->
-              <v-col>
-                <v-list-item>
-                  <MP3 />
-                </v-list-item>
-              </v-col>
-            </v-row>
+        <v-row>
+          <!-- Youtube用 -->
+          <v-col>
             <v-list-item>
-              <v-text-field
-                v-model="selectedText"
-                label="Selected Word"
-                :rules="[rules.max_30]"
-                :error="errors.word"
-                :error-messages="messages.word" 
-                counter="30"
-                @keydown="clearError('word')"	
-              />
-              <v-icon
-                class="pt-5"
-                medium
-                @click="addToList();"
-              >
-                mdi-book-plus-multiple 
-              </v-icon>
-              <v-snackbar
-                v-model="snackbar"
-                :timeout="timeout"
-                class="text-center"
-                top
-              >
-                {{ text }}
-
-                <template #action="{ attrs }">
-                  <v-btn
-                    color="blue"
-                    text
-                    v-bind="attrs"
-                    @click="snackbar = false"
-                  >
-                    Close
-                  </v-btn>
-                </template>
-              </v-snackbar>
+              <Video :dictation="dictation" />
             </v-list-item>
-          </v-list-item-group>
-        </v-list>
+          </v-col>
+          <!-- MP3 -->
+          <v-col>
+            <v-list-item>
+              <MP3 />
+            </v-list-item>
+          </v-col>
+        </v-row>
+        <v-list-item>
+          <v-text-field
+            v-model="selectedText"
+            label="Selected Word"
+            :rules="[rules.max_30]"
+            :error="errors.word"
+            :error-messages="messages.word" 
+            counter="30"
+            @keydown="clearError('word')"	
+          />
+          <v-icon
+            class="pt-4 ml-5"
+            medium
+            @click="addToList();"
+          >
+            mdi-book-plus-multiple 
+          </v-icon>
+          <v-snackbar
+            v-model="snackbar"
+            :timeout="timeout"
+            class="text-center"
+            top
+          >
+            {{ text }}
+
+            <template #action="{ attrs }">
+              <v-btn
+                color="blue"
+                text
+                v-bind="attrs"
+                @click="snackbar = false"
+              >
+                Close
+              </v-btn>
+            </template>
+          </v-snackbar>
+        </v-list-item>
       </v-navigation-drawer>
     <!-- スマホ用ハンバーガーメニュー ここまで -->
     </div>
@@ -327,7 +318,6 @@ export default {
 
 .upload_material {
   width: 200%;
-  padding-top: 100px;
 }
 
 #for_smartphone_right {
@@ -335,9 +325,9 @@ export default {
 }
 
 .right_side {
-  margin-top:150px ;
-  padding-left: 30px;
   position: sticky;
+  top: 5em;
+  margin-top:150px;
 }
 
 .word_add {
@@ -348,9 +338,11 @@ export default {
 
   #audio {
     width: 70%;
-    right:10px;
-    bottom:60px;
     position:fixed;
+    left: 30px;
+    bottom:60px;
+    z-index: 6;
+    background-color:#3293fa;
   }
 
   #add_button {
@@ -364,7 +356,7 @@ export default {
 
   #for_smartphone_right_icon {
     position:fixed;
-    right:50px;
+    right:30px;
     bottom:60px;
     z-index: 6;
     background-color:grey;

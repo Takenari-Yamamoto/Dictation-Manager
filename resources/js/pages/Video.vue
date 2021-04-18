@@ -251,6 +251,10 @@ export default {
   #movie_title {
     font-size: 16px;
   }
+
+  .youtube {
+    display: none;
+  }
   
 }
 </style>
