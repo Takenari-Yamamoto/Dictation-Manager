@@ -4,32 +4,6 @@
     lazy-validation
     method="post"
   >
-    <!-- 選択されたyoutube再生 -->
-    <div
-      v-if="dictation.selected_videoId !== null"
-      class="youtube"
-    >
-      <youtube
-        id="video"
-        ref="youtube"
-        :video-id="dictation.selected_videoId"
-        :width="400"
-        height="250"
-        @playing="playingVideo()"
-      />
-      <v-btn
-        color="error"
-        @click="deleteMovie();"
-      >
-        Delete Movie
-      </v-btn>
-      <v-btn
-        id="togglePipButton"
-        @click="pip()"
-      >
-        pip
-      </v-btn>
-    </div>
     <v-dialog
       v-model="dialog"
       width="600px"

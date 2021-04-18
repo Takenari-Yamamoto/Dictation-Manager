@@ -28,17 +28,26 @@
               :src="mp3_url"
               controlslist="nodownload"
             />
+            <youtube
+              v-if="dictation.selected_videoId!==null"
+              id="video"
+              ref="youtube"
+              :video-id="dictation.selected_videoId"
+              :width="400"
+              height="250"
+              @playing="playingVideo()"
+            />
             <div id="for_smartphone_right">
               <div
                 class="upload_material"
               >
                 <v-row>
                   <!-- Youtube用 -->
-                  <v-col>
+                  <v-col v-if="mp3_url===null">
                     <Video :dictation="dictation" />
                   </v-col>
                   <!-- MP3 -->
-                  <v-col>
+                  <v-col v-if="dictation.selected_videoId===null">
                     <MP3 />
                   </v-col>
                 </v-row>
@@ -215,7 +224,6 @@ export default {
       snackbar: false,
       timeout: 2000,
       text: "",
-      mp3_text: "Hide",
       //エラー情報初期化 
       errors: {
         word: false
@@ -245,8 +253,22 @@ export default {
   created() {
     this.loadDictation();
     this.mounted();
+    this.request();
   },
   methods: {
+    //個別投稿表示
+    request () {
+      axios.get('/api/dictation/'+ this.$route.params['dictationId'])
+        .then((res)=>{
+          this.dictation = res.data;
+          const responseCode = res.status;
+          if (responseCode === 403){
+            this.$router.push('/403');
+          } else {
+            this.$emit('catch-dictation', this.dictation);
+          }
+        });
+    },
     // 範囲選択した文字を表示
     selected () {
       this.selectedText = window.getSelection().toString();
@@ -312,7 +334,6 @@ export default {
 <style>
 
 #audio {
-  cursor: move;
   width: 100%;
 }
 
