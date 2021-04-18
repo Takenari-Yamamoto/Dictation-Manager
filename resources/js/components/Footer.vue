@@ -28,6 +28,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+
 export default {
   computed: {
     ...mapState({
@@ -56,5 +57,6 @@ export default {
 
 .v-footer {
   justify-content: space-between;
+  z-index: 10;
 }
 </style>

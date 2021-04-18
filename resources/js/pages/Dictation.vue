@@ -25,73 +25,149 @@
               v-if="mp3_url!==null"
               id="audio"
               v-drag
-              class="mt-10 mb-10"
               controls 
               :src="mp3_url"
               controlslist="nodownload"
               style="position:absolute"
             />
-            <div
-              class="upload_material"
-            >
-              <v-row>
-                <!-- Youtube用 -->
-                <v-col>
-                  <Video :dictation="dictation" />
-                </v-col>
-                <!-- MP3 -->
-                <v-col>
-                  <MP3 />
-                </v-col>
-              </v-row>
-            </div>
-            <div 
-              class="word_add"
-            >
-              <v-row>
-                <!-- Youtube用 -->
-                <v-col>
-                  <v-text-field
-                    v-model="selectedText"
-                    label="Selected Word"
-                    :rules="[rules.max_30]"
-                    :error="errors.word"
-                    :error-messages="messages.word" 
-                    counter="30"
-                    @keydown="clearError('word')"	
-                  />
-                </v-col>
-                <v-col>
-                  <v-btn
-                    color="success"
-                    @click="addToList();"
-                  >
-                    Add to List
-                  </v-btn>
-                  <v-snackbar
-                    v-model="snackbar"
-                    :timeout="timeout"
-                    class="text-center"
-                  >
-                    {{ text }}
+            <div id="for_smartphone_right">
+              <div
+                class="upload_material"
+              >
+                <v-row>
+                  <!-- Youtube用 -->
+                  <v-col>
+                    <Video :dictation="dictation" />
+                  </v-col>
+                  <!-- MP3 -->
+                  <v-col>
+                    <MP3 />
+                  </v-col>
+                </v-row>
+              </div>
+              <div 
+                class="word_add"
+              >
+                <v-row>
+                  <!-- select word -->
+                  <v-col>
+                    <v-text-field
+                      id="select_word_display"
+                      v-model="selectedText"
+                      label="Selected Word"
+                      :rules="[rules.max_30]"
+                      :error="errors.word"
+                      :error-messages="messages.word" 
+                      counter="30"
+                      @keydown="clearError('word')"	
+                    />
+                  </v-col>
+                  <v-col>
+                    <v-icon
+                      class="pt-5"
+                      medium
+                      @click="addToList();"
+                    >
+                      mdi-book-plus-multiple 
+                    </v-icon>
+                    <v-snackbar
+                      v-model="snackbar"
+                      :timeout="timeout"
+                      class="text-center"
+                    >
+                      {{ text }}
 
-                    <template #action="{ attrs }">
-                      <v-btn
-                        color="blue"
-                        text
-                        v-bind="attrs"
-                        @click="snackbar = false"
-                      >
-                        Close
-                      </v-btn>
-                    </template>
-                  </v-snackbar>
-                </v-col>
-              </v-row>
+                      <template #action="{ attrs }">
+                        <v-btn
+                          color="blue"
+                          text
+                          v-bind="attrs"
+                          @click="snackbar = false"
+                        >
+                          Close
+                        </v-btn>
+                      </template>
+                    </v-snackbar>
+                  </v-col>
+                </v-row>
+              </div>
             </div>
           </div>
         </v-col>
       </v-row>
+      <!-- スマホ用ハンバーガー右側 ここから -->
+      <v-app-bar-nav-icon
+        id="for_smartphone_right_icon"
+        class="mx-auto overflow-hidden"
+        @click="drawer = true"
+      />
+      <v-navigation-drawer
+        v-model="drawer"
+        fixed
+        temporary
+        bottom
+      >
+        <v-list
+          nav
+          dense
+          :height="10"
+        >
+          <v-list-item-group>
+            <v-row>
+              <!-- Youtube用 -->
+              <v-col>
+                <v-list-item>
+                  <Video :dictation="dictation" />
+                </v-list-item>
+              </v-col>
+              <!-- MP3 -->
+              <v-col>
+                <v-list-item>
+                  <MP3 />
+                </v-list-item>
+              </v-col>
+            </v-row>
+            <v-list-item>
+              <v-text-field
+                v-model="selectedText"
+                label="Selected Word"
+                :rules="[rules.max_30]"
+                :error="errors.word"
+                :error-messages="messages.word" 
+                counter="30"
+                @keydown="clearError('word')"	
+              />
+              <v-icon
+                class="pt-5"
+                medium
+                @click="addToList();"
+              >
+                mdi-book-plus-multiple 
+              </v-icon>
+              <v-snackbar
+                v-model="snackbar"
+                :timeout="timeout"
+                class="text-center"
+                top
+              >
+                {{ text }}
+
+                <template #action="{ attrs }">
+                  <v-btn
+                    color="blue"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                  >
+                    Close
+                  </v-btn>
+                </template>
+              </v-snackbar>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+    <!-- スマホ用ハンバーガーメニュー ここまで -->
     </div>
   </v-container>
 </template>
@@ -161,11 +237,18 @@ export default {
       },
       file: '',
       mp3_url: "",
+      drawer: false,
+      group: null,
     };
   },
   computed: {
     isLogin () {
       return this.$store.getters['auth/check'];
+    },
+  },
+  watch: {
+    group () {
+      this.drawer = false;
     },
   },
   created() {
@@ -231,15 +314,6 @@ export default {
         console.log(this.mp3_url);
       }
     },
-    undisplay_mp3() {
-      if(this.mp3_url !== null) {
-        this.mp3_url = null;
-        this.mp3_text = "Show";
-      } else {
-        this.mp3_url = "https://dictationmanager.s3-ap-northeast-1.amazonaws.com/local/"+this.username+"/"+this.$route.params['dictationId']+".mp3";
-        this.mp3_text = "Hide";
-      }
-    }
   }
 };
 </script>
@@ -248,38 +322,55 @@ export default {
 
 #audio {
   cursor: move;
-  width: 120%;
+  width: 100%;
 }
 
 .upload_material {
   width: 200%;
-  margin-top: 100px;
+  padding-top: 100px;
+}
+
+#for_smartphone_right {
+  width: 50%;
 }
 
 .right_side {
-  padding-top: 100px;
+  margin-top:150px ;
   padding-left: 30px;
   position: sticky;
-  z-index: 5;
-  top: 0;
 }
 
 .word_add {
-  width: 200%;
+  width: 600px;
 }
 
 @media screen and (max-width: 600px) {
 
   #audio {
     width: 70%;
+    right:10px;
+    bottom:60px;
+    position:fixed;
+  }
+
+  #add_button {
+    width: 20px !important;
   }
 
   .right_side {
-    position: fixed;
-    width: 110%;
+    margin: 0;
+    padding: 0;
   }
-  
-  .word_add {
+
+  #for_smartphone_right_icon {
+    position:fixed;
+    right:50px;
+    bottom:60px;
+    z-index: 6;
+    background-color:grey;
+  }
+
+  #for_smartphone_right {
     display: none;
   }
 
@@ -289,10 +380,6 @@ export default {
     z-index: 5;
     background-color: white;
   }
-
-  .ql-editor {
-    margin-bottom: 100px;
-  }
-
+  
 }
 </style>

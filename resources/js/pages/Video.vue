@@ -10,7 +10,7 @@
       class="youtube"
     >
       <youtube
-        id="youtube_play"
+        id="video"
         ref="youtube"
         :video-id="dictation.selected_videoId"
         :width="400"
@@ -22,6 +22,12 @@
         @click="deleteMovie();"
       >
         Delete Movie
+      </v-btn>
+      <v-btn
+        id="togglePipButton"
+        @click="pip()"
+      >
+        pip
       </v-btn>
     </div>
     <v-dialog
@@ -206,17 +212,11 @@ export default {
       this.player.pauseVideo();
       this.playing = false;
     },
-    
-    
-    handlePIP(e) {
-      this.isPip = e;
-    },
-    handlePipOpenFailure(err) {
-      console.log('Video failed to enter Picture-in-Picture mode.', err);
-    },
-    handlePipExitFailure(err) {
-      console.log('Video failed to leave Picture-in-Picture mode.', err);
-    },
+    pip() {
+      const video = document.querySelector("/html/body/div/div/div[1]/video");
+      console.log(video);
+      video.requestPictureInPicture();
+    }
   }
   
 };
@@ -228,8 +228,8 @@ export default {
   padding-top: 5px;
 }
 
-.video {
-  padding-top: 100px;
+#video {
+  /* margin-top: 50px; */
 }
 
 #get_button {
@@ -243,9 +243,6 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
-  #youtube_icon {
-    /* display: none; */
-  }
 
   #movie_description {
     display: none;
@@ -254,11 +251,6 @@ export default {
   #movie_title {
     font-size: 16px;
   }
-
-  #get_button {
-    /* text-align: right; */
-  }
-
   
 }
 </style>
