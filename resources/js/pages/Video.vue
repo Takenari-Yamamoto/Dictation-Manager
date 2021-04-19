@@ -202,10 +202,6 @@ export default {
   padding-top: 5px;
 }
 
-#video {
-  /* margin-top: 50px; */
-}
-
 #get_button {
   text-align: right;
 }

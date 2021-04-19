@@ -347,7 +347,7 @@ export default {
 
 .right_side {
   position: sticky;
-  top: 5em;
+  top: 10em;
   margin-top:150px;
 }
 
@@ -400,7 +400,6 @@ export default {
     position: sticky;
     top: 0;
     z-index: 5;
-    background-color: white;
   }
   
 }

@@ -54,7 +54,7 @@ export default {
       dictation: [],
       dictationContent:"",
       editorOption: {
-        theme: 'snow',
+        theme: 'bubble',
       },
       selected_videoId: '',
       //エラー情報初期化 
@@ -125,9 +125,6 @@ export default {
       this.errors[dictation] = false;
       this.messages[dictation] = null;
     },
-    click() {
-      console.log("ok");
-    }
   }
 };
 </script>
@@ -141,13 +138,14 @@ export default {
   .ql-editor {
     line-height: 300% !important;
     font-size: 20px !important;
+    margin-bottom: 30px;
+    border: #d4d5d6 thin solid;
   }
 
   .ql-toolbar {
     position: sticky;
     top: 0;
     z-index: 5;
-    background-color: white;
   }
 
 </style>
