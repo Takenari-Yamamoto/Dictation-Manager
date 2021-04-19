@@ -117,13 +117,13 @@
       >
         <v-row>
           <!-- Youtube用 -->
-          <v-col>
+          <v-col v-if="mp3_url===null">
             <v-list-item>
               <Video :dictation="dictation" />
             </v-list-item>
           </v-col>
           <!-- MP3 -->
-          <v-col>
+          <v-col v-if="dictation.selected_videoId===null">
             <v-list-item>
               <MP3 />
             </v-list-item>
@@ -364,6 +364,15 @@ export default {
     bottom:60px;
     z-index: 6;
     background-color:#3293fa;
+  }
+
+  #video {
+    width: 50%;
+    height: 30%;
+    position:fixed;
+    left: 30px;
+    bottom:60px;
+    z-index: 6;
   }
 
   #add_button {
