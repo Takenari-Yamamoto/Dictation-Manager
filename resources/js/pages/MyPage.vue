@@ -234,10 +234,12 @@ import Sidebar from "../pages/Sidebar";
 </script>
 
 <style>
+
 body {
    margin: 0;
    padding: 0;
 }
+
 #main {
   padding-top: 0;
   margin-top: 0;

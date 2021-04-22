@@ -257,17 +257,8 @@ export default {
   },
   methods: {
     //個別投稿表示
-    request () {
-      axios.get('/api/dictation/'+ this.$route.params['dictationId'])
-        .then((res)=>{
-          this.dictation = res.data;
-          const responseCode = res.status;
-          if (responseCode === 403){
-            this.$router.push('/403');
-          } else {
-            this.$emit('catch-dictation', this.dictation);
-          }
-        });
+    async request () {
+      await this.$store.dispatch('dictation/request');
     },
     // 範囲選択した文字を表示
     selected () {

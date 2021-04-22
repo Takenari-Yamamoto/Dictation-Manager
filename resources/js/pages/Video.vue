@@ -73,7 +73,7 @@
                     class="mb-2"
                   >
                     <v-btn @click="get_videoId(value.id.videoId);">
-                      videoId取得
+                      この動画でディクテーション
                     </v-btn> 
                   </div>
                 </div>
@@ -115,19 +115,7 @@ export default {
       videoId: '',
       playing: false,
       Dictation: this.dictation,
-
       isPip: false,
-      videoOptions: {
-        wrapper: '',
-        src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        poster: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg',
-      },
-      buttonOptions: {
-        wrapper: '',
-        type: 'button',
-        class: '',
-        label: 'Toggle picture-in-picture',
-      },
     };
   },
   computed:{
@@ -147,18 +135,6 @@ export default {
       .then((res) => {
         this.videos = res.data;
         console.log(this.videos);
-      });
-    },
-     // 選択した動画を削除
-    deleteMovie() {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.dictation.selected_videoId = null;
-      axios
-      .post('/api/dictation/'+ this.$route.params['dictationId'], {
-        content: this.dictation.content,
-        title: this.dictation.title,
-        selected_videoId: this.dictation.selected_videoId,
-        _method: 'put'
       });
     },
     //選択した動画の video_Id を取得
@@ -186,11 +162,6 @@ export default {
       this.player.pauseVideo();
       this.playing = false;
     },
-    pip() {
-      const video = document.querySelector("/html/body/div/div/div[1]/video");
-      console.log(video);
-      video.requestPictureInPicture();
-    }
   }
   
 };
